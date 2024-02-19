@@ -4,7 +4,7 @@
   "description": "Opis twojego projektu",
   "scripts": {
     "dev": "concurrently \"cd client && npm run dev\" \"cd server && npm run dev\"",
-    "build": "npm-run-all -p build:*"
+    "build": "concurrently \"cd client && tsc && vite build\" \"cd server && npx tsc\""
   },
   "devDependencies": {
     "concurrently": "^8.2.2",

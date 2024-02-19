@@ -45,7 +45,7 @@ const themes: Record<string, Theme> = {
 
 const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
-  const [theme, setTheme] = useState("dark");
+  const [theme] = useState("dark");
 
   return (
     <ThemeProvider theme={themes[theme]}>

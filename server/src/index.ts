@@ -34,10 +34,24 @@ function writeUserData(userId: any, name: any, email: any, imageUrl: any) {
     });
 }
 
-writeUserData(1, "a", "a", "a");
-
 const app2 = express();
 const port = process.env.PORT;
+
+app2.post("/submit-data", (req: Request, res: Response) => {
+  const { userId, name, email, imageUrl } = req.body;
+
+  if (!userId || !name || !email || !imageUrl) {
+    return res.status(400).json({ error: "Brak wymaganych danych" });
+  }
+
+  // Zapisz dane użytkownika w bazie danych Firebase
+  writeUserData(userId, name, email, imageUrl);
+
+  // Zwróć odpowiedź do frontendu
+  return res
+    .status(200)
+    .json({ message: "Dane zostały pomyślnie przesłane do backendu" });
+});
 
 app2.get("/", (req: Request, res: Response) => {
   res.send("Express + TypeScript Server");
