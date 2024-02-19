@@ -37,33 +37,16 @@ export const LoginPage: React.FC<LoginProps> = ({ setUser }) => {
   };
 
   const onSubmit: SubmitHandler<UseFormInputs> = (data) => {
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    };
-
-    fetch("/register", requestOptions)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Dane zostały wysłane do backendu:", data);
-        // Tutaj możesz dodać kod obsługi odpowiedzi z backendu, jeśli to konieczne
-      })
-      .catch((error) => {
-        console.error("Błąd podczas wysyłania danych do backendu:", error);
-        // Tutaj możesz dodać kod obsługi błędów
-      });
-
-    // console.log(data);
-    // action === "Login"
-    //   ? setUser({
-    //       name: "aaa",
-    //       surname: "bbb",
-    //       email: "aaa@wp.pl",
-    //       password: "aaaaaaaaa",
-    //       points: 500,
-    //     })
-    //   : reset();
+    console.log(data);
+    action === "Login"
+      ? setUser({
+          name: "aaa",
+          surname: "bbb",
+          email: "aaa@wp.pl",
+          password: "aaaaaaaaa",
+          points: 500,
+        })
+      : reset();
   };
 
   return (
