@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { User } from "../../types";
 import styled from "styled-components";
+// import axios from "axios";
 
 import { SubmitHandler, useForm } from "react-hook-form";
+import { LoginService } from "../../services/loginService";
 
 interface LoginProps {
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
@@ -24,9 +26,6 @@ export const LoginPage: React.FC<LoginProps> = ({ setUser }) => {
       password: "",
     },
   });
-
-  console.log(setUser);
-
   const [error, setError] = useState("");
   const [action, setAction] = useState<"Login" | "Register">("Login");
 
@@ -36,17 +35,28 @@ export const LoginPage: React.FC<LoginProps> = ({ setUser }) => {
     reset();
   };
 
-  const onSubmit: SubmitHandler<UseFormInputs> = (data) => {
-    console.log(data);
-    action === "Login"
-      ? setUser({
-          name: "aaa",
-          surname: "bbb",
-          email: "aaa@wp.pl",
-          password: "aaaaaaaaa",
-          points: 500,
-        })
-      : reset();
+  const onSubmit: SubmitHandler<UseFormInputs> = async (data) => {
+    try {
+      let response;
+      if (action === "Register") {
+        response = await LoginService.register(
+          data.email,
+          data.password,
+          data.firstName,
+          data.lastName
+        );
+      } else if (action === "Login") {
+        response = await LoginService.login(data.email, data.password);
+      }
+      if (response.user) {
+        setUser(response.user);
+        setError("");
+      } else {
+        setError(response.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -61,7 +71,7 @@ export const LoginPage: React.FC<LoginProps> = ({ setUser }) => {
           />
 
           <input
-            {...register("password", { minLength: 8, required: true })}
+            {...register("password", { required: true })}
             placeholder="Password"
             type="password"
           />
@@ -69,11 +79,11 @@ export const LoginPage: React.FC<LoginProps> = ({ setUser }) => {
           {action === "Register" ? (
             <>
               <input
-                {...register("firstName", { minLength: 2, required: true })}
+                {...register("firstName", { required: true })}
                 placeholder="First Name"
               />
               <input
-                {...register("lastName", { minLength: 2, required: true })}
+                {...register("lastName", { required: true })}
                 placeholder="Last name"
               />
             </>
