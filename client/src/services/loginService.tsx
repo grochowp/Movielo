@@ -2,7 +2,7 @@ import { sendRequest } from "../utils";
 
 export const LoginService = {
   login: async (email: string, password: string) => {
-    const url = "http://localhost:3001/api/login";
+    const url = "http://localhost:3000/api/auth/login";
     const method = "POST";
     const body = { email, password };
 
@@ -18,7 +18,7 @@ export const LoginService = {
     firstName: string,
     lastName: string
   ) => {
-    const url = "http://localhost:3001/api/register";
+    const url = "http://localhost:3000/api/auth/register";
     const method = "POST";
     const body = { email, password, firstName, lastName };
     return await sendRequest(url, method, body);

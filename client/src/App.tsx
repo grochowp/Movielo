@@ -32,8 +32,8 @@ const DarkTheme: Theme = {
   bodyColor: "#393939",
   pageBackground: "#262626",
   componentsBackground: "#202020",
-  color: "#C3C3C3",
-  colorSecondary: "#D9D9D9",
+  color: "#D9D9D9",
+  colorSecondary: "##C3C3C3",
   colorOnHover: "#ffffff",
   name: "dark",
 };

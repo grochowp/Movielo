@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 
 const authRoutes = require("./routes/auth");
+const movieRoutes = require("./routes/movie");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
@@ -28,4 +29,5 @@ mongoose
     console.log(err.message);
   });
 
-app.use("/api", authRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/movie", movieRoutes);
