@@ -10,7 +10,6 @@ import { IoIosInformationCircleOutline } from "react-icons/io";
 
 const Main: React.FC = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
-
   useEffect(() => {
     async function fetchData() {
       const moviesData = [];
@@ -36,7 +35,7 @@ const Main: React.FC = () => {
             <div>
               <h1>
                 {movie.original_title}
-                <span onClick={() => console.log(movie.original_title)}>
+                <span onClick={() => console.log(movie.id)}>
                   <IoIosInformationCircleOutline />
                 </span>
               </h1>

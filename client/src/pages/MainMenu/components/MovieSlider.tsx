@@ -25,7 +25,7 @@ const MovieSlider: React.FC<fetchMovie> = ({ url, genre }) => {
       <h1>{genre}</h1>
       <article>
         {movies.map((movie, index) => (
-          <div key={index}>
+          <div key={index} onClick={() => console.log(movie.id)}>
             <img
               src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
               alt={movie.original_title}

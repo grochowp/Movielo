@@ -33,7 +33,7 @@ const DarkTheme: Theme = {
   pageBackground: "#262626",
   componentsBackground: "#202020",
   color: "#D9D9D9",
-  colorSecondary: "##C3C3C3",
+  colorSecondary: "#C3C3C3",
   colorOnHover: "#ffffff",
   name: "dark",
 };

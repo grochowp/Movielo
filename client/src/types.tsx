@@ -14,6 +14,7 @@ export interface Movie {
   backdrop_path: string;
   rating: number;
   overview: string;
+  original_name: string;
 }
 
 export interface fetchMovie {
