@@ -9,12 +9,14 @@ export interface User {
 export interface Movie {
   IDs: Array<number>;
   id: number;
-  name: string;
+  original_title: string;
   poster_path: string;
+  backdrop_path: string;
   rating: number;
   overview: string;
 }
 
 export interface fetchMovie {
-  fetchMovie: (apiURL: string) => Promise<Movie[]>; // Deklaracja typu dla fetchMovie
+  url: string;
+  genre?: string;
 }
