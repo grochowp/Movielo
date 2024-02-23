@@ -5,7 +5,7 @@ import styled from "styled-components";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
+import { Autoplay } from "swiper/modules";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 
 const Main: React.FC = () => {
@@ -28,7 +28,16 @@ const Main: React.FC = () => {
 
   return (
     <MainPage>
-      <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
+      <Swiper
+        spaceBetween={0}
+        centeredSlides={true}
+        autoplay={{
+          delay: 10000,
+          disableOnInteraction: false,
+        }}
+        modules={[Autoplay]}
+        className="mySwiper"
+      >
         {movies.map((movie, index) => (
           <SwiperSlide key={index} className="swiper-slide">
             <img src={`/images/bg-${index}.jpg`} alt={movie.original_title} />
@@ -74,7 +83,7 @@ const MainPage = styled.section`
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: opacity(30%);
+    filter: opacity(50%);
   }
 
   .swiper-slide div {

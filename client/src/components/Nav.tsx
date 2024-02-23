@@ -6,16 +6,15 @@ import { useKey } from "../hooks/useKey";
 import { useMovies } from "../hooks/useMovies";
 
 const Nav: React.FC = () => {
-  const [query, setQuery] = useState("");
-  const [selectedIndex, setSelectedIndex] = useState<number>(0); // Indeks zaznaczonego elementu
+  const [query, setQuery] = useState<string>("");
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
-  const inputEl = useRef<HTMLInputElement>(null); // Ustawienie typu na HTMLInputElement
+  const inputEl = useRef<HTMLInputElement>(null);
   const selectedRef = useRef<HTMLLIElement>(null);
 
   const { movies } = useMovies(query);
 
   useEffect(() => {
-    // Po zmianie selectedIndex, przewiń do zaznaczonego elementu
     if (selectedRef.current) {
       selectedRef.current.scrollIntoView({
         behavior: "smooth",
@@ -47,6 +46,7 @@ const Nav: React.FC = () => {
 
   const openMovieDetails = (movie: object) => {
     console.log(movie);
+    setQuery("");
   };
 
   return (
@@ -110,6 +110,7 @@ const Navigation = styled.nav`
 
   span {
     margin: 0 2.5rem;
+    height: max-content;
     font-size: 2.5rem;
     color: ${(props) => props.theme.color};
     cursor: pointer;
@@ -128,24 +129,21 @@ const Navigation = styled.nav`
   div {
     display: flex;
     flex-direction: column;
-    height: 20rem;
     align-items: center;
     max-width: 25rem;
 
     @media (max-width: 700px) {
       width: 70%;
-      max-width: 15rem;
-    }
-
-    @media (max-width: 700px) {
-      width: 70%;
+      height: 20rem;
       max-width: 10rem;
     }
   }
   input {
     margin-left: 1rem;
     height: 3rem;
-    min-width: 25rem;
+    max-width: 25rem;
+    width: 25vw;
+    min-width: 15rem;
     border-radius: 10px;
     border: none;
     background-color: ${(props) => props.theme.color};
@@ -156,6 +154,7 @@ const Navigation = styled.nav`
     @media (max-width: 700px) {
       width: 100%;
       min-width: 0;
+      height: 2rem;
     }
   }
 

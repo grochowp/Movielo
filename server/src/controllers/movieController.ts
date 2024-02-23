@@ -5,6 +5,7 @@ module.exports.getMovies = async (req: any, res: any, next: any) => {
     const { url, options } = req.body;
     const response = await fetch(url, options);
     const data = await response.json();
+
     res.json({ movies: data.results });
   } catch (ex) {
     next(ex);
