@@ -20,7 +20,6 @@ export const MainMenu: React.FC<MainMenuProps> = ({ user }) => {
       <Main />
       <MovieSlider url={TRENDING_MOVIES_URL} genre={`Trending movies`} />
       <MovieSlider url={TRENDING_SERIES_URL} genre={`Trending series`} />
-      {/* <MovieSlider url={ACTION_URL} genre={`Action`} /> */}
       <Selected />
       <Footer />
     </>

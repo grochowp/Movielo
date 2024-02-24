@@ -7,9 +7,11 @@ import "swiper/css/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { IoIosInformationCircleOutline } from "react-icons/io";
+import { useModal } from "../../../contexts/ModalContext";
 
 const Main: React.FC = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
+  const modal = useModal();
   useEffect(() => {
     async function fetchData() {
       const moviesData = [];
@@ -44,7 +46,7 @@ const Main: React.FC = () => {
             <div>
               <h1>
                 {movie.original_title}
-                <span onClick={() => console.log(movie.id)}>
+                <span onClick={() => modal.openModal(movie)}>
                   <IoIosInformationCircleOutline />
                 </span>
               </h1>

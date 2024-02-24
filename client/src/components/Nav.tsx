@@ -4,6 +4,8 @@ import { CiUser } from "react-icons/ci";
 import { useEffect, useRef, useState } from "react";
 import { useKey } from "../hooks/useKey";
 import { useMovies } from "../hooks/useMovies";
+import { useModal } from "../contexts/ModalContext";
+import { Movie } from "../types";
 
 const Nav: React.FC = () => {
   const [query, setQuery] = useState<string>("");
@@ -13,6 +15,7 @@ const Nav: React.FC = () => {
   const selectedRef = useRef<HTMLLIElement>(null);
 
   const { movies } = useMovies(query);
+  const modal = useModal();
 
   useEffect(() => {
     if (selectedRef.current) {
@@ -39,13 +42,12 @@ const Nav: React.FC = () => {
   }, "ArrowDown");
 
   useKey(() => {
-    console.log(movies[selectedIndex]);
     setQuery("");
     setSelectedIndex(0);
   }, "Enter");
 
-  const openMovieDetails = (movie: object) => {
-    console.log(movie);
+  const openMovieDetails = (movie: Movie) => {
+    modal.openModal(movie);
     setQuery("");
   };
 
@@ -99,8 +101,8 @@ const Navigation = styled.nav`
   display: flex;
   justify-content: space-between;
   margin-top: 2rem;
+
   @media (max-width: 1200px) {
-    max-height: 8vw;
     margin-top: 1.5rem;
   }
 
@@ -141,9 +143,7 @@ const Navigation = styled.nav`
   input {
     margin-left: 1rem;
     height: 3rem;
-    max-width: 25rem;
-    width: 25vw;
-    min-width: 15rem;
+    width: 25rem;
     border-radius: 10px;
     border: none;
     background-color: ${(props) => props.theme.color};
@@ -171,6 +171,7 @@ const Navigation = styled.nav`
     @media (max-width: 700px) {
       width: 100%;
       max-width: 15rem;
+      max-height: 10rem;
     }
   }
 
@@ -194,8 +195,8 @@ const StyledLi = styled.li<{ isSelected: boolean }>`
     props.isSelected ? props.theme.componentsBackground : ""};
 
   @media (max-width: 700px) {
-    min-height: 4rem;
-    font-size: 1rem;
+    min-height: 3rem;
+    font-size: 0.8rem;
   }
 
   .selected {
@@ -210,7 +211,7 @@ const StyledLi = styled.li<{ isSelected: boolean }>`
   img {
     height: 5rem;
     @media (max-width: 700px) {
-      height: 4rem;
+      height: 3rem;
     }
   }
 `;

@@ -6,6 +6,7 @@ import { Navigate } from "react-router-dom";
 import { User } from "./types";
 import { ThemeProvider } from "styled-components";
 import GlobalStyle from "./globalStyles";
+import { ModalProvider } from "./contexts/ModalContext";
 
 interface Theme {
   bodyColor: string;
@@ -51,20 +52,24 @@ const App: React.FC = () => {
     <ThemeProvider theme={themes[theme]}>
       <GlobalStyle />
 
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/login"
-            element={
-              user ? <Navigate to="/" /> : <LoginPage setUser={setUser} />
-            }
-          />
-          <Route
-            path="/"
-            element={user ? <MainMenu user={user} /> : <Navigate to="/login" />}
-          />
-        </Routes>
-      </BrowserRouter>
+      <ModalProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/login"
+              element={
+                user ? <Navigate to="/" /> : <LoginPage setUser={setUser} />
+              }
+            />
+            <Route
+              path="/"
+              element={
+                user ? <MainMenu user={user} /> : <Navigate to="/login" />
+              }
+            />
+          </Routes>
+        </BrowserRouter>
+      </ModalProvider>
     </ThemeProvider>
   );
 };

@@ -15,6 +15,7 @@ export interface Movie {
   rating: number;
   overview: string;
   original_name: string;
+  vote_average: number;
 }
 
 export interface fetchMovie {

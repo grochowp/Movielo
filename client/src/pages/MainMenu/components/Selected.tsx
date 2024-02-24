@@ -7,12 +7,15 @@ import {
   IoIosCheckmarkCircleOutline,
 } from "react-icons/io";
 import { Movie } from "../../../types";
+import { useModal } from "../../../contexts/ModalContext";
 
 const Selected: React.FC = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [type, setType] = useState<string>("movie");
   const [page, setPage] = useState<number>(1);
   const [genre, setGenre] = useState<number>(18);
+
+  const modal = useModal();
 
   useEffect(() => {
     fetchAndSetMovies(
@@ -23,7 +26,7 @@ const Selected: React.FC = () => {
   const fetchAndSetMovies = async (apiURL: string) => {
     try {
       const response = await MovieService.getMovie(apiURL);
-      const data = response.movies;
+      const data = response.movies.slice(0, 15);
       setMovies(data);
     } catch (error) {
       console.error("Wystąpił błąd podczas pobierania filmów:", error);
@@ -99,7 +102,7 @@ const Selected: React.FC = () => {
 
       <article className="second">
         {movies.map((movie, index) => (
-          <div key={index} onClick={() => console.log(movie.id)}>
+          <div key={index} onClick={() => modal.openModal(movie)}>
             <img
               src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
               alt={movie.original_title}
@@ -107,6 +110,7 @@ const Selected: React.FC = () => {
           </div>
         ))}
       </article>
+
       <article className="third">
         <button
           className={`${page - 5 <= 0 ? "prev-next disabled" : "prev-next"}`}
@@ -141,14 +145,10 @@ const GenreSelection = styled.section`
   .first {
     display: flex;
     height: max-content;
-    justify-content: space-between;
-    margin: 0 10vw;
-    align-items: center;
+    justify-content: space-around;
 
-    padding-top: 5rem;
-    @media (max-width: 1200px) {
-      margin: 0 5vw;
-    }
+    align-items: center;
+    width: 100%;
 
     select {
       height: 3rem;
@@ -226,7 +226,7 @@ const GenreSelection = styled.section`
   .second {
     display: flex;
     flex-wrap: wrap;
-    margin: 2vw 9rem 0 9rem;
+    margin: 1vw 9rem 0 9rem;
     max-width: 1620px;
     justify-content: center;
 
@@ -234,7 +234,7 @@ const GenreSelection = styled.section`
       margin: 2vw 7vw 0 7vw;
     }
     div {
-      margin: 1rem;
+      margin: 0.5rem 1rem;
       @media (max-width: 1100px) {
         margin: 1vw;
       }

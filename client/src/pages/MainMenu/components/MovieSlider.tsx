@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Movie, fetchMovie } from "../../../types";
 import styled from "styled-components";
 import { MovieService } from "../../../services/movieService";
+import { useModal } from "../../../contexts/ModalContext";
 
 const MovieSlider: React.FC<fetchMovie> = ({ url, genre }) => {
   const [movies, setMovies] = useState<Movie[]>([]);
-
+  const modal = useModal();
   const fetchAndSetMovies = async (apiURL: string) => {
     try {
       const response = await MovieService.getMovie(apiURL);
@@ -25,7 +26,7 @@ const MovieSlider: React.FC<fetchMovie> = ({ url, genre }) => {
       <h1>{genre}</h1>
       <article>
         {movies.map((movie, index) => (
-          <div key={index} onClick={() => console.log(movie.id)}>
+          <div key={index} onClick={() => modal.openModal(movie)}>
             <img
               src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
               alt={movie.original_title}
