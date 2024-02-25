@@ -15,10 +15,11 @@ const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
 const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
-  const [userRating, setUserRating] = useState<string>("");
+  const [userRating, setUserRating] = useState<number>(0);
 
   const closeModal = () => {
     setSelectedMovie(null);
+    console.log(userRating);
   };
 
   const openModal = (movie: Movie) => {

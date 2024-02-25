@@ -17,7 +17,7 @@ interface StarRatingProps {
   size?: number;
   messages?: string[];
   className?: string;
-  onSetRating?: (rating: string) => void;
+  onSetRating?: (rating: number) => void;
 }
 
 const StarRating: React.FC<StarRatingProps> = ({
@@ -31,18 +31,11 @@ const StarRating: React.FC<StarRatingProps> = ({
   const [rating, setRating] = useState(defaultRating);
   const [tempRating, setTempRating] = useState(0);
 
-  function handleRating(rating) {
+  function handleRating(rating: number) {
     setRating(rating);
 
     onSetRating && onSetRating(rating);
   }
-
-  const textStyle = {
-    lineHeight: "1",
-    margin: "0",
-    fontSize: `${size / 1.5}px`,
-    color,
-  };
 
   return (
     <div style={containerStyle} className={className}>
@@ -70,8 +63,24 @@ const StarRating: React.FC<StarRatingProps> = ({
 
 export default StarRating;
 
-function Star({ onRate, full, onHoverIn, onHoverOut, color, size }) {
-  const starStyle = {
+interface StarProps {
+  onRate: () => void;
+  onHoverIn: (event: React.MouseEvent<HTMLSpanElement>) => void;
+  onHoverOut: (event: React.MouseEvent<HTMLSpanElement>) => void;
+  full: boolean;
+  color: string;
+  size: number;
+}
+
+const Star: React.FC<StarProps> = ({
+  onRate,
+  full,
+  onHoverIn,
+  onHoverOut,
+  color,
+  size,
+}) => {
+  const starStyle: React.CSSProperties = {
     width: `${size}px`,
     height: `${size}px`,
     display: "block",
@@ -112,4 +121,4 @@ function Star({ onRate, full, onHoverIn, onHoverOut, color, size }) {
       )}
     </span>
   );
-}
+};
