@@ -1,14 +1,9 @@
 import React, { useState } from "react";
-import { User } from "../../types";
 import styled from "styled-components";
 // import axios from "axios";
-
 import { SubmitHandler, useForm } from "react-hook-form";
 import { LoginService } from "../../services/loginService";
-
-interface LoginProps {
-  setUser: React.Dispatch<React.SetStateAction<User | null>>;
-}
+import { useUser } from "../../contexts/UserContext";
 
 interface UseFormInputs {
   firstName: string;
@@ -17,7 +12,9 @@ interface UseFormInputs {
   password: string;
 }
 
-export const LoginPage: React.FC<LoginProps> = ({ setUser }) => {
+export const LoginPage: React.FC = () => {
+  const user = useUser();
+
   const { register, reset, handleSubmit } = useForm<UseFormInputs>({
     defaultValues: {
       firstName: "",
@@ -38,6 +35,7 @@ export const LoginPage: React.FC<LoginProps> = ({ setUser }) => {
   const onSubmit: SubmitHandler<UseFormInputs> = async (data) => {
     try {
       let response;
+
       if (action === "Register") {
         response = await LoginService.register(
           data.email,
@@ -45,11 +43,14 @@ export const LoginPage: React.FC<LoginProps> = ({ setUser }) => {
           data.firstName,
           data.lastName
         );
-      } else if (action === "Login") {
+      }
+
+      if (action === "Login") {
         response = await LoginService.login(data.email, data.password);
       }
+
       if (response.user) {
-        setUser(response.user);
+        user.setUser(response.user);
         setError("");
       } else {
         setError(response.message);

@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { LoginPage } from "./pages/Login/LoginPage";
-import { MainMenu } from "./pages/MainMenu/MainMenu";
 import { Navigate } from "react-router-dom";
-import { User } from "./types";
 import { ThemeProvider } from "styled-components";
 import GlobalStyle from "./globalStyles";
 import { ModalProvider } from "./contexts/ModalContext";
+import { useUser } from "./contexts/UserContext";
+import Profile from "./pages/Profile/Profile";
+import MainMenu from "./pages/MainMenu/MainMenu";
+import Statistics from "./pages/Statistics/Statistics";
+import Achievements from "./pages/Achievements/Achievements";
+import Favorites from "./pages/Favorites/Favorites";
+import Settings from "./pages/Settings/Settings";
 
 interface Theme {
   bodyColor: string;
@@ -45,8 +50,9 @@ const themes: Record<string, Theme> = {
 };
 
 const App: React.FC = () => {
-  const [user, setUser] = useState<User | null>(null);
   const [theme] = useState("dark");
+
+  const user = useUser();
 
   return (
     <ThemeProvider theme={themes[theme]}>
@@ -55,18 +61,20 @@ const App: React.FC = () => {
       <ModalProvider>
         <BrowserRouter>
           <Routes>
+            <Route path="*" element={<MainMenu />} />
             <Route
               path="/login"
-              element={
-                user ? <Navigate to="/" /> : <LoginPage setUser={setUser} />
-              }
+              element={user.user ? <Navigate to="/" /> : <LoginPage />}
             />
             <Route
               path="/"
-              element={
-                user ? <MainMenu user={user} /> : <Navigate to="/login" />
-              }
+              element={user.user ? <MainMenu /> : <Navigate to="/login" />}
             />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/statistics" element={<Statistics />} />
+            <Route path="/achievements" element={<Achievements />} />
+            <Route path="/favorites" element={<Favorites />} />
+            <Route path="/settings" element={<Settings />} />
           </Routes>
         </BrowserRouter>
       </ModalProvider>

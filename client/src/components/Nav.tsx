@@ -11,6 +11,8 @@ import { BsBookmarkStar } from "react-icons/bs";
 import { CiSettings, CiTrophy } from "react-icons/ci";
 import { AiOutlineLogout } from "react-icons/ai";
 import { IoCloseOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "../contexts/UserContext";
 
 const Nav: React.FC = () => {
   const [query, setQuery] = useState<string>("");
@@ -22,6 +24,8 @@ const Nav: React.FC = () => {
 
   const { movies } = useMovies(query);
   const modal = useModal();
+  const navigate = useNavigate();
+  const user = useUser();
 
   useEffect(() => {
     if (selectedRef.current) {
@@ -55,6 +59,11 @@ const Nav: React.FC = () => {
   const openMovieDetails = (movie: Movie) => {
     modal.openModal(movie);
     setQuery("");
+  };
+
+  const moveTo = (s: string) => {
+    if (s === "login") user.setUser(null);
+    navigate(`/${s}`);
   };
 
   return (
@@ -110,29 +119,33 @@ const Nav: React.FC = () => {
                 </div>
               </div>
               <div className="second">
-                <p>
+                <p onClick={() => moveTo("profile")}>
                   <CgProfile />
                   My profile
                 </p>
-                <p>
+
+                <p onClick={() => moveTo("statistics")}>
                   <FaRegChartBar />
                   Statistics
                 </p>
-                <p>
+                <p onClick={() => moveTo("favorites")}>
                   <BsBookmarkStar />
                   Favorites
                 </p>
-                <p>
+                <p onClick={() => moveTo("achievements")}>
                   <CiTrophy />
                   Achievements
                 </p>
               </div>
               <div className="third">
-                <p>
+                <p onClick={() => moveTo("settings")}>
                   <CiSettings />
                   Settings
                 </p>
-                <p style={{ borderRadius: "0 0 10px 10px", color: "red" }}>
+                <p
+                  onClick={() => moveTo("login")}
+                  style={{ borderRadius: "0 0 10px 10px", color: "red" }}
+                >
                   <AiOutlineLogout />
                   Log-out
                 </p>
