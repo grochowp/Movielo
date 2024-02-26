@@ -1,4 +1,10 @@
-import React, { createContext, useState, useContext, ReactNode } from "react";
+import React, {
+  createContext,
+  useState,
+  useContext,
+  ReactNode,
+  useEffect,
+} from "react";
 import { Movie } from "../types";
 import styled from "styled-components";
 import StarRating from "../components/StarRating";
@@ -6,7 +12,7 @@ import { IoCloseOutline } from "react-icons/io5";
 import { IoStarSharp } from "react-icons/io5";
 import { MovieService } from "../services/movieService";
 import { useUser } from "./UserContext";
-import { BsBookmarkStar } from "react-icons/bs";
+import { BsBookmarkStar, BsBookmarkStarFill } from "react-icons/bs";
 
 interface ModalContextType {
   selectedMovie: Movie | null;
@@ -20,8 +26,12 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [userRating, setUserRating] = useState<number>(5);
   const [message, setMessage] = useState<string>("");
-
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const userContext = useUser();
+
+  useEffect(() => {
+    seeFav();
+  }, [userContext.user, selectedMovie]);
 
   const closeModal = () => {
     setSelectedMovie(null);
@@ -31,6 +41,7 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const openModal = (movie: Movie) => {
     setSelectedMovie(movie);
+    setIsFavorite(false);
   };
 
   const rateMovie = async () => {
@@ -45,15 +56,38 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     setMessage(response.message);
   };
 
-  const addFavMovie = async () => {
-    let response;
-    if (userContext.user && selectedMovie)
-      response = await MovieService.addFavMovie(
+  const seeFav = async () => {
+    if (userContext.user && selectedMovie) {
+      const response = await MovieService.handleFav(
         userContext.user._id,
-        selectedMovie
+        selectedMovie?.id
       );
 
-    setMessage(response.message);
+      setIsFavorite(response.favorite);
+    }
+  };
+
+  const addFavMovie = async () => {
+    const genre = selectedMovie?.media_type === "movie" ? "Movie" : "Series";
+
+    if (userContext.user && selectedMovie)
+      await MovieService.addFavMovie(
+        userContext.user._id,
+        selectedMovie,
+        genre
+      );
+
+    seeFav();
+  };
+
+  const deleteFavMovie = async () => {
+    if (userContext.user && selectedMovie)
+      await MovieService.deleteFavMovie(
+        userContext.user._id,
+        selectedMovie?.id
+      );
+
+    seeFav();
   };
 
   return (
@@ -71,7 +105,14 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
               <IoCloseOutline />
             </button>
             <div className="modalWindow">
-              <BsBookmarkStar className="fav" onClick={() => addFavMovie()} />
+              {isFavorite ? (
+                <BsBookmarkStarFill
+                  className="fav"
+                  onClick={() => deleteFavMovie()}
+                />
+              ) : (
+                <BsBookmarkStar className="fav" onClick={() => addFavMovie()} />
+              )}
               <ImageWrapper className="image">
                 <img
                   className="poster"

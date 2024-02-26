@@ -8,9 +8,10 @@ const favoriteSchema = new mongoose3.Schema({
   },
   movieId: { type: String, required: true },
   title: { type: String, required: true },
-  genres: { type: Array, required: true },
+  genre: { type: String, required: true },
   rating: { type: Number, required: true },
   releaseDate: { type: String, required: true },
+  poster: { type: String, required: true },
 });
 
 module.exports = mongoose3.model("Favorite", favoriteSchema);

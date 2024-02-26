@@ -17,6 +17,7 @@ export interface Movie {
   overview: string;
   original_name: string;
   vote_average: number;
+  media_type: string;
 }
 
 export interface fetchMovie {

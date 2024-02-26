@@ -30,12 +30,33 @@ export const MovieService = {
     return await sendRequest(url, method, body);
   },
 
-  addFavMovie: async (_id: string, movie: object) => {
+  addFavMovie: async (_id: string, movie: object, genre: string) => {
     const url = "http://localhost:3000/api/movie/addFavMovie";
     const method = "POST";
     const body = {
       _id,
       movie,
+      genre,
+    };
+    return await sendRequest(url, method, body);
+  },
+
+  handleFav: async (_id: string, movieId: number) => {
+    const url = "http://localhost:3000/api/movie/handleFav";
+    const method = "POST";
+    const body = {
+      _id,
+      movieId,
+    };
+    return await sendRequest(url, method, body);
+  },
+
+  deleteFavMovie: async (_id: string, movieId: number) => {
+    const url = "http://localhost:3000/api/movie/deleteFavMovie";
+    const method = "POST";
+    const body = {
+      _id,
+      movieId,
     };
     return await sendRequest(url, method, body);
   },
