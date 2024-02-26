@@ -4,6 +4,9 @@ import styled from "styled-components";
 import StarRating from "../components/StarRating";
 import { IoCloseOutline } from "react-icons/io5";
 import { IoStarSharp } from "react-icons/io5";
+import { MovieService } from "../services/movieService";
+import { useUser } from "./UserContext";
+import { BsBookmarkStar } from "react-icons/bs";
 
 interface ModalContextType {
   selectedMovie: Movie | null;
@@ -15,15 +18,42 @@ const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
 const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
-  const [userRating, setUserRating] = useState<number>(0);
+  const [userRating, setUserRating] = useState<number>(5);
+  const [message, setMessage] = useState<string>("");
+
+  const userContext = useUser();
 
   const closeModal = () => {
     setSelectedMovie(null);
-    console.log(userRating);
+    setUserRating(5);
+    setMessage("");
   };
 
   const openModal = (movie: Movie) => {
     setSelectedMovie(movie);
+  };
+
+  const rateMovie = async () => {
+    let response;
+    if (userContext.user && selectedMovie)
+      response = await MovieService.rateMovie(
+        userContext.user._id,
+        selectedMovie?.id,
+        userRating
+      );
+
+    setMessage(response.message);
+  };
+
+  const addFavMovie = async () => {
+    let response;
+    if (userContext.user && selectedMovie)
+      response = await MovieService.addFavMovie(
+        userContext.user._id,
+        selectedMovie
+      );
+
+    setMessage(response.message);
   };
 
   return (
@@ -41,12 +71,13 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
               <IoCloseOutline />
             </button>
             <div className="modalWindow">
+              <BsBookmarkStar className="fav" onClick={() => addFavMovie()} />
               <ImageWrapper className="image">
                 <img
                   className="poster"
                   src={`https://image.tmdb.org/t/p/w500${selectedMovie.poster_path}`}
                   alt={selectedMovie.original_title}
-                />
+                ></img>
                 <img
                   className="backdrop"
                   src={`https://image.tmdb.org/t/p/w500${selectedMovie.backdrop_path}`}
@@ -77,14 +108,14 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
                     </p>
                   </div> */}
                   <div className="rating">
-                    <p>Rating</p>
+                    <p>{message || "Rating"}</p>
                     <StarRating
                       maxRating={10}
                       size={24}
                       key={selectedMovie.id}
                       onSetRating={setUserRating}
                     />
-                    <button>Rate</button>
+                    <button onClick={() => rateMovie()}>Rate</button>
                   </div>
                 </Rating>
               </div>
@@ -105,6 +136,7 @@ const useModal = (): ModalContextType => {
   return context;
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export { ModalProvider, useModal };
 
 const Modal = styled.section`
@@ -158,10 +190,24 @@ const Modal = styled.section`
   .modalWindow {
     display: flex;
     flex-direction: row;
-
     height: max-content;
-    @media (max-width: 650px) {
-      flex-direction: column;
+    color: ${(props) => props.theme.color};
+
+    .fav {
+      font-size: 5rem;
+      position: fixed;
+      margin: 2.5rem 0 0 3rem;
+      cursor: pointer;
+
+      @media (max-width: 1350px) {
+        font-size: 5.5vw;
+
+        margin: 3vw 0 0 3.5vw;
+      }
+
+      @media (max-width: 650px) {
+        margin-top: 8vw;
+      }
     }
 
     .desc {
@@ -169,8 +215,11 @@ const Modal = styled.section`
       flex: 1;
       display: flex;
       flex-direction: column;
-      color: ${(props) => props.theme.color};
       gap: 0.5rem;
+    }
+
+    @media (max-width: 650px) {
+      flex-direction: column;
     }
   }
 `;
@@ -285,6 +334,7 @@ const Description = styled.div`
 
     @media (max-width: 650px) {
       margin: 0;
+      height: 2.5rem;
 
       span {
         width: 25%;

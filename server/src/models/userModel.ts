@@ -15,17 +15,17 @@ const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
     required: true,
-    unique: false,
     min: 2,
     max: 50,
   },
   lastName: {
     type: String,
     required: true,
-    unique: false,
     min: 2,
     max: 50,
   },
+  favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Movie" }],
+  ratings: [{ type: mongoose.Schema.Types.ObjectId, ref: "ratings" }],
 });
 
 module.exports = mongoose.model("Users", userSchema);

@@ -1,5 +1,5 @@
 const Statistics: React.FC = () => {
-  return <div></div>;
+  return <div style={{ width: "10px" }}>bbaaab</div>;
 };
 
 export default Statistics;

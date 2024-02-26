@@ -25,7 +25,7 @@ const StarRating: React.FC<StarRatingProps> = ({
   color = "#fcc419",
   size = 48,
   className = "",
-  defaultRating = 0,
+  defaultRating = 5,
   onSetRating,
 }) => {
   const [rating, setRating] = useState(defaultRating);
@@ -52,11 +52,6 @@ const StarRating: React.FC<StarRatingProps> = ({
           />
         ))}
       </div>
-      {/* <p style={textStyle}>
-        {messages.length === maxRating
-          ? messages[tempRating ? tempRating - 1 : rating - 1]
-          : tempRating || rating || ""}
-      </p> */}
     </div>
   );
 };

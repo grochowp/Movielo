@@ -7,6 +7,7 @@ import { useModal } from "../../../contexts/ModalContext";
 const MovieSlider: React.FC<fetchMovie> = ({ url, genre }) => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const modal = useModal();
+
   const fetchAndSetMovies = async (apiURL: string) => {
     try {
       const response = await MovieService.getMovie(apiURL);

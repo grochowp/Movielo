@@ -1,5 +1,3 @@
-const Movie = require("../models/movieModel");
-
 module.exports.getMovies = async (req: any, res: any, next: any) => {
   try {
     const { url, options } = req.body;

@@ -63,7 +63,7 @@ const Nav: React.FC = () => {
 
   const moveTo = (s: string) => {
     if (s === "login") user.setUser(null);
-    navigate(`/${s}`);
+    navigate(`/dashboard/${s}`);
   };
 
   return (
