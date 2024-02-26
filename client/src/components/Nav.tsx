@@ -101,7 +101,11 @@ const Nav: React.FC = () => {
       </div>
       <div>
         <span>
-          {showUser ? "" : <CiUser onClick={() => setShowUser(true)} />}
+          {showUser ? (
+            ""
+          ) : (
+            <CiUser className="userIcon" onClick={() => setShowUser(true)} />
+          )}
         </span>
         {showUser ? (
           <div className="profile">
@@ -183,9 +187,15 @@ const Navigation = styled.nav`
   span {
     z-index: 6;
     margin: 0 2.5rem;
-    height: max-content;
-    font-size: 2.5rem;
-    color: ${(props) => props.theme.color};
+    background-color: ${(props) => props.theme.color};
+    display: flex;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    width: 3rem;
+    height: 3rem;
+    font-size: 2rem;
+    color: ${(props) => props.theme.componentsBackground};
     cursor: pointer;
     transition: 1s;
 
@@ -194,8 +204,10 @@ const Navigation = styled.nav`
       margin: 0 4vw;
     }
     @media (max-width: 700px) {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       margin: 0 3vw;
+      width: 2rem;
+      height: 2rem;
     }
   }
 

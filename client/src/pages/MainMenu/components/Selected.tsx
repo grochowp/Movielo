@@ -272,7 +272,7 @@ const GenreSelection = styled.section`
     }
     div button {
       margin: 0 0.5rem;
-
+      transition: 0.5s;
       @media (max-width: 650px) {
         margin: 0 0.25rem;
       }
@@ -285,6 +285,7 @@ const GenreSelection = styled.section`
     }
 
     .prev-next {
+      transition: 0.5s;
       width: 8rem;
       border-radius: 30px;
 

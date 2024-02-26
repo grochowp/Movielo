@@ -12,7 +12,7 @@ import { IoCloseOutline } from "react-icons/io5";
 import { IoStarSharp } from "react-icons/io5";
 import { MovieService } from "../services/movieService";
 import { useUser } from "./UserContext";
-import { BsBookmarkStar, BsBookmarkStarFill } from "react-icons/bs";
+import { PiBookmarkSimpleThin, PiBookmarkSimpleFill } from "react-icons/pi";
 
 interface ModalContextType {
   selectedMovie: Movie | null;
@@ -31,6 +31,10 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   useEffect(() => {
     seeFav();
+
+    // Dependency Array - Adding "seeFav" will cause infinite loop, user and selectedMovie are needed to make sure that it will display correct bookmark after changing movie or changing users but trying to see modal of the same movie on both accounts
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userContext.user, selectedMovie]);
 
   const closeModal = () => {
@@ -69,7 +73,7 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const addFavMovie = async () => {
     const genre = selectedMovie?.media_type === "movie" ? "Movie" : "Series";
-
+    console.log(selectedMovie);
     if (userContext.user && selectedMovie)
       await MovieService.addFavMovie(
         userContext.user._id,
@@ -106,12 +110,15 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
             </button>
             <div className="modalWindow">
               {isFavorite ? (
-                <BsBookmarkStarFill
+                <PiBookmarkSimpleFill
                   className="fav"
                   onClick={() => deleteFavMovie()}
                 />
               ) : (
-                <BsBookmarkStar className="fav" onClick={() => addFavMovie()} />
+                <PiBookmarkSimpleThin
+                  className="fav"
+                  onClick={() => addFavMovie()}
+                />
               )}
               <ImageWrapper className="image">
                 <img
@@ -237,17 +244,17 @@ const Modal = styled.section`
     .fav {
       font-size: 5rem;
       position: fixed;
-      margin: 2.5rem 0 0 3rem;
+      margin: 1.75rem 0 0 3rem;
       cursor: pointer;
-
+      color: #ffe61b;
       @media (max-width: 1350px) {
         font-size: 5.5vw;
 
-        margin: 3vw 0 0 3.5vw;
+        margin: 2.2vw 0 0 3.5vw;
       }
 
       @media (max-width: 650px) {
-        margin-top: 8vw;
+        margin-top: 7.2vw;
       }
     }
 

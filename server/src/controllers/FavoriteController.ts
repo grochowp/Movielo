@@ -8,10 +8,10 @@ module.exports.addFavMovie = async (req: any, res: any, next: any) => {
     const newFavorite = await Favorite.create({
       userId,
       movieId: movie.id,
-      title: movie.title,
+      title: movie.title || movie.name,
       genre,
       rating: movie.vote_average,
-      releaseDate: movie.release_date,
+      releaseDate: movie.release_date || movie.first_air_date,
       poster: movie.poster_path,
     });
 

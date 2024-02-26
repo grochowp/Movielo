@@ -25,9 +25,9 @@ interface Theme {
 }
 
 const LightTheme: Theme = {
-  bodyColor: "#D9D9D9",
-  pageBackground: "#F9f6f8",
-  componentsBackground: "#E1E1E1",
+  bodyColor: "#B0ACAB",
+  pageBackground: "#DBDBDB",
+  componentsBackground: "#C9C5C4 ", //ECE8DD
   color: "#393939",
   colorSecondary: "#363636",
 
@@ -62,7 +62,7 @@ const App: React.FC = () => {
       <ModalProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/*" element={""} />
+            <Route path="/*" element={<Navigate to="/main" />} />
             <Route
               path="/login"
               element={user.user ? <Navigate to="/main" /> : <LoginPage />}

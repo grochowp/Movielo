@@ -62,7 +62,8 @@ export default Main;
 
 const MainPage = styled.section`
   max-height: 1080px;
-  background-color: ${(props) => props.theme.pageBackground};
+  background-color: #262626;
+  color: #d9d9d9;
 
   .swiper {
     max-width: 1920px;
@@ -73,11 +74,11 @@ const MainPage = styled.section`
   .swiper-slide {
     text-align: center;
     font-size: 8px;
-    position: relative; 
+    position: relative;
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;]
+    align-items: center;
   }
 
   .swiper-slide img {
@@ -96,7 +97,6 @@ const MainPage = styled.section`
     top: 60%;
     left: 30%;
     transform: translate(-50%, -50%);
-    color: ${(props) => props.theme.color};
   }
   h1 {
     width: 100vw;
@@ -116,7 +116,7 @@ const MainPage = styled.section`
     left: 50%;
     font-size: 1.05rem;
     transform: translate(-50%, -50%);
-    color: ${(props) => props.theme.color};
+    // color: ${(props) => props.theme.color};
     font-family: "Inika", serif;
     font-weight: 100;
 
