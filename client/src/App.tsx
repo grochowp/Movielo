@@ -6,13 +6,8 @@ import { ThemeProvider } from "styled-components";
 import GlobalStyle from "./globalStyles";
 import { ModalProvider } from "./contexts/ModalContext";
 import { useUser } from "./contexts/UserContext";
-import Profile from "./pages/Profile/Profile";
 import MainMenu from "./pages/MainMenu/MainMenu";
-import Statistics from "./pages/Statistics/Statistics";
-import Achievements from "./pages/Achievements/Achievements";
-import Favorites from "./pages/Favorites/Favorites";
-import Settings from "./pages/Settings/Settings";
-import Nav from "./components/Nav";
+import Dashboard from "./components/Dashboard";
 
 interface Theme {
   bodyColor: string;
@@ -73,22 +68,7 @@ const App: React.FC = () => {
             />
             <Route
               path="/dashboard/*"
-              element={
-                user.user ? (
-                  <>
-                    <Nav />
-                    <Routes>
-                      <Route path="profile" element={<Profile />} />
-                      <Route path="statistics" element={<Statistics />} />
-                      <Route path="favorites" element={<Favorites />} />
-                      <Route path="achievements" element={<Achievements />} />
-                      <Route path="settings" element={<Settings />} />
-                    </Routes>
-                  </>
-                ) : (
-                  <Navigate to="/login" />
-                )
-              }
+              element={user.user ? <Dashboard /> : <Navigate to="/login" />}
             />
           </Routes>
         </BrowserRouter>

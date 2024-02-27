@@ -53,6 +53,7 @@ const Nav: React.FC = () => {
 
   useKey(() => {
     setQuery("");
+    openMovieDetails(movies[selectedIndex]);
     setSelectedIndex(0);
   }, "Enter");
 

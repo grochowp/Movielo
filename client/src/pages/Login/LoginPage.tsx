@@ -14,6 +14,8 @@ interface UseFormInputs {
 
 export const LoginPage: React.FC = () => {
   const user = useUser();
+  const [error, setError] = useState("");
+  const [action, setAction] = useState<"Login" | "Register">("Login");
 
   const { register, reset, handleSubmit } = useForm<UseFormInputs>({
     defaultValues: {
@@ -23,8 +25,6 @@ export const LoginPage: React.FC = () => {
       password: "",
     },
   });
-  const [error, setError] = useState("");
-  const [action, setAction] = useState<"Login" | "Register">("Login");
 
   const handleChangeAction = () => {
     setAction(action === "Login" ? "Register" : "Login");
@@ -62,6 +62,7 @@ export const LoginPage: React.FC = () => {
 
   return (
     <PageBackground>
+      <img src={"/images/loginBackground-1.jpg"} />
       <article>
         <Form action={action} onSubmit={handleSubmit(onSubmit)}>
           <h1>{action}</h1>
@@ -122,15 +123,15 @@ const PageBackground = styled.section`
     border-radius: 20px;
   }
 
-  article::before {
+  img {
     height: 100vh;
     width: 100vw;
     max-width: 1920px;
-    max-height: 1080px;
+    // max-height: 1080px;
     content: "";
     position: absolute;
-    background: url(images/loginBackground.jpg) center;
-    filter: blur(7px);
+
+    filter: blur(2px);
     z-index: -1;
   }
 `;

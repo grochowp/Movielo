@@ -13,6 +13,7 @@ import { IoStarSharp } from "react-icons/io5";
 import { MovieService } from "../services/movieService";
 import { useUser } from "./UserContext";
 import { PiBookmarkSimpleThin, PiBookmarkSimpleFill } from "react-icons/pi";
+import { useKey } from "../hooks/useKey";
 
 interface ModalContextType {
   selectedMovie: Movie | null;
@@ -93,6 +94,10 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
     seeFav();
   };
+
+  useKey(() => {
+    closeModal();
+  }, "Escape");
 
   return (
     <ModalContext.Provider
