@@ -9,6 +9,12 @@ import { useUser } from "./contexts/UserContext";
 import MainMenu from "./pages/MainMenu/MainMenu";
 import Dashboard from "./components/Dashboard";
 
+import Profile from "./pages/Profile/Profile";
+import Statistics from "./pages/Statistics/Statistics";
+import Favorites from "./pages/Favorites/Favorites";
+import Achievements from "./pages/Achievements/Achievements";
+import Settings from "./pages/Settings/Settings";
+
 interface Theme {
   bodyColor: string;
   pageBackground: string;
@@ -57,7 +63,7 @@ const App: React.FC = () => {
       <ModalProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/*" element={<Navigate to="/main" />} />
+            <Route path="*" element={<Navigate to="login" />} />
             <Route
               path="/login"
               element={user.user ? <Navigate to="/main" /> : <LoginPage />}
@@ -69,7 +75,13 @@ const App: React.FC = () => {
             <Route
               path="/dashboard/*"
               element={user.user ? <Dashboard /> : <Navigate to="/login" />}
-            />
+            >
+              <Route path="profile" element={<Profile />} />
+              <Route path="statistics" element={<Statistics />} />
+              <Route path="favorites" element={<Favorites />} />
+              <Route path="achievements" element={<Achievements />} />
+              <Route path="settings" element={<Settings />} />
+            </Route>
           </Routes>
         </BrowserRouter>
       </ModalProvider>
