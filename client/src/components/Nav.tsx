@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { CiUser } from "react-icons/ci";
 import { useEffect, useRef, useState } from "react";
 import { useKey } from "../hooks/useKey";
@@ -101,70 +101,74 @@ const Nav: React.FC = () => {
         )}
       </div>
       <div>
-        <span>
-          {showUser ? (
-            ""
-          ) : (
-            <CiUser className="userIcon" onClick={() => setShowUser(true)} />
-          )}
-        </span>
         {showUser ? (
-          <div className="profile">
-            <div className="options" onClick={() => setShowUser(false)}>
-              <div className="first">
-                <div className="img">
-                  <img src={`/images/bg-1.jpg`} alt={"a"} />
-                </div>
-                <div>
-                  <h1>Patryk Grochowski</h1>
-                  <h2>grochowp@gmail.com</h2>
-                </div>
-                <div className="x">
-                  <IoCloseOutline onClick={() => setShowUser(true)} />
-                </div>
+          <div className="options" onClick={() => setShowUser(false)}>
+            <div className="first">
+              <div className="img">
+                <img src={`/images/bg-1.jpg`} alt={"a"} />
               </div>
-              <div className="second">
-                <p onClick={() => moveTo("profile")}>
-                  <CgProfile />
-                  My profile
-                </p>
+              <div>
+                <h1>Patryk Grochowski</h1>
+                <h2>grochowp@gmail.com</h2>
+              </div>
+              <div className="x">
+                <IoCloseOutline onClick={() => setShowUser(true)} />
+              </div>
+            </div>
+            <div className="second">
+              <p onClick={() => moveTo("profile")}>
+                <CgProfile />
+                My profile
+              </p>
 
-                <p onClick={() => moveTo("statistics")}>
-                  <FaRegChartBar />
-                  Statistics
-                </p>
-                <p onClick={() => moveTo("favorites")}>
-                  <BsBookmarkStar />
-                  Favorites
-                </p>
-                <p onClick={() => moveTo("achievements")}>
-                  <CiTrophy />
-                  Achievements
-                </p>
-              </div>
-              <div className="third">
-                <p onClick={() => moveTo("settings")}>
-                  <CiSettings />
-                  Settings
-                </p>
-                <p
-                  onClick={() => moveTo("login")}
-                  style={{ borderRadius: "0 0 10px 10px", color: "red" }}
-                >
-                  <AiOutlineLogout />
-                  Log-out
-                </p>
-              </div>
+              <p onClick={() => moveTo("statistics")}>
+                <FaRegChartBar />
+                Statistics
+              </p>
+              <p onClick={() => moveTo("favorites")}>
+                <BsBookmarkStar />
+                Favorites
+              </p>
+              <p onClick={() => moveTo("achievements")}>
+                <CiTrophy />
+                Achievements
+              </p>
+            </div>
+            <div className="third">
+              <p onClick={() => moveTo("settings")}>
+                <CiSettings />
+                Settings
+              </p>
+              <p
+                onClick={() => moveTo("login")}
+                style={{ borderRadius: "0 0 10px 10px", color: "red" }}
+              >
+                <AiOutlineLogout />
+                Log-out
+              </p>
             </div>
           </div>
         ) : (
-          ""
+          <span>
+            <CiUser className="userIcon" onClick={() => setShowUser(true)} />
+          </span>
         )}
       </div>
     </Navigation>
   );
 };
 export default Nav;
+
+const slideDown = keyframes`
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 1000px; 
+  }
+`;
 
 const Navigation = styled.nav`
   position: fixed;
@@ -233,7 +237,7 @@ const Navigation = styled.nav`
   }
   input {
     height: 3rem;
-    width: 23rem;
+    width: 20rem;
     border-radius: 10px;
     border: none;
     background-color: ${(props) => props.theme.color};
@@ -276,20 +280,24 @@ const Navigation = styled.nav`
     font-weight: 100;
     z-index: 5;
     position: relative;
-    top: -1.5rem;
-    right: 1.5rem;
+    top: -0.5rem;
+    right: 2rem;
     border-radius: 10px;
     background-color: ${(props) => props.theme.componentsBackground};
     color: ${(props) => props.theme.color};
     width: 18rem;
     height: max-content;
-    margin-top: -2rem;
+    animation: ${slideDown} 1.5s ease forwards;
 
     @media (max-width: 700px) {
-      margin-top: -1rem;
+      margin-top: -0.5rem;
       width: 49vw;
       max-width: 18rem;
       right: 0.5rem;
+    }
+
+    @media (max-width: 500px) {
+      margin-top: 0rem;
     }
 
     p {

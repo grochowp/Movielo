@@ -6,6 +6,7 @@ import { useModal } from "../../../contexts/ModalContext";
 
 const MovieSlider: React.FC<fetchMovie> = ({ url, genre }) => {
   const [movies, setMovies] = useState<Movie[]>([]);
+
   const modal = useModal();
 
   const fetchAndSetMovies = async (apiURL: string) => {
@@ -25,6 +26,7 @@ const MovieSlider: React.FC<fetchMovie> = ({ url, genre }) => {
   return (
     <Trends>
       <h1>{genre}</h1>
+
       <article>
         {movies.map((movie, index) => (
           <div key={index} onClick={() => modal.openModal(movie)}>

@@ -55,7 +55,8 @@ const Selected: React.FC = () => {
         {type === "tv" ? (
           <select
             id="genresSeries"
-            name="Genres"
+            name="Series"
+            aria-label="Series"
             value={genre}
             onChange={handleGenreChange}
           >
@@ -69,6 +70,7 @@ const Selected: React.FC = () => {
           <select
             id="genresMovies"
             name="Movies"
+            aria-label="Movies"
             value={genre}
             onChange={handleGenreChange}
           >

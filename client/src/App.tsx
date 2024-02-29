@@ -7,7 +7,7 @@ import GlobalStyle from "./globalStyles";
 import { ModalProvider } from "./contexts/ModalContext";
 import { useUser } from "./contexts/UserContext";
 import MainMenu from "./pages/MainMenu/MainMenu";
-import Dashboard from "./components/Dashboard";
+import Dashboard from "./pages/Dashboard/Dashboard";
 
 import Profile from "./pages/Profile/Profile";
 import Statistics from "./pages/Statistics/Statistics";
