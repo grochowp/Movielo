@@ -29,7 +29,7 @@ const Selected: React.FC = () => {
       const data = response.movies.slice(0, 15);
       setMovies(data);
     } catch (error) {
-      console.error("Wystąpił błąd podczas pobierania filmów:", error);
+      console.error("Error while fetching movie data", error);
     }
   };
 
@@ -115,8 +115,8 @@ const Selected: React.FC = () => {
 
       <article className="third">
         <button
-          className={`${page - 5 <= 0 ? "prev-next disabled" : "prev-next"}`}
-          onClick={() => setPage(page - 5)}
+          className={`${page - 3 <= 0 ? "prev-next disabled" : "prev-next"}`}
+          onClick={() => setPage(page - 3)}
         >
           {"<< 5"}
         </button>
@@ -128,9 +128,17 @@ const Selected: React.FC = () => {
             {page - 1}
           </button>
           <button className="selected">{page}</button>
-          <button onClick={() => setPage(page + 1)}>{page + 1}</button>
+          <button
+            className={`${page === 15 ? "disabled" : ""}`}
+            onClick={() => setPage(page + 1)}
+          >
+            {page + 1}
+          </button>
         </div>
-        <button className="prev-next" onClick={() => setPage(page + 5)}>
+        <button
+          className={`${page + 3 > 15 ? "prev-next disabled" : "prev-next"}`}
+          onClick={() => setPage(page + 3)}
+        >
           {"5 >>"}
         </button>
       </article>

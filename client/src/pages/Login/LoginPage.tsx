@@ -97,8 +97,17 @@ export const LoginPage: React.FC = () => {
 
           <input type="submit" value={action} />
           <h5>
-            Already have an account?{" "}
-            <span onClick={() => handleChangeAction()}>{action}</span>
+            {action === "Login" ? (
+              <p>
+                Don't have an account?{" "}
+                <span onClick={() => handleChangeAction()}>Register</span>
+              </p>
+            ) : (
+              <p>
+                Already have an account?{" "}
+                <span onClick={() => handleChangeAction()}>Login</span>
+              </p>
+            )}
           </h5>
         </Form>
       </article>
@@ -121,13 +130,17 @@ const PageBackground = styled.section`
     width: 30rem;
     border: 1px solid ${(props) => props.theme.color};
     border-radius: 20px;
+
+    @media (max-width: 500px) {
+      width: clamp(20rem, 95vw, 30rem);
+    }
   }
 
   img {
     height: 100vh;
     width: 100vw;
     max-width: 1920px;
-    // max-height: 1080px;
+
     content: "";
     position: absolute;
 
@@ -152,6 +165,9 @@ const Form = styled.form`
     border: 1px solid ${(props) => props.theme.color};
     border-radius: 10px;
     color: ${(props) => props.theme.color};
+    @media (max-width: 500px) {
+      width: clamp(15rem, 75vw, 20rem);
+    }
   }
 
   input[type="submit"] {

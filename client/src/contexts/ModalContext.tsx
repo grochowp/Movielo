@@ -74,7 +74,7 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const addFavMovie = async () => {
     const genre = selectedMovie?.media_type === "movie" ? "Movie" : "Series";
-    console.log(selectedMovie);
+
     if (userContext.user && selectedMovie)
       await MovieService.addFavMovie(
         userContext.user._id,
@@ -113,6 +113,7 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
             <button className="close" onClick={closeModal}>
               <IoCloseOutline />
             </button>
+
             <div className="modalWindow">
               {isFavorite ? (
                 <PiBookmarkSimpleFill
@@ -125,6 +126,7 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
                   onClick={() => addFavMovie()}
                 />
               )}
+
               <ImageWrapper className="image">
                 <img
                   className="poster"
@@ -152,14 +154,6 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
                   <h2>{selectedMovie.overview}</h2>
                 </Description>
                 <Rating>
-                  {/* <div className="info">
-                    <p>
-                      Type <span>{selectedMovie.media_type || "series"}</span>
-                    </p>
-                    <p>
-                      Released <span>{selectedMovie.release_date}</span>
-                    </p>
-                  </div> */}
                   <div className="rating">
                     <p>{message || "Rating"}</p>
                     <StarRating

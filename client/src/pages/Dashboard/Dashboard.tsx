@@ -23,8 +23,13 @@ const Dashb = styled.section`
   max-width: 1920px;
 `;
 
-const Content = styled.div`
+const Content = styled.section`
   width: calc(100vw - 7rem);
   height: 100vh;
-  // background-color: red;
+  min-height: max-content;
+  margin-left: 7rem;
+  @media (max-width: 900px) {
+    width: 100vw;
+    margin-left: 0;
+  }
 `;

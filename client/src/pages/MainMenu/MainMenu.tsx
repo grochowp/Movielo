@@ -14,7 +14,7 @@ const MainMenu: React.FC = () => {
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" }); // Adjust max-width as needed
 
   useEffect(() => {
-    const intervalTime = isMobile ? 2000 : 1000;
+    const intervalTime = isMobile ? 1500 : 750;
     const intervalId = setInterval(() => {
       setIsLoading(false);
     }, intervalTime);
@@ -37,12 +37,14 @@ const MainMenu: React.FC = () => {
           />
         </Loader>
       )}
-      <Nav />
-      <Main />
-      <MovieSlider url={TRENDING_MOVIES_URL} genre={`Trending movies`} />
-      <MovieSlider url={TRENDING_SERIES_URL} genre={`Trending series`} />
-      <Selected />
-      <Footer />
+      <div style={{ display: isLoading ? "none" : "" }}>
+        <Nav />
+        <Main />
+        <MovieSlider url={TRENDING_MOVIES_URL} genre={`Trending movies`} />
+        <MovieSlider url={TRENDING_SERIES_URL} genre={`Trending series`} />
+        <Selected />
+        <Footer />
+      </div>
     </>
   );
 };

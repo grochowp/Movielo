@@ -12,6 +12,7 @@ import { useModal } from "../../../contexts/ModalContext";
 const Main: React.FC = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const modal = useModal();
+
   useEffect(() => {
     async function fetchData() {
       const moviesData = [];

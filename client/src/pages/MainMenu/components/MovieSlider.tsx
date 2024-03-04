@@ -15,7 +15,7 @@ const MovieSlider: React.FC<fetchMovie> = ({ url, genre }) => {
       const data = response.movies;
       setMovies(data);
     } catch (error) {
-      console.error("Wystąpił błąd podczas pobierania filmów:", error);
+      console.error("Error while fetching movie data", error);
     }
   };
 

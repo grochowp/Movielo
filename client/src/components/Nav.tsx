@@ -221,7 +221,7 @@ const Navigation = styled.nav`
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 22rem;
+    max-width: 20rem;
     z-index: 4;
 
     @media (max-width: 700px) {
