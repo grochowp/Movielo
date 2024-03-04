@@ -1,5 +1,11 @@
+import ProfileHeader from "../../components/ProfileHeader";
+
 const Statistics: React.FC = () => {
-  return <div style={{ width: "10px" }}>bbaaab</div>;
+  return (
+    <>
+      <ProfileHeader>Statistics</ProfileHeader>
+    </>
+  );
 };
 
 export default Statistics;

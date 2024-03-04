@@ -1,5 +1,11 @@
+import ProfileHeader from "../../components/ProfileHeader";
+
 const Settings: React.FC = () => {
-  return <div>ddd</div>;
+  return (
+    <>
+      <ProfileHeader>Settings</ProfileHeader>
+    </>
+  );
 };
 
 export default Settings;

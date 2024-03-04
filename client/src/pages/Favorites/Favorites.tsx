@@ -1,5 +1,11 @@
+import ProfileHeader from "../../components/ProfileHeader";
+
 const Favorites: React.FC = () => {
-  return <div>bbbb</div>;
+  return (
+    <>
+      <ProfileHeader>Favorites</ProfileHeader>
+    </>
+  );
 };
 
 export default Favorites;

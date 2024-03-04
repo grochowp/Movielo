@@ -1,5 +1,11 @@
+import ProfileHeader from "../../components/ProfileHeader";
+
 const Achievements: React.FC = () => {
-  return <div>ccc</div>;
+  return (
+    <>
+      <ProfileHeader>Achievements</ProfileHeader>
+    </>
+  );
 };
 
 export default Achievements;

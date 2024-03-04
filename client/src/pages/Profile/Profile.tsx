@@ -9,7 +9,6 @@ const Profile: React.FC = () => {
   const { user } = useUser();
   const [movies, setMovies] = useState<Array<Movie>>([]);
   const [series, setSeries] = useState<Array<Movie>>([]);
-
   const fetchAndSetMovies = async () => {
     try {
       if (user) {
@@ -58,8 +57,8 @@ const Profile: React.FC = () => {
                   <h2>Favorite</h2>
                   <p>
                     <img src={`/images/bg-2.jpg`} alt={"a"} />
-                    <div>
-                      <h3>John Wick 3 - Parraleum</h3>
+                    <div className="titleYear">
+                      <h3>Dune</h3>
                       <h4>Year</h4>
                     </div>
                   </p>
@@ -83,15 +82,11 @@ const Profile: React.FC = () => {
                 <div>
                   <h2> Avg. rate</h2>
                   <h3 className="rate">
-                    {movies
-                      ? parseFloat(
-                          (
-                            movies.reduce(
-                              (sum, movie) => sum + movie.rating,
-                              0
-                            ) / movies.length
-                          ).toFixed(2)
-                        )
+                    {movies.length > 0
+                      ? (
+                          movies.reduce((sum, movie) => sum + movie.rating, 0) /
+                          movies.length
+                        ).toFixed(2)
                       : 0}
                     <span>
                       <IoStarSharp />
@@ -112,8 +107,8 @@ const Profile: React.FC = () => {
                   <h2>Favorite</h2>
                   <p>
                     <img src={`/images/bg-2.jpg`} alt={"a"} />
-                    <div>
-                      <h3>John Wick 3 - Parraleum</h3>
+                    <div className="titleYear ">
+                      <h3>John Wick 3 - Paraolimpic</h3>
                       <h4>Year</h4>
                     </div>
                   </p>
@@ -137,7 +132,7 @@ const Profile: React.FC = () => {
                 <div>
                   <h2> Avg. rate</h2>
                   <h3 className="rate">
-                    {movies
+                    {movies.length > 0
                       ? (
                           series.reduce((sum, serie) => sum + serie.rating, 0) /
                           series.length
@@ -344,9 +339,16 @@ const Stats = styled.article`
       width: 15rem;
     }
 
+    .titleYear h3 {
+      justify-content: left;
+    }
+
     p {
       display: flex;
       gap: 1rem;
+
+      width: 100%;
+      margin-left: 1rem;
       justify-content: center;
       align-items: center;
     }
