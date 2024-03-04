@@ -19,13 +19,21 @@ export const MovieService = {
     return await sendRequest(url, method, body);
   },
 
-  rateMovie: async (_id: string, movieId: number, rating: number) => {
+  rateMovie: async (
+    _id: string,
+    movieId: number,
+    rating: number,
+    genre: string,
+    title: string
+  ) => {
     const url = "http://localhost:3000/api/movie/rateMovie";
     const method = "POST";
     const body = {
       _id,
       movieId,
       rating,
+      genre,
+      title,
     };
     return await sendRequest(url, method, body);
   },
@@ -57,6 +65,15 @@ export const MovieService = {
     const body = {
       _id,
       movieId,
+    };
+    return await sendRequest(url, method, body);
+  },
+
+  findAllRated: async (_id: string) => {
+    const url = "http://localhost:3000/api/movie/findAllRated";
+    const method = "POST";
+    const body = {
+      _id,
     };
     return await sendRequest(url, method, body);
   },

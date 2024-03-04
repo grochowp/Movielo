@@ -8,6 +8,8 @@ const ratingSchema = new mongoose2.Schema({
   },
   movieId: { type: String, required: true },
   rating: { type: Number, min: 1, max: 10, required: true },
+  genre: { type: String, required: true },
+  title: { type: String, required: true },
 });
 
 module.exports = mongoose2.model("Rating", ratingSchema);

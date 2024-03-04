@@ -11,13 +11,14 @@ export interface Movie {
   IDs: Array<number>;
   id: number;
   original_title: string;
+  original_name: string;
   poster_path: string;
   backdrop_path: string;
   rating: number;
   overview: string;
-  original_name: string;
   vote_average: number;
   media_type: string;
+  title: string;
 }
 
 export interface fetchMovie {

@@ -1,9 +1,32 @@
 import styled from "styled-components";
 import { useUser } from "../../contexts/UserContext";
 import { IoStarSharp } from "react-icons/io5";
+import { MovieService } from "../../services/movieService";
+import { useEffect, useState } from "react";
+import { Movie } from "../../types";
 
 const Profile: React.FC = () => {
   const { user } = useUser();
+  const [movies, setMovies] = useState<Array<Movie>>([]);
+  const [series, setSeries] = useState<Array<Movie>>([]);
+
+  const fetchAndSetMovies = async () => {
+    try {
+      if (user) {
+        const response = await MovieService.findAllRated(user._id);
+
+        setMovies(response.movies);
+        setSeries(response.series);
+      }
+    } catch (error) {
+      console.error("Error while fetching movie data", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAndSetMovies();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -43,23 +66,33 @@ const Profile: React.FC = () => {
                 </div>
 
                 <div>
-                  <h2>Favorite genres</h2>
+                  <h2>Recent ratings</h2>
                   <ul>
-                    <li>
-                      1. drama <span>aaa</span>
-                    </li>
-                    <li>
-                      2. drama <span>aaa</span>
-                    </li>
-                    <li>
-                      3. drama <span>aaa</span>
-                    </li>
+                    {movies
+                      .slice()
+                      .reverse()
+                      .slice(0, 3)
+                      .map((movie, index) => (
+                        <div>
+                          <li key={index + 1}>{movie.title}</li>
+                          <span>{movie.rating}</span>
+                        </div>
+                      ))}
                   </ul>
                 </div>
                 <div>
                   <h2> Avg. rate</h2>
                   <h3 className="rate">
-                    8,1{" "}
+                    {movies
+                      ? parseFloat(
+                          (
+                            movies.reduce(
+                              (sum, movie) => sum + movie.rating,
+                              0
+                            ) / movies.length
+                          ).toFixed(2)
+                        )
+                      : 0}
                     <span>
                       <IoStarSharp />
                     </span>
@@ -67,7 +100,7 @@ const Profile: React.FC = () => {
                 </div>
                 <div>
                   <h2>Total rated</h2>
-                  <h3 className="rate">152</h3>
+                  <h3 className="rate">{movies.length}</h3>
                 </div>
               </article>
             </section>
@@ -87,23 +120,29 @@ const Profile: React.FC = () => {
                 </div>
 
                 <div>
-                  <h2>Favorite genres</h2>
+                  <h2>Recent ratings</h2>
                   <ul>
-                    <li>
-                      1. drama <span>aaa</span>
-                    </li>
-                    <li>
-                      2. drama <span>aaa</span>
-                    </li>
-                    <li>
-                      3. drama <span>aaa</span>
-                    </li>
+                    {series
+                      .slice()
+                      .reverse()
+                      .slice(0, 3)
+                      .map((serie, index) => (
+                        <div>
+                          <li key={index + 1}>{serie.title}</li>
+                          <span>{serie.rating}</span>
+                        </div>
+                      ))}
                   </ul>
                 </div>
                 <div>
                   <h2> Avg. rate</h2>
                   <h3 className="rate">
-                    8,1{" "}
+                    {movies
+                      ? (
+                          series.reduce((sum, serie) => sum + serie.rating, 0) /
+                          series.length
+                        ).toFixed(2)
+                      : 0}
                     <span>
                       <IoStarSharp />
                     </span>
@@ -111,7 +150,7 @@ const Profile: React.FC = () => {
                 </div>
                 <div>
                   <h2>Total rated</h2>
-                  <h3 className="rate">152</h3>
+                  <h3 className="rate">{series.length}</h3>
                 </div>
               </article>
             </section>
@@ -322,14 +361,24 @@ const Stats = styled.article`
     ul {
       list-style: none;
       width: 70%;
-    }
 
-    li {
-      padding-bottom: 1rem;
-      font-family: "Kanit", sans-serif;
-      font-weight: 200;
+      div {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        height: max-content;
+        gap: 1rem;
+        padding-bottom: 0.5rem;
+      }
+      li {
+        font-family: "Kanit", sans-serif;
+        font-weight: 200;
+      }
+
       span {
         float: right;
+        font-weight: 500;
       }
     }
 
@@ -362,6 +411,10 @@ const Stats = styled.article`
       width: 110%;
       font-family: "Kanit", sans-serif;
       font-weight: 400;
+
+      span {
+        margin-top: 0.1rem;
+      }
     }
 
     .rate {

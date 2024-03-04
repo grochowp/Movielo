@@ -1,5 +1,5 @@
 const { getMovies } = require("../controllers/movieController");
-const { addRating } = require("../controllers/ratingController");
+const { addRating, findAllRated } = require("../controllers/ratingController");
 const {
   addFavMovie,
   handleFav,
@@ -13,5 +13,6 @@ router2.post("/rateMovie", addRating);
 router2.post("/addFavMovie", addFavMovie);
 router2.post("/handleFav", handleFav);
 router2.post("/deleteFavMovie", deleteFavMovie);
+router2.post("/findAllRated", findAllRated);
 
 module.exports = router2;

@@ -21,13 +21,14 @@ const Selected: React.FC = () => {
     fetchAndSetMovies(
       `https://api.themoviedb.org/3/discover/${type}?api_key=${API_KEY}&with_genres=${genre}&page=${page}`
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, type, genre]);
 
   const fetchAndSetMovies = async (apiURL: string) => {
     try {
       const response = await MovieService.getMovie(apiURL);
       const data = response.movies.slice(0, 15);
-      setMovies(data);
+      setMovies(data.map((item: Movie) => ({ ...item, media_type: type })));
     } catch (error) {
       console.error("Error while fetching movie data", error);
     }
