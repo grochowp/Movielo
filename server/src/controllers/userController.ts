@@ -1,7 +1,21 @@
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
+import { Request, Response, NextFunction } from "express";
 
-module.exports.login = async (req: any, res: any, next: any) => {
+interface UserRequest extends Request {
+  body: {
+    email: string;
+    password: string;
+    firstName: string;
+    lastName: string;
+  };
+}
+
+module.exports.login = async (
+  req: UserRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
@@ -23,7 +37,11 @@ module.exports.login = async (req: any, res: any, next: any) => {
   }
 };
 
-module.exports.register = async (req: any, res: any, next: any) => {
+module.exports.register = async (
+  req: UserRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { email, password, firstName, lastName } = req.body;
 

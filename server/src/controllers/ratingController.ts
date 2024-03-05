@@ -1,14 +1,39 @@
+import { Request, Response, NextFunction } from "express";
 const Rating = require("../models/ratingModel");
-const User2 = require("../models/userModel");
+const User = require("../models/userModel");
 
-module.exports.addRating = async (req: any, res: any, next: any) => {
+interface AddRatingRequest extends Request {
+  body: {
+    _id: string;
+    movieId: string;
+    rating: number;
+    genre: string;
+    title: string;
+  };
+}
+
+interface FindAllRatedRequest extends Request {
+  body: {
+    _id: string;
+  };
+}
+
+module.exports.addRating = async (
+  req: AddRatingRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { _id: userId, movieId, rating, genre, title } = req.body;
 
     const existingRating = await Rating.findOne({ userId, movieId });
 
     if (existingRating) {
-      Rating.findOneAndUpdate({ userId, movieId }, { rating }, { new: true });
+      await Rating.findOneAndUpdate(
+        { userId, movieId },
+        { rating },
+        { new: true }
+      );
 
       return res.json({
         message: "Rating updated successfully!",
@@ -24,7 +49,7 @@ module.exports.addRating = async (req: any, res: any, next: any) => {
       title,
     });
 
-    await User2.findByIdAndUpdate(userId, {
+    await User.findByIdAndUpdate(userId, {
       $push: { ratings: newRating },
     });
 
@@ -33,8 +58,11 @@ module.exports.addRating = async (req: any, res: any, next: any) => {
     next(ex);
   }
 };
-
-module.exports.findAllRated = async (req: any, res: any, next: any) => {
+module.exports.findAllRated = async (
+  req: FindAllRatedRequest,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { _id: userId } = req.body;
 
