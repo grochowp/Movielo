@@ -5,9 +5,9 @@ const User = require("../models/userModel");
 interface AddRatingRequest extends Request {
   body: {
     _id: string;
-    movieId: string;
+    id: string;
     rating: number;
-    genre: string;
+    type: string;
     title: string;
   };
 }
@@ -24,16 +24,12 @@ module.exports.addRating = async (
   next: NextFunction
 ) => {
   try {
-    const { _id: userId, movieId, rating, genre, title } = req.body;
+    const { _id: userId, id, rating, type, title } = req.body;
 
-    const existingRating = await Rating.findOne({ userId, movieId });
+    const existingRating = await Rating.findOne({ userId, id });
 
     if (existingRating) {
-      await Rating.findOneAndUpdate(
-        { userId, movieId },
-        { rating },
-        { new: true }
-      );
+      await Rating.findOneAndUpdate({ userId, id }, { rating }, { new: true });
 
       return res.json({
         message: "Rating updated successfully!",
@@ -43,9 +39,9 @@ module.exports.addRating = async (
 
     const newRating = await Rating.create({
       userId,
-      movieId,
+      id,
       rating,
-      genre,
+      type,
       title,
     });
 
@@ -66,8 +62,8 @@ module.exports.findAllRated = async (
   try {
     const { _id: userId } = req.body;
 
-    const movies = await Rating.find({ userId, genre: "movie" });
-    const series = await Rating.find({ userId, genre: "tv" });
+    const movies = await Rating.find({ userId, type: "movie" });
+    const series = await Rating.find({ userId, type: "tv" });
 
     return res.json({ status: true, movies, series });
   } catch (ex) {

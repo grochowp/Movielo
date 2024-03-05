@@ -23,7 +23,7 @@ interface AddFavoriteRequest extends Request {
 interface handleFavorite extends Request {
   body: {
     _id: string;
-    movieId: string;
+    id: string;
   };
 }
 
@@ -37,13 +37,13 @@ interface FindFavoritesRequest extends Request {
 
 function sortByField(field: string, order: string) {
   return function (a: any, b: any) {
-    if (field === "releaseDate" || field === "rating") {
+    if (field === "releaseDate" || field === "vote_average") {
       if (order === "asc") {
-        return field === "rating"
+        return field === "vote_average"
           ? a[field] - b[field]
           : a[field].localeCompare(b[field]);
       } else {
-        return field === "rating"
+        return field === "vote_average"
           ? b[field] - a[field]
           : b[field].localeCompare(a[field]);
       }
@@ -69,12 +69,12 @@ module.exports.addFavMovie = async (
 
     const newFavorite = await Favorite.create({
       userId,
-      movieId: movie.id,
+      id: movie.id,
       title: movie.title || movie.name,
       type,
-      rating: movie.vote_average,
+      vote_average: movie.vote_average,
       releaseDate: movie.release_date || movie.first_air_date,
-      poster: movie.poster_path,
+      poster_path: movie.poster_path,
     });
 
     await User.findByIdAndUpdate(userId, {
@@ -93,9 +93,9 @@ module.exports.handleFav = async (
   next: NextFunction
 ) => {
   try {
-    const { _id: userId, movieId } = req.body;
+    const { _id: userId, id } = req.body;
 
-    const isFav = await Favorite.findOne({ userId, movieId });
+    const isFav = await Favorite.findOne({ userId, id });
 
     return res.json({ status: true, favorite: isFav });
   } catch (ex) {
@@ -109,9 +109,9 @@ module.exports.deleteFavMovie = async (
   next: NextFunction
 ) => {
   try {
-    const { _id: userId, movieId } = req.body;
+    const { _id: userId, id } = req.body;
 
-    const delFav = await Favorite.findOneAndDelete({ userId, movieId });
+    const delFav = await Favorite.findOneAndDelete({ userId, id });
 
     await User.findByIdAndUpdate(userId, {
       $pull: { favorites: delFav._id },

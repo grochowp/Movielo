@@ -9,10 +9,13 @@ import { IoStarSharp } from "react-icons/io5";
 
 const Favorites: React.FC = () => {
   const { user } = useUser();
-
   const [favorites, setFavorites] = useState<Array<Movie>>([]);
   const [type, setType] = useState<string>("all");
   const [sort, setSort] = useState<string>("all");
+
+  const deleteFavMovie = async (movie: Movie) => {
+    if (user) await MovieService.deleteFavMovie(user._id, movie.id);
+  };
 
   const fetchAndSetMovies = async () => {
     try {
@@ -73,10 +76,10 @@ const Favorites: React.FC = () => {
               value={sort}
               onChange={handleChangeSort}
             >
-              <option key={"ratingUp"} value={"rating_desc"}>
+              <option key={"ratingUp"} value={"vote_average_desc"}>
                 High rated
               </option>
-              <option key={"ratingDown"} value={"rating"}>
+              <option key={"ratingDown"} value={"vote_average"}>
                 Low rated
               </option>
               <option key={"nameUp"} value={"title_desc"}>
@@ -97,9 +100,9 @@ const Favorites: React.FC = () => {
 
         <div className="favorites">
           {favorites.map((fav) => (
-            <div key={fav.poster} className="fav">
+            <div key={fav.poster_path} className="fav">
               <img
-                src={`https://image.tmdb.org/t/p/w500${fav.poster}`}
+                src={`https://image.tmdb.org/t/p/w500${fav.poster_path}`}
                 alt={fav.original_title}
               />
               <div>
@@ -109,11 +112,14 @@ const Favorites: React.FC = () => {
                 </div>
                 <div className="ratings">
                   <h3>{fav.releaseDate.slice(0, 4)}</h3>
-                  <h4>{fav.rating.toFixed(2)}</h4>
+                  <h4>{fav.vote_average.toFixed(2)}</h4>
                 </div>
               </div>
               <div>
-                <PiBookmarkSimpleFill className="bookmark" />
+                <PiBookmarkSimpleFill
+                  className="bookmark"
+                  onClick={() => deleteFavMovie(fav)}
+                />
                 <IoStarSharp className="star" />
               </div>
             </div>

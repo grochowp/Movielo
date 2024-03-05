@@ -6,9 +6,9 @@ const ratingSchema = new mongoose2.Schema({
     ref: "users",
     required: true,
   },
-  movieId: { type: String, required: true },
+  id: { type: Number, required: true },
   rating: { type: Number, min: 1, max: 10, required: true },
-  genre: { type: String, required: true },
+  type: { type: String, required: true },
   title: { type: String, required: true },
 });
 

@@ -4,7 +4,7 @@ import Nav from "../../components/Nav";
 import Main from "./components/Main";
 import Selected from "./components/Selected";
 import MovieSlider from "./components/MovieSlider";
-import { TRENDING_MOVIES_URL, TRENDING_SERIES_URL } from "../../utils";
+
 import { ThreeCircles } from "react-loader-spinner";
 import { useMediaQuery } from "react-responsive";
 import styled from "styled-components";
@@ -40,8 +40,14 @@ const MainMenu: React.FC = () => {
       <div style={{ display: isLoading ? "none" : "" }}>
         <Nav />
         <Main />
-        <MovieSlider url={TRENDING_MOVIES_URL} genre={`Trending movies`} />
-        <MovieSlider url={TRENDING_SERIES_URL} genre={`Trending series`} />
+        <MovieSlider
+          url={"https://api.themoviedb.org/3/trending/movie/day?language=en-US"}
+          genre={`Trending movies`}
+        />
+        <MovieSlider
+          url={"https://api.themoviedb.org/3/trending/tv/day?language=en-US"}
+          genre={`Trending series`}
+        />
         <Selected />
         <Footer />
       </div>

@@ -8,19 +8,18 @@ export interface User {
 }
 
 export interface Movie {
-  IDs: Array<number>;
+  IDs: Array<number>; // IDs of genres
   id: number;
-  original_title: string;
-  original_name: string;
+  original_title: string; // direct fetch
+  original_name: string; // direct fetch
   poster_path: string;
   backdrop_path: string;
-  rating: number;
+  rating: number; // logged user rating
   overview: string;
-  vote_average: number;
+  vote_average: number; // other users avg rating
   media_type: string;
-  title: string;
-  poster: string;
-  type: string;
+  title: string; // database fetch
+  type: string; // movie/series
   releaseDate: string;
 }
 

@@ -6,12 +6,12 @@ const favoriteSchema = new mongoose3.Schema({
     ref: "users",
     required: true,
   },
-  movieId: { type: String, required: true },
+  id: { type: String, required: true },
   title: { type: String, required: true },
   type: { type: String, required: true },
-  rating: { type: Number, required: true },
+  vote_average: { type: Number, required: true },
   releaseDate: { type: String, required: true },
-  poster: { type: String, required: true },
+  poster_path: { type: String, required: true },
 });
 
 module.exports = mongoose3.model("Favorite", favoriteSchema);

@@ -32,7 +32,6 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   useEffect(() => {
     seeFav();
-    console.log(selectedMovie);
     // Dependency Array - Adding "seeFav" will cause infinite loop, user and selectedMovie are needed to make sure that it will display correct bookmark after changing movie or changing users but trying to see modal of the same movie on both accounts
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -83,13 +82,9 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     seeFav();
   };
 
-  console.log(selectedMovie);
   const deleteFavMovie = async () => {
     if (userContext.user && selectedMovie)
-      await MovieService.deleteFavMovie(
-        userContext.user._id,
-        selectedMovie?.id
-      );
+      await MovieService.deleteFavMovie(userContext.user._id, selectedMovie.id);
 
     seeFav();
   };
