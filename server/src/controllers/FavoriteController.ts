@@ -3,13 +3,13 @@ const User3 = require("../models/userModel");
 
 module.exports.addFavMovie = async (req: any, res: any, next: any) => {
   try {
-    const { _id: userId, movie, genre } = req.body;
+    const { _id: userId, movie, type } = req.body;
 
     const newFavorite = await Favorite.create({
       userId,
       movieId: movie.id,
       title: movie.title || movie.name,
-      genre,
+      type,
       rating: movie.vote_average,
       releaseDate: movie.release_date || movie.first_air_date,
       poster: movie.poster_path,
@@ -83,7 +83,7 @@ module.exports.findFavorites = async (req: any, res: any, next: any) => {
 
     let favorites;
     if (type !== "all") {
-      favorites = await Favorite.find({ userId, genre: type });
+      favorites = await Favorite.find({ userId, type });
     } else {
       favorites = await Favorite.find({ userId });
     }

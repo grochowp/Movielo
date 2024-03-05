@@ -10,7 +10,9 @@ body {
     padding: 0;
     overflow-x: hidden;
     transition:1s;
-    background-color: ${(props) => props.theme.bodyColor}
+    background-color: ${(props) => props.theme.bodyColor}; 
+    overflow-y: overlay;
+    overflow-x: hidden;
   }
 
   ::-webkit-scrollbar {

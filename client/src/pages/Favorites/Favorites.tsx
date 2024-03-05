@@ -38,7 +38,6 @@ const Favorites: React.FC = () => {
     setSort(event.target.value);
   };
 
-  console.log(favorites);
   return (
     <>
       <ProfileHeader>Favorites</ProfileHeader>
@@ -75,22 +74,22 @@ const Favorites: React.FC = () => {
               onChange={handleChangeSort}
             >
               <option key={"ratingUp"} value={"rating_desc"}>
-                Rating Up
+                High rated
               </option>
               <option key={"ratingDown"} value={"rating"}>
-                Rating Down
+                Low rated
               </option>
               <option key={"nameUp"} value={"title_desc"}>
-                Name Up
+                Title A-Z
               </option>
               <option key={"nameDown"} value={"title"}>
-                Name Down
+                Title Z-A
               </option>
               <option key={"yearUp"} value={"releaseDate_desc"}>
-                Year Up
+                Newest
               </option>
               <option key={"yearDown"} value={"releaseDate"}>
-                Year Down
+                Oldest
               </option>
             </select>
           </div>
@@ -106,7 +105,7 @@ const Favorites: React.FC = () => {
               <div>
                 <div className="name">
                   <h1>{fav.title}</h1>
-                  <h2>{fav.genre}</h2>
+                  <h2>{fav.type}</h2>
                 </div>
                 <div className="ratings">
                   <h3>{fav.releaseDate.slice(0, 4)}</h3>
@@ -128,14 +127,14 @@ const Favorites: React.FC = () => {
 export default Favorites;
 
 const Content = styled.article`
-  min-height: calc(100% - 6.5rem);
+  min-height: calc(100% - 6.6rem);
   background-color: ${(props) => props.theme.pageBackground};
   display: flex;
   flex-direction: column;
 
   .selectBars {
     display: flex;
-    width: 100%;
+    width: calc(100% - 2rem);
     justify-content: flex-end;
     float: right;
     margin: 0;
@@ -150,7 +149,7 @@ const Content = styled.article`
       gap: 2rem;
 
       &:last-child {
-        margin-right: 7em;
+        margin-right: 5em;
       }
 
       h3 {
@@ -169,7 +168,39 @@ const Content = styled.article`
         background-color: ${(props) => props.theme.componentsBackground};
         border: none;
         border-radius: 20px;
+        border-right: 10px solid transparent;
         padding-left: 0.75rem;
+      }
+    }
+
+    @media (max-width: 900px) {
+      gap: 5vw;
+      margin: 2rem 2vw;
+
+      div {
+        height: 5vw;
+        gap: 0.5rem;
+
+        &:last-child {
+          margin-right: 2vw;
+        }
+
+        h3 {
+          font-size: clamp(0.8rem, 3vw, 1.5rem);
+        }
+
+        select {
+          color: ${(props) => props.theme.color};
+          width: clamp(6rem, 25vw, 10rem);
+          font-family: "Kadwa", sans-serif;
+          font-weight: 100;
+          font-size: clamp(0.5rem, 3vw, 1.25rem);
+          background-color: ${(props) => props.theme.componentsBackground};
+          border: none;
+          border-radius: 20px;
+          border-right: 10px solid transparent;
+          padding-left: 0.75rem;
+        }
       }
     }
   }
@@ -178,12 +209,12 @@ const Content = styled.article`
     height: max-content;
     display: flex;
     flex-wrap: wrap;
-    gap: 3rem;
-    margin: 1rem 6rem;
+    gap: 2.5rem;
+    margin: 1rem 0.4rem;
     justify-content: center;
 
     .fav {
-      border-radius: 1rem;
+      border-radius: 0.5rem;
       display: flex;
       width: 23rem;
       height: 10rem;
@@ -221,7 +252,7 @@ const Content = styled.article`
 
     img {
       height: 10rem;
-      border-radius: 1rem 0 0 1rem;
+      border-radius: 0.5rem 0 0 0.5rem;
     }
 
     .bookmark {

@@ -38,13 +38,13 @@ export const MovieService = {
     return await sendRequest(url, method, body);
   },
 
-  addFavMovie: async (_id: string, movie: object, genre: string) => {
+  addFavMovie: async (_id: string, movie: object, type: string) => {
     const url = "http://localhost:3000/api/movie/addFavMovie";
     const method = "POST";
     const body = {
       _id,
       movie,
-      genre,
+      type,
     };
     return await sendRequest(url, method, body);
   },

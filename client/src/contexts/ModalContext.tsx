@@ -75,18 +75,15 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   };
 
   const addFavMovie = async () => {
-    const genre = selectedMovie?.media_type === "movie" ? "Movie" : "Series";
+    const type = selectedMovie?.media_type === "movie" ? "Movie" : "Series";
 
     if (userContext.user && selectedMovie)
-      await MovieService.addFavMovie(
-        userContext.user._id,
-        selectedMovie,
-        genre
-      );
+      await MovieService.addFavMovie(userContext.user._id, selectedMovie, type);
 
     seeFav();
   };
 
+  console.log(selectedMovie);
   const deleteFavMovie = async () => {
     if (userContext.user && selectedMovie)
       await MovieService.deleteFavMovie(

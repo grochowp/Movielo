@@ -28,6 +28,7 @@ const Content = styled.section`
   height: 100vh;
   min-height: max-content;
   margin-left: 7rem;
+
   @media (max-width: 900px) {
     width: 100vw;
     margin-left: 0;

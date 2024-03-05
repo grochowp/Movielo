@@ -20,7 +20,7 @@ export interface Movie {
   media_type: string;
   title: string;
   poster: string;
-  genre: string;
+  type: string;
   releaseDate: string;
 }
 

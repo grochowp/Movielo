@@ -47,7 +47,11 @@ const Main: React.FC = () => {
             <div>
               <h1>
                 {movie.original_title}
-                <span onClick={() => modal.openModal(movie)}>
+                <span
+                  onClick={() =>
+                    modal.openModal({ ...movie, media_type: "movie" })
+                  }
+                >
                   <IoIosInformationCircleOutline />
                 </span>
               </h1>
