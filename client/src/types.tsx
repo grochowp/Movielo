@@ -19,6 +19,9 @@ export interface Movie {
   vote_average: number;
   media_type: string;
   title: string;
+  poster: string;
+  genre: string;
+  releaseDate: string;
 }
 
 export interface fetchMovie {

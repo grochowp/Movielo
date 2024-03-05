@@ -1,11 +1,266 @@
+import styled from "styled-components";
 import ProfileHeader from "../../components/ProfileHeader";
+import { ChangeEvent, useEffect, useState } from "react";
+import { Movie } from "../../types";
+import { MovieService } from "../../services/movieService";
+import { useUser } from "../../contexts/UserContext";
+import { PiBookmarkSimpleFill } from "react-icons/pi";
+import { IoStarSharp } from "react-icons/io5";
 
 const Favorites: React.FC = () => {
+  const { user } = useUser();
+
+  const [favorites, setFavorites] = useState<Array<Movie>>([]);
+  const [type, setType] = useState<string>("all");
+  const [sort, setSort] = useState<string>("all");
+
+  const fetchAndSetMovies = async () => {
+    try {
+      if (user) {
+        const response = await MovieService.findFavorites(user._id, type, sort);
+
+        setFavorites(response.favorites);
+      }
+    } catch (error) {
+      console.error("Error while fetching movie data", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAndSetMovies();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [type, sort]);
+
+  const handleChangeType = (event: ChangeEvent<HTMLSelectElement>) => {
+    setType(event.target.value);
+  };
+  const handleChangeSort = (event: ChangeEvent<HTMLSelectElement>) => {
+    setSort(event.target.value);
+  };
+
+  console.log(favorites);
   return (
     <>
       <ProfileHeader>Favorites</ProfileHeader>
+      <Content>
+        <div className="selectBars">
+          <div>
+            <h3>Select</h3>
+            <select
+              id="SelectType"
+              name="Type"
+              aria-label="Type"
+              value={type}
+              onChange={handleChangeType}
+            >
+              <option key={"all"} value={"all"}>
+                All
+              </option>
+              <option key={"movies"} value={"Movie"}>
+                Movies
+              </option>
+              <option key={"series"} value={"Series"}>
+                Series
+              </option>
+            </select>
+          </div>
+          <div>
+            <h3>Sort by</h3>
+
+            <select
+              id="SelectSort"
+              name="Sort"
+              aria-label="Sort"
+              value={sort}
+              onChange={handleChangeSort}
+            >
+              <option key={"ratingUp"} value={"rating_desc"}>
+                Rating Up
+              </option>
+              <option key={"ratingDown"} value={"rating"}>
+                Rating Down
+              </option>
+              <option key={"nameUp"} value={"title_desc"}>
+                Name Up
+              </option>
+              <option key={"nameDown"} value={"title"}>
+                Name Down
+              </option>
+              <option key={"yearUp"} value={"releaseDate_desc"}>
+                Year Up
+              </option>
+              <option key={"yearDown"} value={"releaseDate"}>
+                Year Down
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div className="favorites">
+          {favorites.map((fav) => (
+            <div key={fav.poster} className="fav">
+              <img
+                src={`https://image.tmdb.org/t/p/w500${fav.poster}`}
+                alt={fav.original_title}
+              />
+              <div>
+                <div className="name">
+                  <h1>{fav.title}</h1>
+                  <h2>{fav.genre}</h2>
+                </div>
+                <div className="ratings">
+                  <h3>{fav.releaseDate.slice(0, 4)}</h3>
+                  <h4>{fav.rating.toFixed(2)}</h4>
+                </div>
+              </div>
+              <div>
+                <PiBookmarkSimpleFill className="bookmark" />
+                <IoStarSharp className="star" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </Content>
     </>
   );
 };
 
 export default Favorites;
+
+const Content = styled.article`
+  min-height: calc(100% - 6.5rem);
+  background-color: ${(props) => props.theme.pageBackground};
+  display: flex;
+  flex-direction: column;
+
+  .selectBars {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    float: right;
+    margin: 0;
+    padding: 0;
+    gap: 5rem;
+    margin: 2rem;
+
+    div {
+      display: flex;
+      height: 2rem;
+      align-items: center;
+      gap: 2rem;
+
+      &:last-child {
+        margin-right: 7em;
+      }
+
+      h3 {
+        font-family: "Kadwa", sans-serif;
+        font-weight: 100;
+        font-size: 1.5rem;
+        color: ${(props) => props.theme.color};
+      }
+
+      select {
+        color: ${(props) => props.theme.color};
+        width: 10rem;
+        font-family: "Kadwa", sans-serif;
+        font-weight: 100;
+        font-size: 1.25rem;
+        background-color: ${(props) => props.theme.componentsBackground};
+        border: none;
+        border-radius: 20px;
+        padding-left: 0.75rem;
+      }
+    }
+  }
+
+  .favorites {
+    height: max-content;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+    margin: 1rem 6rem;
+    justify-content: center;
+
+    .fav {
+      border-radius: 1rem;
+      display: flex;
+      width: 23rem;
+      height: 10rem;
+      background-color: ${(props) => props.theme.componentsBackground};
+
+      .name {
+        color: ${(props) => props.theme.color};
+        width: 12rem;
+        height: 7rem;
+      }
+
+      h1 {
+        font-family: "Kadwa", sans-serif;
+        font-weight: 100;
+        margin: 0;
+        padding: 0;
+        margin-left: 10px;
+        font-size: 1.5rem;
+        height: 2.5rem;
+        white-space: nowrap; /* zapobiega zawijaniu tekstu */
+        overflow: hidden; /* ukrywa tekst, który wychodzi poza element */
+        text-overflow: ellipsis; /* wyświetla "..." w przypadku, gdy tekst jest zbyt długi */
+      }
+
+      h2 {
+        font-family: "Kufam", sans-serif;
+        font-weight: 100;
+        margin: 0;
+        margin: 5px 0 0 10px;
+        font-size: 0.75rem;
+        filter: blur(50%);
+        color: ${(props) => props.theme.colorSecondary};
+      }
+    }
+
+    img {
+      height: 10rem;
+      border-radius: 1rem 0 0 1rem;
+    }
+
+    .bookmark {
+      color: #ffe61b;
+      font-size: 4rem;
+      position: relative;
+      bottom: 0.5rem;
+    }
+    .star {
+      color: #ffe61b;
+      position: relative;
+      top: 3.65rem;
+      left: 0.5rem;
+      font-size: 1.75rem;
+    }
+
+    .ratings {
+      color: ${(props) => props.theme.color};
+      width: 12rem;
+      height: 4rem;
+      display: flex;
+      justify-content: space-between;
+      margin-left: 0.5rem;
+
+      h3 {
+        font-family: "Kadwa", sans-serif;
+        font-weight: 100;
+        display: flex;
+        align-items: center;
+        color: ${(props) => props.theme.colorSecondary};
+      }
+
+      h4 {
+        font-family: "Kufam", sans-serif;
+        font-weight: 100;
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+`;

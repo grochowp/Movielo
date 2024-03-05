@@ -77,4 +77,15 @@ export const MovieService = {
     };
     return await sendRequest(url, method, body);
   },
+
+  findFavorites: async (_id: string, type: string, sort: string) => {
+    const url = "http://localhost:3000/api/movie/findFavorites";
+    const method = "POST";
+    const body = {
+      _id,
+      type,
+      sort,
+    };
+    return await sendRequest(url, method, body);
+  },
 };
