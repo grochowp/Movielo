@@ -21,28 +21,24 @@ interface Theme {
   componentsBackground: string;
   color: string;
   colorSecondary: string;
-  colorOnHover: string;
   name: string;
 }
 
 const LightTheme: Theme = {
   bodyColor: "#B0ACAB",
-  pageBackground: "#DBDBDB",
-  componentsBackground: "#C9C5C4 ", //ECE8DD
+  pageBackground: "#fafafa",
+  componentsBackground: "#d2d3db ", //ECE8DD
   color: "#393939",
   colorSecondary: "#363636",
-
-  colorOnHover: "#000000",
   name: "light",
 };
 
 const DarkTheme: Theme = {
   bodyColor: "#393939",
-  pageBackground: "#262626",
-  componentsBackground: "#202020",
-  color: "#D9D9D9",
-  colorSecondary: "#808080",
-  colorOnHover: "#ffffff",
+  pageBackground: "#121217",
+  componentsBackground: "#292938",
+  color: "#E3E3E3",
+  colorSecondary: "#B6B6B6",
   name: "dark",
 };
 

@@ -75,6 +75,7 @@ const Trends = styled.section`
   }
 
   img {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     flex: 0 0 auto;
     height: 355px;
     border-radius: 10px;

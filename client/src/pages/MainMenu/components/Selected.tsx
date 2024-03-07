@@ -252,6 +252,7 @@ const GenreSelection = styled.section`
     }
 
     img {
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
       width: 14vw;
       max-width: 16rem;
       border-radius: 10px;

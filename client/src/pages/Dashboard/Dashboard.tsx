@@ -32,5 +32,7 @@ const Content = styled.section`
   @media (max-width: 900px) {
     width: 100vw;
     margin-left: 0;
+    height: max-content;
+    padding-bottom: 3.5rem;
   }
 `;

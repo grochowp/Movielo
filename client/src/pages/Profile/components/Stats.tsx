@@ -14,13 +14,13 @@ const StatsComp: React.FC<IProps> = ({ children, data }) => {
       <article>
         <div>
           <h2>Favorite</h2>
-          <p>
+          <div className="favMovie">
             <img src={`/images/bg-2.jpg`} alt={"a"} />
             <div className="titleYear">
               <h3>Dune</h3>
               <h4>Year</h4>
             </div>
-          </p>
+          </div>
         </div>
 
         <div>
@@ -31,8 +31,8 @@ const StatsComp: React.FC<IProps> = ({ children, data }) => {
               .reverse()
               .slice(0, 3)
               .map((movie, index) => (
-                <div>
-                  <li key={index + 1}>{movie.title}</li>
+                <div key={index + 1}>
+                  <li>{movie.title}</li>
                   <span>{movie.rating}</span>
                 </div>
               ))}
@@ -74,9 +74,10 @@ const Sect = styled.section`
   height: 25rem;
   background-color: ${(props) => props.theme.componentsBackground};
   color: ${(props) => props.theme.color};
-  font-family: "Kadwa", sans-serif;
+  font-family: "Spline Sans", sans-serif;
   gap: 1rem;
-  line-height: 1.3;
+  line-height: 1.2;
+  border: 1px solid #3d3d54;
 
   @media (max-width: 1300px) {
     width: 20rem;
@@ -109,6 +110,7 @@ const Sect = styled.section`
     display: flex;
     align-items: center;
 
+    font-weight: 400;
     @media (max-width: 1300px) {
       font-size: clamp(1.25rem, 2vw, 1.75rem);
       margin-top: 1rem;
@@ -135,17 +137,19 @@ const Sect = styled.section`
     @media (max-width: 570px) {
       grid-template-columns: auto;
     }
-
     div {
-      height: 80%;
       width: 15rem;
+
+      @media (min-width: 900px) and (max-width: 1300px) {
+        height: max-content;
+      }
     }
 
     .titleYear h3 {
       justify-content: left;
     }
 
-    p {
+    .favMovie {
       display: flex;
       gap: 1rem;
 
@@ -153,6 +157,7 @@ const Sect = styled.section`
       margin-left: 1rem;
       justify-content: center;
       align-items: center;
+      margin-top: 1rem;
     }
 
     img {

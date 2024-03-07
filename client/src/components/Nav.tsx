@@ -192,7 +192,7 @@ const Navigation = styled.nav`
   span {
     z-index: 6;
     margin: 0 2.5rem;
-    background-color: ${(props) => props.theme.color};
+    background-color: ${(props) => props.theme.colorSecondary};
     display: flex;
     border-radius: 50%;
     justify-content: center;
@@ -240,7 +240,7 @@ const Navigation = styled.nav`
     width: 20rem;
     border-radius: 10px;
     border: none;
-    background-color: ${(props) => props.theme.color};
+    background-color: ${(props) => props.theme.colorSecondary};
     color: ${(props) => props.theme.pageBackground};
     font-family: "Inter", sans-serif;
     padding-left: 1rem;

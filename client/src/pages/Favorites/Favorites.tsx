@@ -133,7 +133,7 @@ const Favorites: React.FC = () => {
 export default Favorites;
 
 const Content = styled.article`
-  min-height: calc(100% - 6.6rem);
+  min-height: calc(100% - 6.1rem);
   background-color: ${(props) => props.theme.pageBackground};
   display: flex;
   flex-direction: column;
@@ -220,11 +220,16 @@ const Content = styled.article`
     justify-content: center;
 
     .fav {
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
       border-radius: 0.5rem;
       display: flex;
       width: 23rem;
       height: 10rem;
       background-color: ${(props) => props.theme.componentsBackground};
+      transition: 1s;
+      &:hover {
+        transform: scale(1.05);
+      }
 
       .name {
         color: ${(props) => props.theme.color};
