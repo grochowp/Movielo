@@ -133,10 +133,15 @@ const Favorites: React.FC = () => {
 export default Favorites;
 
 const Content = styled.article`
-  min-height: calc(100% - 6.1rem);
+  min-height: calc(100vh - 8rem);
+  padding-top: 8rem;
   background-color: ${(props) => props.theme.pageBackground};
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 900px) {
+    // padding-top: 10rem;
+  }
 
   .selectBars {
     display: flex;

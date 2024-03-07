@@ -26,8 +26,8 @@ interface Theme {
 
 const LightTheme: Theme = {
   bodyColor: "#B0ACAB",
-  pageBackground: "#fafafa",
-  componentsBackground: "#d2d3db ", //ECE8DD
+  pageBackground: "#e0e0e0",
+  componentsBackground: "#cfd8dc ", // bdbdbd
   color: "#393939",
   colorSecondary: "#363636",
   name: "light",
@@ -48,7 +48,7 @@ const themes: Record<string, Theme> = {
 };
 
 const App: React.FC = () => {
-  const [theme] = useState("dark");
+  const [theme, setTheme] = useState("dark");
 
   const user = useUser();
 
@@ -76,7 +76,10 @@ const App: React.FC = () => {
               <Route path="statistics" element={<Statistics />} />
               <Route path="favorites" element={<Favorites />} />
               <Route path="achievements" element={<Achievements />} />
-              <Route path="settings" element={<Settings />} />
+              <Route
+                path="settings"
+                element={<Settings theme={theme} setTheme={setTheme} />}
+              />
             </Route>
           </Routes>
         </BrowserRouter>

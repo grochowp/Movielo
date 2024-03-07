@@ -3,8 +3,15 @@ import ProfileHeader from "../../components/ProfileHeader";
 import { GoPencil } from "react-icons/go";
 import { useUser } from "../../contexts/UserContext";
 import { useEffect, useState } from "react";
+import { CiDark } from "react-icons/ci";
+import { IoSunnyOutline } from "react-icons/io5";
 
-const Settings: React.FC = () => {
+interface ISettings {
+  theme: string;
+  setTheme: (newTheme: string) => void;
+}
+
+const Settings: React.FC<ISettings> = ({ theme, setTheme }) => {
   const { user } = useUser();
   const initialName = user ? user.firstName : "";
   const initialSurname = user ? user.lastName : "";
@@ -31,6 +38,10 @@ const Settings: React.FC = () => {
   const resetUserData = () => {
     setName(initialName);
     setSurname(initialSurname);
+  };
+
+  const changeTheme = (newTheme: string) => {
+    setTheme(newTheme);
   };
   return (
     <>
@@ -132,6 +143,26 @@ const Settings: React.FC = () => {
               </li>
             </ul>
           </div>
+          <div className="prof2">
+            <p>Theme</p>
+            <div className="themes">
+              <button
+                className={`profPic ${theme === "dark" ? "active" : ""}`}
+                onClick={() => changeTheme("dark")}
+              >
+                Dark <CiDark />
+              </button>
+              <button
+                className={`profPic ${theme === "light" ? "active" : ""}`}
+                onClick={() => changeTheme("light")}
+              >
+                Light <IoSunnyOutline />
+              </button>
+              {/* <button className="profPic" onClick={() => changeTheme("")}>
+                ???? <GoPencil />
+              </button> */}
+            </div>
+          </div>
         </div>
       </Content>
     </>
@@ -144,11 +175,21 @@ const Content = styled.article`
   display: flex;
   max-width: calc(1920px - 7rem);
   width: calc(100vw - 7rem);
-  height: calc(100vh - 6.1rem);
+  height: calc(100vh - 6rem);
   font-family: "Spline Sans", sans-serif;
   background-color: ${(props) => props.theme.pageBackground};
-
+  padding-top: 6rem;
+  transition: 0.25s;
+  @media (max-width: 900px) {
+    padding-top: 8rem;
+  }
   button {
+    box-shadow: 0px 0px 10px
+      ${(props) =>
+        props.theme.name === "dark"
+          ? "rgba(0, 0, 0, 0.5)"
+          : "rgba(255, 255, 255, 0.5)"};
+
     font-family: "Spline Sans", sans-serif;
     color: ${(props) => props.theme.color};
     font-size: clamp(0.75rem, 1.5vw, 1.25rem);
@@ -172,6 +213,7 @@ const Content = styled.article`
 
   @media (max-width: 900px) {
     width: 100vw;
+
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -191,6 +233,10 @@ const Content = styled.article`
     justify-content: center;
     align-items: center;
     color: ${(props) => props.theme.color};
+
+    @media (max-width: 900px) {
+      width: 100vw;
+    }
 
     .personalInfo-Edit {
       height: 3.5rem;
@@ -248,10 +294,13 @@ const Content = styled.article`
     width: 50vw;
     display: flex;
     flex-direction: column;
-    gap: 5rem;
+    gap: 3rem;
     justify-content: center;
     align-items: center;
 
+    @media (max-width: 900px) {
+      width: 100vw;
+    }
     .profPic {
       width: clamp(5rem, 10vw, 8rem);
     }
@@ -275,7 +324,7 @@ const Content = styled.article`
       }
 
       ul {
-        max-height: 10rem;
+        max-height: 7.5rem;
         overflow-y: auto;
         list-style: none;
         padding: 0;
@@ -288,6 +337,14 @@ const Content = styled.article`
             margin-left: 1rem;
           }
         }
+      }
+      .themes {
+        display: flex;
+        justify-content: space-around;
+      }
+      .active {
+        background-color: ${(props) => props.theme.componentsBackground};
+        // color: ${(props) => props.theme.componentsBackground};
       }
     }
   }
