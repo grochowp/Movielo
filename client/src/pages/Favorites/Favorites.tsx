@@ -225,7 +225,7 @@ const Content = styled.article`
     justify-content: center;
 
     .fav {
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+      box-shadow: 0px 0px 10px ${(props) => props.theme.boxShadow};
       border-radius: 0.5rem;
       display: flex;
       width: 23rem;

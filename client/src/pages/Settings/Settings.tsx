@@ -184,12 +184,7 @@ const Content = styled.article`
     padding-top: 8rem;
   }
   button {
-    box-shadow: 0px 0px 10px
-      ${(props) =>
-        props.theme.name === "dark"
-          ? "rgba(0, 0, 0, 0.5)"
-          : "rgba(255, 255, 255, 0.5)"};
-
+    box-shadow: 0px 0px 10px ${(props) => props.theme.boxShadow};
     font-family: "Spline Sans", sans-serif;
     color: ${(props) => props.theme.color};
     font-size: clamp(0.75rem, 1.5vw, 1.25rem);

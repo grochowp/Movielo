@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Movie, fetchMovie } from "../../../types";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { MovieService } from "../../../services/movieService";
 import { useModal } from "../../../contexts/ModalContext";
 
 const MovieSlider: React.FC<fetchMovie> = ({ url, genre }) => {
   const [movies, setMovies] = useState<Movie[]>([]);
-
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const modal = useModal();
 
   const fetchAndSetMovies = async (apiURL: string) => {
@@ -14,6 +14,7 @@ const MovieSlider: React.FC<fetchMovie> = ({ url, genre }) => {
       const response = await MovieService.getMovie(apiURL);
       const data = response.movies;
       setMovies(data);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error while fetching movie data", error);
     }
@@ -28,20 +29,36 @@ const MovieSlider: React.FC<fetchMovie> = ({ url, genre }) => {
       <h1>{genre}</h1>
 
       <article>
-        {movies.map((movie, index) => (
-          <div key={index} onClick={() => modal.openModal(movie)}>
-            <img
-              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-              alt={movie.original_title}
-            />
-          </div>
-        ))}
+        {isLoading
+          ? Array.from({ length: 10 }, (_, i) => (
+              <div key={i} className="loaders"></div>
+            ))
+          : movies.map((movie, index) => (
+              <div key={index} onClick={() => modal.openModal(movie)}>
+                <img
+                  src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                  alt={movie.original_title}
+                />
+              </div>
+            ))}
       </article>
     </Trends>
   );
 };
 
 export default MovieSlider;
+
+const loading = keyframes`
+  0% {
+    opacity: 0;
+  }
+  50%{
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
 
 const Trends = styled.section`
   display: flex;
@@ -55,7 +72,7 @@ const Trends = styled.section`
   article {
     display: flex;
     flex-wrap: nowrap;
-    overflow-x: auto;
+    overflow-x: scroll;
     width: 92vw;
     max-width: 1800px;
     height: 410px;
@@ -70,12 +87,28 @@ const Trends = styled.section`
     }
   }
 
+  .loaders {
+    background-color: ${(props) => props.theme.componentsBackground};
+    animation: ${loading} 2s;
+    animation-iteration-count: infinite;
+    border-radius: 10px;
+    height: 355px;
+    aspect-ratio: 4/6;
+    flex: 0 0 auto;
+    @media (max-width: 1000px) {
+      height: 250px;
+    }
+    @media (max-width: 600px) {
+      height: 150px;
+    }
+  }
+
   div {
     margin: 1rem 0.5rem;
   }
 
   img {
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 0px 10px ${(props) => props.theme.boxShadow};
     flex: 0 0 auto;
     height: 355px;
     border-radius: 10px;

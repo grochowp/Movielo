@@ -8,9 +8,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 import { useModal } from "../../../contexts/ModalContext";
+import { ThreeCircles } from "react-loader-spinner";
 
 const Main: React.FC = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const modal = useModal();
 
   useEffect(() => {
@@ -24,6 +26,7 @@ const Main: React.FC = () => {
         moviesData.push(movieData);
       }
       setMovies(moviesData);
+      setIsLoading(false);
     }
 
     fetchData();
@@ -31,39 +34,61 @@ const Main: React.FC = () => {
 
   return (
     <MainPage>
-      <Swiper
-        spaceBetween={0}
-        centeredSlides={true}
-        autoplay={{
-          delay: 10000,
-          disableOnInteraction: false,
-        }}
-        modules={[Autoplay]}
-        className="mySwiper"
-      >
-        {movies.map((movie, index) => (
-          <SwiperSlide key={index} className="swiper-slide">
-            <img src={`/images/bg-${index}.jpg`} alt={movie.original_title} />
-            <div>
-              <h1>
-                {movie.original_title}
-                <span
-                  onClick={() =>
-                    modal.openModal({ ...movie, media_type: "movie" })
-                  }
-                >
-                  <IoIosInformationCircleOutline />
-                </span>
-              </h1>
-              <p>{movie.overview}</p>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      {isLoading ? (
+        <Loader>
+          <ThreeCircles
+            visible={true}
+            height="100"
+            width="100"
+            color="#d9d9d9"
+            ariaLabel="three-circles-loading"
+          />
+        </Loader>
+      ) : (
+        <Swiper
+          spaceBetween={0}
+          centeredSlides={true}
+          autoplay={{
+            delay: 10000,
+            disableOnInteraction: false,
+          }}
+          modules={[Autoplay]}
+          className="mySwiper"
+        >
+          {movies.map((movie, index) => (
+            <SwiperSlide key={index} className="swiper-slide">
+              <img src={`/images/bg-${index}.jpg`} alt={movie.original_title} />
+              <div>
+                <h1>
+                  {movie.original_title}
+                  <span
+                    onClick={() =>
+                      modal.openModal({ ...movie, media_type: "movie" })
+                    }
+                  >
+                    <IoIosInformationCircleOutline />
+                  </span>
+                </h1>
+                <p>{movie.overview}</p>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      )}
     </MainPage>
   );
 };
 export default Main;
+
+const Loader = styled.div`
+  width: 100vw;
+  max-width: 1920px;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${(props) => props.theme.componentsBackground};
+`;
 
 const MainPage = styled.section`
   max-height: 1080px;

@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { API_KEY, MOVIE_GENRES, SERIES_GENRES } from "../../../utils";
 import { MovieService } from "../../../services/movieService";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import {
   IoIosCheckmarkCircle,
   IoIosCheckmarkCircleOutline,
@@ -14,6 +14,7 @@ const Selected: React.FC = () => {
   const [type, setType] = useState<string>("movie");
   const [page, setPage] = useState<number>(1);
   const [genre, setGenre] = useState<number>(18);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const modal = useModal();
 
@@ -21,14 +22,17 @@ const Selected: React.FC = () => {
     fetchAndSetMovies(
       `https://api.themoviedb.org/3/discover/${type}?api_key=${API_KEY}&with_genres=${genre}&page=${page}`
     );
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, type, genre]);
 
   const fetchAndSetMovies = async (apiURL: string) => {
+    setIsLoading(true);
     try {
       const response = await MovieService.getMovie(apiURL);
       const data = response.movies.slice(0, 15);
       setMovies(data.map((item: Movie) => ({ ...item, media_type: type })));
+      setIsLoading(false);
     } catch (error) {
       console.error("Error while fetching movie data", error);
     }
@@ -104,14 +108,19 @@ const Selected: React.FC = () => {
       </article>
 
       <article className="second">
-        {movies.map((movie, index) => (
-          <div key={index} onClick={() => modal.openModal(movie)}>
-            <img
-              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-              alt={movie.original_title}
-            />
-          </div>
-        ))}
+        {isLoading
+          ? Array.from({ length: 15 }, (_, i) => (
+              <div key={i} className="loaders"></div>
+            ))
+          : movies.map((movie, index) => (
+              <div key={index} onClick={() => modal.openModal(movie)}>
+                <img
+                  src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                  alt={movie.original_title}
+                />
+              </div>
+            ))}
+        {}
       </article>
 
       <article className="third">
@@ -147,6 +156,18 @@ const Selected: React.FC = () => {
   );
 };
 export default Selected;
+
+const loading = keyframes`
+  0% {
+    opacity: 0;
+  }
+  50%{
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
 
 const GenreSelection = styled.section`
   background-color: ${(props) => props.theme.pageBackground};
@@ -244,6 +265,19 @@ const GenreSelection = styled.section`
     @media (max-width: 1550px) {
       margin: 2vw 7vw 0 7vw;
     }
+
+    .loaders {
+      width: 14vw;
+      aspect-ratio: 4.2/6;
+      background-color: ${(props) => props.theme.componentsBackground};
+      animation: ${loading} 2s;
+      animation-iteration-count: infinite;
+      border-radius: 10px;
+      @media (max-width: 600px) {
+        width: 24vw;
+      }
+    }
+
     div {
       margin: 0.5rem 1rem;
       @media (max-width: 1100px) {
@@ -252,7 +286,7 @@ const GenreSelection = styled.section`
     }
 
     img {
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+      box-shadow: 0px 0px 10px ${(props) => props.theme.boxShadow};
       width: 14vw;
       max-width: 16rem;
       border-radius: 10px;

@@ -21,6 +21,7 @@ interface Theme {
   componentsBackground: string;
   color: string;
   colorSecondary: string;
+  boxShadow: string;
   name: string;
 }
 
@@ -30,6 +31,7 @@ const LightTheme: Theme = {
   componentsBackground: "#cfd8dc ", // bdbdbd
   color: "#393939",
   colorSecondary: "#363636",
+  boxShadow: "rgba(0, 0, 0, 0.3)",
   name: "light",
 };
 
@@ -39,6 +41,7 @@ const DarkTheme: Theme = {
   componentsBackground: "#292938",
   color: "#E3E3E3",
   colorSecondary: "#B6B6B6",
+  boxShadow: "rgba(0, 0, 0, 0.5)",
   name: "dark",
 };
 
