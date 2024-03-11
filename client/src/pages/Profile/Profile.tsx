@@ -4,6 +4,7 @@ import { MovieService } from "../../services/movieService";
 import { useEffect, useState } from "react";
 import { Movie } from "../../types";
 import StatsComp from "./components/Stats";
+import { Link } from "react-router-dom";
 
 const Profile: React.FC = () => {
   const { user } = useUser();
@@ -44,9 +45,11 @@ const Profile: React.FC = () => {
                 {user.firstName} {user.lastName}
               </div>
               <div className="titles">
-                <p>Title 1</p>
-                <p>Titasdasdle 2</p>
-                <p>Title 3</p>
+                {user.titles.map((title: string) => (
+                  <Link to="../achievements">
+                    <p>{title}</p>
+                  </Link>
+                ))}
               </div>
             </section>
           </Photo>
@@ -107,14 +110,18 @@ const Photo = styled.article`
     display: flex;
     gap: 1.5rem;
 
+    a {
+      text-decoration: none;
+    }
     p {
       width: max-content;
       font-family: "Inter", sans-serif;
       font-weight: 400;
       padding: 0.5rem 1rem;
       border-radius: 16px;
-      background-color: yellow;
-      color: #262626;
+      background-color: ${(props) => props.theme.color};
+      color: ${(props) => props.theme.pageBackground};
+      cursor: pointer;
     }
   }
 

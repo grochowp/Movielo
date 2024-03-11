@@ -1,6 +1,14 @@
 import { Request, Response, NextFunction } from "express";
 const Achievements = require("../models/achievementModel");
-const User4 = require("../models/userModel");
+const User = require("../models/userModel");
+
+interface IAchievement {
+  name: string;
+  tier: number;
+  type: string;
+  points: number;
+  text: string;
+}
 
 module.exports.getAchievements = async (
   req: Request,
@@ -8,7 +16,7 @@ module.exports.getAchievements = async (
   next: NextFunction
 ) => {
   try {
-    const { type } = req.body;
+    const { type, display, userAchievements } = req.body;
     let achievements;
     if (type === "All") achievements = await Achievements.find();
     else
@@ -16,7 +24,23 @@ module.exports.getAchievements = async (
         $or: [{ type }, { type: "Combined" }],
       });
 
-    return res.json({ status: true, achievements });
+    if (display === "All") return res.json({ status: true, achievements });
+
+    if (display === "Completed") {
+      const completedAchievements = achievements.filter(
+        (achievement: IAchievement) =>
+          userAchievements.includes(achievement.name)
+      );
+
+      return res.json({ status: true, achievements: completedAchievements });
+    } else {
+      const unearnedAchievements = achievements.filter(
+        (achievement: IAchievement) =>
+          !userAchievements.includes(achievement.name)
+      );
+
+      return res.json({ status: true, achievements: unearnedAchievements });
+    }
   } catch (ex) {
     next(ex);
   }
@@ -35,11 +59,11 @@ module.exports.assignAchievement = async (
         .status(404)
         .json({ status: false, message: "Achievement not found" });
     }
-    console.log(achievement);
-    const user = await User4.findByIdAndUpdate(
+
+    const user = await User.findByIdAndUpdate(
       userId,
       {
-        $push: { achievements: name },
+        $push: { achievements: name, titles: achievement?.title },
         $inc: { points: achievement.points },
       },
       { new: true }

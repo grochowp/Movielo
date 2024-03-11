@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express from "express";
 
 const authRoutes = require("./routes/auth");
 const movieRoutes = require("./routes/movie");

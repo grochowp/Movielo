@@ -17,13 +17,19 @@ interface IAchievement {
 
 const Achievements: React.FC = () => {
   const [type, setType] = useState<string>("All");
+  const [display, setDisplay] = useState<string>("All");
   const [data, setData] = useState<IAchievement[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { user } = useUser();
+
   useEffect(() => {
     const fetchAndSetMovies = async () => {
       try {
-        const response = await AchievementsService.getAchievements(type);
+        const response = await AchievementsService.getAchievements(
+          type,
+          display,
+          user?.achievements
+        );
 
         setData(response.achievements);
         setIsLoading(false);
@@ -32,7 +38,7 @@ const Achievements: React.FC = () => {
       }
     };
     fetchAndSetMovies();
-  }, [type]);
+  }, [type, display, user?.achievements]);
 
   return (
     <>
@@ -61,9 +67,24 @@ const Achievements: React.FC = () => {
               </SelectSpan>
             </div>
             <div>
-              <span>All</span>
-              <span>Completed</span>
-              <span>In progress</span>
+              <SelectSpan
+                selected={display === "All"}
+                onClick={() => setDisplay("All")}
+              >
+                All
+              </SelectSpan>
+              <SelectSpan
+                selected={display === "Completed"}
+                onClick={() => setDisplay("Completed")}
+              >
+                Completed
+              </SelectSpan>
+              <SelectSpan
+                selected={display === "In progress"}
+                onClick={() => setDisplay("In progress")}
+              >
+                In progress
+              </SelectSpan>
             </div>
           </div>
           <div>Total points: {user?.points}</div>

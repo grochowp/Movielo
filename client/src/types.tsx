@@ -1,3 +1,8 @@
+interface IRating {
+  _id: string;
+  type: string;
+}
+
 export interface User {
   _id: string;
   firstName: string;
@@ -6,7 +11,8 @@ export interface User {
   password: string;
   points: number;
   achievements: Array<string>;
-  ratings: Array<object>;
+  ratings: Array<IRating>;
+  titles: Array<string>;
 }
 
 export interface Movie {

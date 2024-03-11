@@ -22,9 +22,7 @@ const Settings: React.FC<ISettings> = ({ theme, setTheme }) => {
   const [dataChanged, setDataChanged] = useState<boolean>(false);
 
   useEffect(() => {
-    if (name !== initialName) {
-      setDataChanged(true);
-    } else if (surname !== initialSurname) {
+    if (name !== initialName || surname !== initialSurname) {
       setDataChanged(true);
     } else {
       setDataChanged(false);
@@ -113,34 +111,12 @@ const Settings: React.FC<ISettings> = ({ theme, setTheme }) => {
           <div className="prof2">
             <p>Titles</p>
             <ul>
-              <li>
-                <input type="checkbox" />
-                <span>aaaaa</span>
-              </li>
-              <li>
-                <input type="checkbox" />
-                <span>aaaaa</span>
-              </li>
-              <li>
-                <input type="checkbox" />
-                <span>aaaaa</span>
-              </li>
-              <li>
-                <input type="checkbox" />
-                <span>aaaaa</span>
-              </li>
-              <li>
-                <input type="checkbox" />
-                <span>aaaaa</span>
-              </li>
-              <li>
-                <input type="checkbox" />
-                <span>aaaaa</span>
-              </li>
-              <li>
-                <input type="checkbox" />
-                <span>aaaaa</span>
-              </li>
+              {user?.titles.map((title: string, i: number) => (
+                <li>
+                  <input type="checkbox" value={i} />
+                  <span>{title}</span>
+                </li>
+              ))}
             </ul>
           </div>
           <div className="prof2">
