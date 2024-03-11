@@ -40,7 +40,7 @@ const DarkTheme: Theme = {
   pageBackground: "#121217",
   componentsBackground: "#292938",
   color: "#E3E3E3",
-  colorSecondary: "#B6B6B6",
+  colorSecondary: "#757575",
   boxShadow: "rgba(0, 0, 0, 0.5)",
   name: "dark",
 };

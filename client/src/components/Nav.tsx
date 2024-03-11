@@ -275,6 +275,10 @@ const Navigation = styled.nav`
     outline: none;
   }
 
+  input::placeholder {
+    color: ${(props) => props.theme.color};
+  }
+
   .options {
     font-family: "Inika", sans-serif;
     font-weight: 100;
