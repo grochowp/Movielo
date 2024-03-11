@@ -28,14 +28,14 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [userRating, setUserRating] = useState<number>(5);
   const [message, setMessage] = useState<string>("");
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
-  const userContext = useUser();
+  const { user } = useUser();
 
   useEffect(() => {
     seeFav();
     // Dependency Array - Adding "seeFav" will cause infinite loop, user and selectedMovie are needed to make sure that it will display correct bookmark after changing movie or changing users but trying to see modal of the same movie on both accounts
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userContext.user, selectedMovie]);
+  }, [user, selectedMovie]);
 
   const closeModal = () => {
     setSelectedMovie(null);
@@ -50,9 +50,9 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const rateMovie = async () => {
     let response;
-    if (userContext.user && selectedMovie)
+    if (user && selectedMovie)
       response = await MovieService.rateMovie(
-        userContext.user._id,
+        user._id,
         selectedMovie?.id,
         userRating,
         selectedMovie.media_type,
@@ -63,9 +63,9 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   };
 
   const seeFav = async () => {
-    if (userContext.user && selectedMovie) {
+    if (user && selectedMovie) {
       const response = await MovieService.handleFav(
-        userContext.user._id,
+        user._id,
         selectedMovie?.id
       );
 
@@ -76,15 +76,15 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const addFavMovie = async () => {
     const type = selectedMovie?.media_type === "movie" ? "Movie" : "Series";
 
-    if (userContext.user && selectedMovie)
-      await MovieService.addFavMovie(userContext.user._id, selectedMovie, type);
+    if (user && selectedMovie)
+      await MovieService.addFavMovie(user._id, selectedMovie, type);
 
     seeFav();
   };
 
   const deleteFavMovie = async () => {
-    if (userContext.user && selectedMovie)
-      await MovieService.deleteFavMovie(userContext.user._id, selectedMovie.id);
+    if (user && selectedMovie)
+      await MovieService.deleteFavMovie(user._id, selectedMovie.id);
 
     seeFav();
   };

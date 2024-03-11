@@ -26,6 +26,7 @@ const userSchema = new mongoose.Schema({
   },
   favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Movie" }],
   ratings: [{ type: mongoose.Schema.Types.ObjectId, ref: "ratings" }],
+  achievements: [{ type: String, required: true }],
 });
 
 module.exports = mongoose.model("Users", userSchema);

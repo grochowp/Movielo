@@ -276,7 +276,7 @@ const Navigation = styled.nav`
   }
 
   input::placeholder {
-    color: ${(props) => props.theme.color};
+    color: ${(props) => props.theme.pageBackground};
   }
 
   .options {

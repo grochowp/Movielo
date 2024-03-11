@@ -95,6 +95,7 @@ const Trends = styled.section`
     height: 355px;
     aspect-ratio: 4/6;
     flex: 0 0 auto;
+
     @media (max-width: 1000px) {
       height: 250px;
     }

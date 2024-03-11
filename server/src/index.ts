@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 
 const authRoutes = require("./routes/auth");
 const movieRoutes = require("./routes/movie");
+const achievementRoutes = require("./routes/achievement");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
@@ -31,3 +32,4 @@ mongoose
 
 app.use("/api/auth", authRoutes);
 app.use("/api/movie", movieRoutes);
+app.use("/api/achievement", achievementRoutes);

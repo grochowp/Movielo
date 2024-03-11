@@ -1,45 +1,38 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import ProfileHeader from "../../components/ProfileHeader";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { IoTrophyOutline } from "react-icons/io5";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
+import { AchievementsService } from "../../services/AchievementsService";
+import { useUser } from "../../contexts/UserContext";
+
+interface IAchievement {
+  name: string;
+  title?: string;
+  tier: number;
+  text: string;
+  points: number;
+  type: string;
+}
 
 const Achievements: React.FC = () => {
-  const achievements = useMemo(
-    () => [
-      {
-        name: "aaasd asd asd aa",
-        tier: 1,
-        text: "aaaa dsadsa dsa dass dd sadas dasd asd asdasas asd sadasd asdas dasa",
-        type: "Movies",
-        points: 10,
-      },
-      {
-        name: "aa12a",
-        title: "bbb",
-        tier: 1,
-        text: "aaaaa",
-        type: "Movies",
-        points: 10,
-      },
-      { name: "aasa", tier: 1, text: "aaaaa", type: "Movies", points: 10 },
-      { name: "abaa", tier: 1, text: "aaaaa", type: "Movies", points: 10 },
-      { name: "aana", tier: 1, text: "aaaaa", type: "Series", points: 10 },
-      { name: "aaba", tier: 1, text: "aaaaa", type: "Series", points: 10 },
-      { name: "aznaa", tier: 1, text: "aaaaa", type: "Series", points: 10 },
-      { name: "aaaa", tier: 1, text: "aaaaa", type: "Series", points: 10 },
-      { name: "a,aa", tier: 1, text: "aaaaa", type: "Movies", points: 10 },
-    ],
-    []
-  );
-
   const [type, setType] = useState<string>("All");
-  const [ach, setAch] = useState(achievements);
-
+  const [data, setData] = useState<IAchievement[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { user } = useUser();
   useEffect(() => {
-    if (type == "All") setAch(achievements);
-    else setAch(() => achievements.filter((ac) => ac.type === type));
-  }, [type, achievements]);
+    const fetchAndSetMovies = async () => {
+      try {
+        const response = await AchievementsService.getAchievements(type);
+
+        setData(response.achievements);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error while fetching movie data", error);
+      }
+    };
+    fetchAndSetMovies();
+  }, [type]);
 
   return (
     <>
@@ -76,33 +69,73 @@ const Achievements: React.FC = () => {
           <div>Total points: 100</div>
         </div>
 
-        {ach.map((achiev) => (
-          <div key={achiev.name} className="achievement">
-            <div className="tier">{achiev.tier}</div>
-            <div className="title">
-              <h1>
-                {achiev.name}{" "}
-                {achiev?.title && (
-                  <span>
-                    <IoTrophyOutline /> {achiev?.title}
-                  </span>
-                )}
-              </h1>
-              <h2>{achiev.text}</h2>
-            </div>
-            <div className="type">{achiev.type}</div>
-            <div className="state">
-              <IoIosCheckmarkCircle />
-            </div>
-            <div className="points">+{achiev.points}p</div>
-          </div>
-        ))}
+        {isLoading
+          ? Array.from({ length: 5 }, (_, i) => (
+              <div key={i} className="loaders"></div>
+            ))
+          : data.map((achievement) => (
+              <div key={achievement.name} className="achievement">
+                <div
+                  style={{
+                    borderColor:
+                      achievement.tier === 1
+                        ? "green"
+                        : achievement.tier === 2
+                        ? "yellow"
+                        : "red",
+                  }}
+                  className="tier"
+                >
+                  {achievement.tier}
+                </div>
+                <div className="title">
+                  <h1>
+                    {achievement.name}{" "}
+                    {achievement?.title && (
+                      <span>
+                        <IoTrophyOutline /> {achievement?.title}
+                      </span>
+                    )}
+                  </h1>
+                  <h2>{achievement.text}</h2>
+                </div>
+                <div className="type">{achievement.type}</div>
+                <div className="state">
+                  {user?.achievements.includes(achievement.name) && (
+                    <IoIosCheckmarkCircle />
+                  )}
+                </div>
+                <div
+                  style={{
+                    color: user?.achievements.includes(achievement.name)
+                      ? "green"
+                      : "",
+                  }}
+                  className="points"
+                >
+                  +{achievement.points}p
+                </div>
+              </div>
+            ))}
       </Content>
     </>
   );
 };
 
 export default Achievements;
+
+const loading = keyframes`
+  0% {
+    opacity: 0;
+  }
+  50%{
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
+
 interface SelectSpanProps {
   selected: boolean;
 }
@@ -166,8 +199,20 @@ const Content = styled.article`
     }
   }
 
+  .loaders {
+    height: 7rem;
+    margin: 2rem 5rem;
+    background-color: ${(props) => props.theme.componentsBackground};
+    animation: ${loading} 2s;
+    animation-iteration-count: infinite;
+
+    @media (max-width: 900px) {
+      margin: 2rem 0.5rem;
+    }
+  }
+
   .achievement {
-    height: max-content;
+    // height: max-content;
     background-color: ${(props) => props.theme.componentsBackground};
     margin: 2rem 5rem;
     height: 7rem;
