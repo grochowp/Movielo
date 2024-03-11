@@ -8,6 +8,7 @@ interface UserRequest extends Request {
     password: string;
     firstName: string;
     lastName: string;
+    userId: string;
   };
 }
 
@@ -44,7 +45,14 @@ module.exports.register = async (
 ) => {
   try {
     const { email, password, firstName, lastName } = req.body;
-
+    const specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~0-9]/;
+    if (specialChars.test(firstName) || specialChars.test(lastName)) {
+      return res.json({
+        message:
+          "You can`t use numbers or special symbols for first and last name",
+        status: false,
+      });
+    }
     const emailCheck = await User.findOne({ email });
     if (emailCheck)
       return res.json({ message: "Email already used", status: false });
@@ -62,6 +70,28 @@ module.exports.register = async (
     });
     delete user.password;
     return res.json({ status: true, user });
+  } catch (ex) {
+    next(ex);
+  }
+};
+
+module.exports.editProfile = async (
+  req: UserRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { firstName, lastName, userId } = req.body;
+    const specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~0-9]/;
+    if (specialChars.test(firstName) || specialChars.test(lastName)) {
+      return res.json({ message: "Letters only" });
+    }
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { firstName, lastName },
+      { new: true }
+    );
+    return res.json({ status: true, user, message: "Profile updated!" });
   } catch (ex) {
     next(ex);
   }

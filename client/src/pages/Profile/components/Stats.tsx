@@ -170,7 +170,7 @@ const Sect = styled.section`
     ul {
       list-style: none;
       width: 70%;
-
+      height: 5rem;
       div {
         display: flex;
         width: 100%;

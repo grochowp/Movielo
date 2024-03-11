@@ -93,7 +93,7 @@ export const LoginPage: React.FC = () => {
             ""
           )}
 
-          {error ? <p>{error}</p> : <p></p>}
+          <p className="error">{error ? error : ""}</p>
 
           <input type="submit" value={action} />
           <h5>
@@ -201,5 +201,8 @@ const Form = styled.form`
   p {
     margin: 0;
     height: 2rem;
+  }
+  .error {
+    text-align: center;
   }
 `;

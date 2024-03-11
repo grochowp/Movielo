@@ -52,13 +52,13 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const getRatingTitle = (type: string, length: number) => {
     if (type === "tv") {
-      if (length === 5) return "Series Critic I";
+      if (length === 3) return "Series Critic I";
       if (length === 10) return "Series Critic II";
-      if (length === 15) return "Series Critic III";
+      if (length === 20) return "Series Critic III";
     } else if (type === "movie") {
       if (length === 5) return "Movie Critic I";
-      if (length === 10) return "Movie Critic II";
-      if (length === 15) return "Movie Critic III";
+      if (length === 15) return "Movie Critic II";
+      if (length === 30) return "Movie Critic III";
     }
     return "";
   };

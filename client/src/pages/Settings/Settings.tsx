@@ -5,6 +5,7 @@ import { useUser } from "../../contexts/UserContext";
 import { useEffect, useState } from "react";
 import { CiDark } from "react-icons/ci";
 import { IoSunnyOutline } from "react-icons/io5";
+import { userService } from "../../services/userService";
 
 interface ISettings {
   theme: string;
@@ -12,7 +13,8 @@ interface ISettings {
 }
 
 const Settings: React.FC<ISettings> = ({ theme, setTheme }) => {
-  const { user } = useUser();
+  const { user, setUser } = useUser();
+  const userId = user ? user._id : "";
   const initialName = user ? user.firstName : "";
   const initialSurname = user ? user.lastName : "";
 
@@ -20,6 +22,7 @@ const Settings: React.FC<ISettings> = ({ theme, setTheme }) => {
   const [surname, setSurname] = useState<string>(initialSurname);
   const [password, setPassword] = useState<string>("********");
   const [dataChanged, setDataChanged] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>("");
 
   useEffect(() => {
     if (name !== initialName || surname !== initialSurname) {
@@ -29,8 +32,19 @@ const Settings: React.FC<ISettings> = ({ theme, setTheme }) => {
     }
   }, [name, surname, password, initialName, initialSurname]);
 
-  const editUserData = () => {
-    console.log(name, surname);
+  const editUserData = async () => {
+    const response = await userService.editProfile(name, surname, userId);
+    setMessage(response.message);
+    resetUserData();
+    response.user && setUser(response.user);
+
+    const intervalId = setInterval(() => {
+      setMessage("");
+    }, 3500);
+
+    setTimeout(function () {
+      clearInterval(intervalId);
+    }, 1000);
   };
 
   const resetUserData = () => {
@@ -61,6 +75,7 @@ const Settings: React.FC<ISettings> = ({ theme, setTheme }) => {
                 </button>
               </div>
             )}
+            {message && !dataChanged && <div>{message}</div>}
           </div>
           <div className="userData">
             <div>
