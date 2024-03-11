@@ -45,11 +45,19 @@ module.exports.addRating = async (
       title,
     });
 
-    await User.findByIdAndUpdate(userId, {
-      $push: { ratings: newRating },
-    });
+    const user = await User.findByIdAndUpdate(
+      userId,
+      {
+        $push: { ratings: newRating },
+      },
+      { new: true }
+    );
 
-    return res.json({ status: true, message: "Thanks for rating!" });
+    return res.json({
+      status: true,
+      message: "Thanks for rating!",
+      user: user,
+    });
   } catch (ex) {
     next(ex);
   }

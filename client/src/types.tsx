@@ -6,6 +6,7 @@ export interface User {
   password: string;
   points: number;
   achievements: Array<string>;
+  ratings: Array<object>;
 }
 
 export interface Movie {

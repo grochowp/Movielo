@@ -8,4 +8,10 @@ export const AchievementsService = {
 
     return await sendRequest(url, method, body);
   },
+  assignAchievement: async (userId: string, name: string) => {
+    const url = "http://localhost:3000/api/achievement/assignAchievement";
+    const method = "POST";
+    const body = { userId, name };
+    return await sendRequest(url, method, body);
+  },
 };

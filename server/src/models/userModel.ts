@@ -24,8 +24,18 @@ const userSchema = new mongoose.Schema({
     min: 2,
     max: 50,
   },
+  points: { type: Number, required: true },
   favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Movie" }],
-  ratings: [{ type: mongoose.Schema.Types.ObjectId, ref: "ratings" }],
+  ratings: [
+    {
+      ref: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "ratings",
+        required: true,
+      },
+      type: { type: String, enum: ["movie", "tv"], required: true },
+    },
+  ],
   achievements: [{ type: String, required: true }],
 });
 

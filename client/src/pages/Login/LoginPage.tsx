@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 // import axios from "axios";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { LoginService } from "../../services/loginService";
+import { userService } from "../../services/userService";
 import { useUser } from "../../contexts/UserContext";
 
 interface UseFormInputs {
@@ -37,7 +37,7 @@ export const LoginPage: React.FC = () => {
       let response;
 
       if (action === "Register") {
-        response = await LoginService.register(
+        response = await userService.register(
           data.email,
           data.password,
           data.firstName,
@@ -46,7 +46,7 @@ export const LoginPage: React.FC = () => {
       }
 
       if (action === "Login") {
-        response = await LoginService.login(data.email, data.password);
+        response = await userService.login(data.email, data.password);
       }
 
       if (response.user) {

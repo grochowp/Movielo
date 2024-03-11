@@ -29,10 +29,22 @@ module.exports.assignAchievement = async (
 ) => {
   try {
     const { userId, name } = req.body;
+    const achievement = await Achievements.findOne({ name });
+    if (!achievement) {
+      return res
+        .status(404)
+        .json({ status: false, message: "Achievement not found" });
+    }
+    console.log(achievement);
+    const user = await User4.findByIdAndUpdate(
+      userId,
+      {
+        $push: { achievements: name },
+        $inc: { points: achievement.points },
+      },
+      { new: true }
+    );
 
-    const user = await User4.findByIdAndUpdate(userId, {
-      $push: { achievements: name },
-    });
     return res.json({ status: true, user });
   } catch (ex) {
     next(ex);

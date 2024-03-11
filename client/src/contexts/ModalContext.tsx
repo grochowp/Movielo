@@ -5,7 +5,7 @@ import React, {
   ReactNode,
   useEffect,
 } from "react";
-import { Movie } from "../types";
+import { Movie, User } from "../types";
 import styled from "styled-components";
 import StarRating from "../components/StarRating";
 import { IoCloseOutline } from "react-icons/io5";
@@ -14,6 +14,7 @@ import { MovieService } from "../services/movieService";
 import { useUser } from "./UserContext";
 import { PiBookmarkSimpleThin, PiBookmarkSimpleFill } from "react-icons/pi";
 import { useKey } from "../hooks/useKey";
+import { AchievementsService } from "../services/AchievementsService";
 
 interface ModalContextType {
   selectedMovie: Movie | null;
@@ -28,7 +29,8 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [userRating, setUserRating] = useState<number>(5);
   const [message, setMessage] = useState<string>("");
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
-  const { user } = useUser();
+
+  const { user, setUser } = useUser();
 
   useEffect(() => {
     seeFav();
@@ -48,6 +50,37 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     setIsFavorite(false);
   };
 
+  const getRatingTitle = (type: string, length: number) => {
+    if (type === "tv") {
+      if (length === 5) return "Series Critic I";
+      if (length === 10) return "Series Critic II";
+      if (length === 15) return "Series Critic III";
+    } else if (type === "movie") {
+      if (length === 5) return "Movie Critic I";
+      if (length === 10) return "Movie Critic II";
+      if (length === 15) return "Movie Critic III";
+    }
+    return "";
+  };
+
+  const getAchievement = async (user: User) => {
+    if (selectedMovie) {
+      const length = user.ratings.filter(
+        (rating) => rating.type === selectedMovie.media_type
+      ).length;
+
+      const ratingTitle = getRatingTitle(selectedMovie.media_type, length);
+
+      if (ratingTitle) {
+        const response = await AchievementsService.assignAchievement(
+          user._id,
+          ratingTitle
+        );
+        setUser(response.user);
+      }
+    }
+  };
+
   const rateMovie = async () => {
     let response;
     if (user && selectedMovie)
@@ -58,6 +91,11 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         selectedMovie.media_type,
         selectedMovie.original_title || selectedMovie.original_name
       );
+
+    if (response.user) {
+      setUser(response.user);
+      getAchievement(response.user);
+    }
 
     setMessage(response.message);
   };

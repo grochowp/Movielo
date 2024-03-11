@@ -1,6 +1,6 @@
 import { sendRequest } from "../utils";
 
-export const LoginService = {
+export const userService = {
   login: async (email: string, password: string) => {
     const url = "http://localhost:3000/api/auth/login";
     const method = "POST";

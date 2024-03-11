@@ -66,7 +66,7 @@ const Achievements: React.FC = () => {
               <span>In progress</span>
             </div>
           </div>
-          <div>Total points: 100</div>
+          <div>Total points: {user?.points}</div>
         </div>
 
         {isLoading
