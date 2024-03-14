@@ -14,7 +14,8 @@ interface AddRatingRequest extends Request {
 
 interface FindAllRatedRequest extends Request {
   body: {
-    _id: string;
+    userId: string;
+    type: string;
   };
 }
 
@@ -68,12 +69,15 @@ module.exports.findAllRated = async (
   next: NextFunction
 ) => {
   try {
-    const { _id: userId } = req.body;
+    const { userId, type } = req.body;
 
-    const movies = await Rating.find({ userId, type: "movie" });
-    const series = await Rating.find({ userId, type: "tv" });
+    let data;
+    if (type === "All") data = await Rating.find({ userId });
+    else {
+      data = await Rating.find({ userId, type: type });
+    }
 
-    return res.json({ status: true, movies, series });
+    return res.json({ status: true, data });
   } catch (ex) {
     next(ex);
   }

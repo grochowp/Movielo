@@ -69,11 +69,12 @@ export const MovieService = {
     return await sendRequest(url, method, body);
   },
 
-  findAllRated: async (_id: string) => {
+  findAllRated: async (userId: string, type: string) => {
     const url = "http://localhost:3000/api/movie/findAllRated";
     const method = "POST";
     const body = {
-      _id,
+      userId,
+      type,
     };
     return await sendRequest(url, method, body);
   },

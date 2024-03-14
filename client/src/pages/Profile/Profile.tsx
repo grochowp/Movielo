@@ -14,10 +14,14 @@ const Profile: React.FC = () => {
   const fetchAndSetMovies = async () => {
     try {
       if (user) {
-        const response = await MovieService.findAllRated(user._id);
-
-        setMovies(response.movies);
-        setSeries(response.series);
+        const movieResponse = await MovieService.findAllRated(
+          user._id,
+          "movie"
+        );
+        const seriesResponse = await MovieService.findAllRated(user._id, "tv");
+        console.log(seriesResponse);
+        setMovies(movieResponse.data);
+        setSeries(seriesResponse.data);
       }
     } catch (error) {
       console.error("Error while fetching movie data", error);
