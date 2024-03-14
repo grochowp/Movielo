@@ -118,14 +118,15 @@ const StatsComponents = styled.div`
       justify-content: space-between;
       align-items: center;
       font-size: clamp(1.5rem, 1.75vw, 2rem);
+      height: 60%;
 
       h1 {
         font-family: "Roboto", sans-serif;
         font-weight: 400;
-        margin: 0.5vw 0 0 1rem;
+        margin: 0 0 0 1rem;
       }
       svg {
-        margin: 0.5vw 0.75rem 0 0;
+        margin: 0 1rem 0 0;
       }
     }
 
@@ -133,10 +134,10 @@ const StatsComponents = styled.div`
       font-family: "Spline Sans", sans-serif;
       font-weight: 300;
       font-size: clamp(0.5rem, 1vw, 1.25rem);
-      margin: 1.25vw 0 0 1rem;
+
+      margin: 0.25rem 0 0 1rem;
 
       @media (max-width: 900px) {
-        margin: 0.75rem 0 0 0.75rem;
         font-size: 0.65rem;
       }
 

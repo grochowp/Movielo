@@ -5,6 +5,7 @@ import { IoTrophyOutline } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import { AchievementsService } from "../../services/AchievementsService";
 import { useUser } from "../../contexts/UserContext";
+import ProgressBar from "./components/ProgressBar";
 
 interface IAchievement {
   name: string;
@@ -13,6 +14,7 @@ interface IAchievement {
   text: string;
   points: number;
   type: string;
+  requirements: number;
 }
 
 const Achievements: React.FC = () => {
@@ -21,7 +23,20 @@ const Achievements: React.FC = () => {
   const [data, setData] = useState<IAchievement[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { user } = useUser();
+  const counts = {
+    movie: 0,
+    tv: 0,
+  };
 
+  user?.ratings.forEach((rating) => {
+    if (rating.type === "movie") {
+      counts.movie++;
+    } else if (rating.type === "tv") {
+      counts.tv++;
+    }
+  });
+
+  console.log(counts);
   useEffect(() => {
     const fetchAndSetMovies = async () => {
       try {
@@ -122,8 +137,24 @@ const Achievements: React.FC = () => {
                 </div>
                 <div className="type">{achievement.type}</div>
                 <div className="state">
-                  {user?.achievements.includes(achievement.name) && (
+                  {user?.achievements.includes(achievement.name) ? (
                     <IoIosCheckmarkCircle />
+                  ) : (
+                    // <progress
+                    //   value={
+                    //     counts[achievement.type === "Series" ? "tv" : "movie"] /
+                    //     achievement.requirements
+                    //   }
+                    // />
+                    <ProgressBar
+                      completed={(
+                        (counts[
+                          achievement.type === "Series" ? "tv" : "movie"
+                        ] /
+                          achievement.requirements) *
+                        100
+                      ).toFixed(1)}
+                    />
                   )}
                 </div>
                 <div
@@ -233,7 +264,6 @@ const Content = styled.article`
   }
 
   .achievement {
-    // height: max-content;
     background-color: ${(props) => props.theme.componentsBackground};
     margin: 2rem 5rem;
     height: 7rem;
@@ -306,12 +336,18 @@ const Content = styled.article`
     }
 
     .state {
-      width: clamp(7rem, 20vw, 30rem);
+      width: clamp(20rem, 20vw, 30rem);
       color: green;
       display: flex;
-      font-size: 3rem;
       justify-content: center;
       align-items: center;
+      svg {
+        font-size: 3rem;
+      }
+
+      @media (max-width: 900px) {
+        width: clamp(7rem, 20vw, 30rem);
+      }
     }
 
     .points {
