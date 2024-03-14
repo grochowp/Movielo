@@ -171,6 +171,7 @@ const Content = styled.article`
   background-color: ${(props) => props.theme.pageBackground};
   padding-top: 6rem;
   transition: 0.25s;
+
   @media (max-width: 900px) {
     padding-top: 8rem;
   }
