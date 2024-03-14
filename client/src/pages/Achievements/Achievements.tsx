@@ -139,13 +139,7 @@ const Achievements: React.FC = () => {
                 <div className="state">
                   {user?.achievements.includes(achievement.name) ? (
                     <IoIosCheckmarkCircle />
-                  ) : (
-                    // <progress
-                    //   value={
-                    //     counts[achievement.type === "Series" ? "tv" : "movie"] /
-                    //     achievement.requirements
-                    //   }
-                    // />
+                  ) : achievement.requirements ? (
                     <ProgressBar
                       completed={(
                         (counts[
@@ -155,6 +149,8 @@ const Achievements: React.FC = () => {
                         100
                       ).toFixed(1)}
                     />
+                  ) : (
+                    ""
                   )}
                 </div>
                 <div

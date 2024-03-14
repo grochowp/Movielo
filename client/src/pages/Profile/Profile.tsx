@@ -19,7 +19,6 @@ const Profile: React.FC = () => {
           "movie"
         );
         const seriesResponse = await MovieService.findAllRated(user._id, "tv");
-        console.log(seriesResponse);
         setMovies(movieResponse.data);
         setSeries(seriesResponse.data);
       }
@@ -80,6 +79,7 @@ const Background = styled.img`
 
   @media (max-width: 900px) {
     width: 100vw;
+    height: 15%;
   }
 `;
 
@@ -171,17 +171,18 @@ const Stats = styled.article`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 65%;
+  min-height: 65%;
+
   gap: 3rem;
   background-color: ${(props) => props.theme.pageBackground};
 
   @media (max-width: 1300px) {
-    height: max-content;
     padding: 2rem;
+    min-height: 75%;
   }
 
   @media (max-width: 900px) {
     flex-direction: column;
-    height: max-content;
+    min-height: calc(77vh);
   }
 `;

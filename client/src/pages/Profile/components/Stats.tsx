@@ -11,6 +11,7 @@ const StatsComp: React.FC<IProps> = ({ children, data }) => {
   return (
     <Sect>
       <h1>{children}</h1>
+
       <article>
         <div>
           <h2>Favorite</h2>

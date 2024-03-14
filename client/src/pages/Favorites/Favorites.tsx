@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import ProfileHeader from "../../components/ProfileHeader";
 import { ChangeEvent, useEffect, useState } from "react";
 import { Movie } from "../../types";
@@ -12,6 +12,7 @@ const Favorites: React.FC = () => {
   const [favorites, setFavorites] = useState<Array<Movie>>([]);
   const [type, setType] = useState<string>("all");
   const [sort, setSort] = useState<string>("all");
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const deleteFavMovie = async (movie: Movie) => {
     if (user) await MovieService.deleteFavMovie(user._id, movie.id);
@@ -23,6 +24,7 @@ const Favorites: React.FC = () => {
         const response = await MovieService.findFavorites(user._id, type, sort);
 
         setFavorites(response.favorites);
+        setIsLoading(false);
       }
     } catch (error) {
       console.error("Error while fetching movie data", error);
@@ -30,6 +32,7 @@ const Favorites: React.FC = () => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     fetchAndSetMovies();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type, sort]);
@@ -99,31 +102,35 @@ const Favorites: React.FC = () => {
         </div>
 
         <div className="favorites">
-          {favorites.map((fav) => (
-            <div key={fav.poster_path} className="fav">
-              <img
-                src={`https://image.tmdb.org/t/p/w500${fav.poster_path}`}
-                alt={fav.original_title}
-              />
-              <div>
-                <div className="name">
-                  <h1>{fav.title}</h1>
-                  <h2>{fav.type}</h2>
+          {isLoading
+            ? Array.from({ length: 5 }, (_, i) => (
+                <div key={i} className="loaders"></div>
+              ))
+            : favorites.map((fav) => (
+                <div key={fav.poster_path} className="fav">
+                  <img
+                    src={`https://image.tmdb.org/t/p/w500${fav.poster_path}`}
+                    alt={fav.original_title}
+                  />
+                  <div>
+                    <div className="name">
+                      <h1>{fav.title}</h1>
+                      <h2>{fav.type}</h2>
+                    </div>
+                    <div className="ratings">
+                      <h3>{fav.releaseDate.slice(0, 4)}</h3>
+                      <h4>{fav.vote_average.toFixed(2)}</h4>
+                    </div>
+                  </div>
+                  <div>
+                    <PiBookmarkSimpleFill
+                      className="bookmark"
+                      onClick={() => deleteFavMovie(fav)}
+                    />
+                    <IoStarSharp className="star" />
+                  </div>
                 </div>
-                <div className="ratings">
-                  <h3>{fav.releaseDate.slice(0, 4)}</h3>
-                  <h4>{fav.vote_average.toFixed(2)}</h4>
-                </div>
-              </div>
-              <div>
-                <PiBookmarkSimpleFill
-                  className="bookmark"
-                  onClick={() => deleteFavMovie(fav)}
-                />
-                <IoStarSharp className="star" />
-              </div>
-            </div>
-          ))}
+              ))}
         </div>
       </Content>
     </>
@@ -132,6 +139,17 @@ const Favorites: React.FC = () => {
 
 export default Favorites;
 
+const loading = keyframes`
+  0% {
+    opacity: 0;
+  }
+  50%{
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
 const Content = styled.article`
   min-height: calc(100vh - 8rem);
   padding-top: 8rem;
@@ -224,6 +242,19 @@ const Content = styled.article`
     margin: 1rem 0.4rem;
     justify-content: center;
 
+    .loaders {
+      display: flex;
+      width: 23rem;
+      height: 10rem;
+      background-color: ${(props) => props.theme.componentsBackground};
+      animation: ${loading} 2s;
+      animation-iteration-count: infinite;
+      border-radius: 10px;
+      @media (max-width: 600px) {
+        width: 24vw;
+      }
+    }
+
     .fav {
       box-shadow: 0px 0px 10px ${(props) => props.theme.boxShadow};
       border-radius: 0.5rem;
@@ -250,9 +281,9 @@ const Content = styled.article`
         margin-left: 10px;
         font-size: 1.5rem;
         height: 2.5rem;
-        white-space: nowrap; /* zapobiega zawijaniu tekstu */
-        overflow: hidden; /* ukrywa tekst, który wychodzi poza element */
-        text-overflow: ellipsis; /* wyświetla "..." w przypadku, gdy tekst jest zbyt długi */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       h2 {

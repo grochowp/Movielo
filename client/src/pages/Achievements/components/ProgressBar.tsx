@@ -30,7 +30,7 @@ const Filler = styled.div<{ completed: string }>`
 
 const Label = styled.span`
   padding: 5px;
-  color: ${(props) => props.theme.color};
+  color: ${(props) => props.theme.componentsBackground};
   font-weight: bold;
   font-size: 0.75rem;
 `;
