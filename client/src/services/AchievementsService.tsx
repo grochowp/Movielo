@@ -1,4 +1,4 @@
-import { sendRequest } from "../utils";
+import { sendRequestPOST, sendRequestGET } from "../utils";
 
 export const AchievementsService = {
   getAchievements: async (
@@ -6,16 +6,17 @@ export const AchievementsService = {
     display: string,
     userAchievements?: Array<string>
   ) => {
-    const url = "http://localhost:3000/api/achievement/getAchievements";
-    const method = "POST";
-    const body = { type, display, userAchievements };
+    let url = `http://localhost:3000/api/achievement/getAchievements?type=${type}&display=${display}`;
+    if (userAchievements) {
+      const userAchievementsString = userAchievements.join(",");
+      url += `&userAchievements=${userAchievementsString}`;
+    }
 
-    return await sendRequest(url, method, body);
+    return await sendRequestGET(url);
   },
   assignAchievement: async (userId: string, name: string) => {
     const url = "http://localhost:3000/api/achievement/assignAchievement";
-    const method = "POST";
     const body = { userId, name };
-    return await sendRequest(url, method, body);
+    return await sendRequestPOST(url, body);
   },
 };

@@ -14,7 +14,7 @@ interface Movie {
 
 interface AddFavoriteRequest extends Request {
   body: {
-    _id: string;
+    userId: string;
     movie: Movie;
     type: string;
   };
@@ -22,14 +22,14 @@ interface AddFavoriteRequest extends Request {
 
 interface handleFavorite extends Request {
   body: {
-    _id: string;
-    id: string;
+    userId: string;
+    movieId: string;
   };
 }
 
 interface FindFavoritesRequest extends Request {
   body: {
-    _id: string;
+    userId: string;
     type: string;
     sort: string;
   };
@@ -65,7 +65,7 @@ module.exports.addFavMovie = async (
   next: NextFunction
 ) => {
   try {
-    const { _id: userId, movie, type } = req.body;
+    const { userId, movie, type } = req.body;
 
     const newFavorite = await Favorite.create({
       userId,
@@ -93,9 +93,9 @@ module.exports.handleFav = async (
   next: NextFunction
 ) => {
   try {
-    const { _id: userId, id } = req.body;
+    const { userId, movieId } = req.query;
 
-    const isFav = await Favorite.findOne({ userId, id });
+    const isFav = await Favorite.findOne({ userId, id: movieId });
 
     return res.json({ status: true, favorite: isFav });
   } catch (ex) {
@@ -109,15 +109,16 @@ module.exports.deleteFavMovie = async (
   next: NextFunction
 ) => {
   try {
-    const { _id: userId, id } = req.body;
+    const { userId, movieId } = req.query;
+    const delFav = await Favorite.findOneAndDelete({ userId, id: movieId });
 
-    const delFav = await Favorite.findOneAndDelete({ userId, id });
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { $pull: { favorites: delFav._id } },
+      { new: true }
+    );
 
-    await User.findByIdAndUpdate(userId, {
-      $pull: { favorites: delFav._id },
-    });
-
-    return res.json({ status: true, favorite: false });
+    return res.json({ status: true, favorite: false, user });
   } catch (ex) {
     next(ex);
   }
@@ -129,7 +130,8 @@ module.exports.findFavorites = async (
   next: NextFunction
 ) => {
   try {
-    const { _id: userId, type, sort } = req.body;
+    const { userId, type } = req.query;
+    const { sort } = req.params;
 
     let favorites;
     if (type !== "all") {

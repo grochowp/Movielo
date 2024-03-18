@@ -6,8 +6,15 @@ const {
 
 const router = require("express").Router();
 
-router.post("/login", login);
+// POST
 router.post("/register", register);
-router.post("/editProfile", editProfile);
+router.post("/login", login);
+
+// GET
+
+// PUT
+router.put("/editProfile/:userId", editProfile);
+
+// DELETE
 
 module.exports = router;

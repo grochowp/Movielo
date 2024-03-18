@@ -4,8 +4,8 @@ import { useUser } from "../../contexts/UserContext";
 import { useEffect, useState } from "react";
 import { MovieService } from "../../services/movieService";
 import { Movie } from "../../types";
-import SingleStats from "./SingleStats";
-import Graph from "./Graph";
+import SingleStats from "./components/SingleStats";
+import Graph from "./components/Graph";
 
 const Statistics: React.FC = () => {
   const { user } = useUser();

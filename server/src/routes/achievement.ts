@@ -5,7 +5,14 @@ const {
 
 const router3 = require("express").Router();
 
-router3.post("/getAchievements", getAchievements);
+// POST
 router3.post("/assignAchievement", assignAchievement);
+
+// GET
+router3.get("/getAchievements", getAchievements);
+
+// PUT
+
+// DELETE
 
 module.exports = router3;

@@ -4,7 +4,7 @@ const User = require("../models/userModel");
 
 interface AddRatingRequest extends Request {
   body: {
-    _id: string;
+    userId: string;
     id: string;
     rating: number;
     type: string;
@@ -25,7 +25,7 @@ module.exports.addRating = async (
   next: NextFunction
 ) => {
   try {
-    const { _id: userId, id, rating, type, title } = req.body;
+    const { userId, id, rating, type, title } = req.body;
 
     const existingRating = await Rating.findOne({ userId, id });
 
@@ -69,7 +69,8 @@ module.exports.findAllRated = async (
   next: NextFunction
 ) => {
   try {
-    const { userId, type } = req.body;
+    const { userId } = req.params;
+    const { type } = req.query;
 
     let data;
     if (type === "All") data = await Rating.find({ userId });

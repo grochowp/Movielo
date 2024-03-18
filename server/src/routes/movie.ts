@@ -9,12 +9,19 @@ const {
 
 const router2 = require("express").Router();
 
+// POST
 router2.post("/getMovie", getMovies);
 router2.post("/rateMovie", addRating);
 router2.post("/addFavMovie", addFavMovie);
-router2.post("/handleFav", handleFav);
-router2.post("/deleteFavMovie", deleteFavMovie);
-router2.post("/findAllRated", findAllRated);
-router2.post("/findFavorites", findFavorites);
+
+// GET
+router2.get("/handleFav", handleFav);
+router2.get("/findFavorites/:sort", findFavorites);
+router2.get("/findAllRated/:userId", findAllRated);
+
+// PUT
+
+// DELETE
+router2.delete("/deleteFavMovie", deleteFavMovie);
 
 module.exports = router2;

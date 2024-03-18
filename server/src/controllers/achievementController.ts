@@ -9,34 +9,42 @@ interface IAchievement {
   points: number;
   text: string;
 }
-
 module.exports.getAchievements = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const { type, display, userAchievements } = req.body;
+    const { type, display, userAchievements } = req.query;
+
+    // Sprawdzenie czy userAchievements istnieje i jest niepuste
+    const userAchievementsArray =
+      typeof userAchievements === "string" ? userAchievements.split(",") : [];
+
     let achievements;
-    if (type === "All") achievements = await Achievements.find();
-    else
+    if (type === "All") {
+      achievements = await Achievements.find();
+    } else {
       achievements = await Achievements.find({
         $or: [{ type }, { type: "Combined" }],
       });
+    }
 
-    if (display === "All") return res.json({ status: true, achievements });
+    if (display === "All") {
+      return res.json({ status: true, achievements });
+    }
 
     if (display === "Completed") {
       const completedAchievements = achievements.filter(
         (achievement: IAchievement) =>
-          userAchievements.includes(achievement.name)
+          userAchievementsArray.includes(achievement.name)
       );
 
       return res.json({ status: true, achievements: completedAchievements });
     } else {
       const unearnedAchievements = achievements.filter(
         (achievement: IAchievement) =>
-          !userAchievements.includes(achievement.name)
+          !userAchievementsArray.includes(achievement.name)
       );
 
       return res.json({ status: true, achievements: unearnedAchievements });

@@ -49,7 +49,7 @@ const Profile: React.FC = () => {
               </div>
               <div className="titles">
                 {user.titles.map((title: string) => (
-                  <Link to="../achievements">
+                  <Link to="../achievements" key={title}>
                     <p>{title}</p>
                   </Link>
                 ))}

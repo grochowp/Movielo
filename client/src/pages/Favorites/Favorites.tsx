@@ -8,14 +8,18 @@ import { PiBookmarkSimpleFill } from "react-icons/pi";
 import { IoStarSharp } from "react-icons/io5";
 
 const Favorites: React.FC = () => {
-  const { user } = useUser();
+  const { user, setUser } = useUser();
   const [favorites, setFavorites] = useState<Array<Movie>>([]);
   const [type, setType] = useState<string>("all");
   const [sort, setSort] = useState<string>("all");
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const deleteFavMovie = async (movie: Movie) => {
-    if (user) await MovieService.deleteFavMovie(user._id, movie.id);
+    if (user) {
+      const response = await MovieService.deleteFavMovie(user._id, movie.id);
+      setUser(response.user);
+      fetchAndSetMovies();
+    }
   };
 
   const fetchAndSetMovies = async () => {

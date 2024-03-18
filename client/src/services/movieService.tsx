@@ -1,9 +1,8 @@
-import { sendRequest } from "../utils";
+import { sendRequestPOST, sendRequestDELETE, sendRequestGET } from "../utils";
 
 export const MovieService = {
   getMovie: async (apiURL: string) => {
     const url = "http://localhost:3000/api/movie/getMovie";
-    const method = "POST";
     const body = {
       url: apiURL,
       options: {
@@ -16,77 +15,57 @@ export const MovieService = {
       },
     };
 
-    return await sendRequest(url, method, body);
+    return await sendRequestPOST(url, body);
   },
 
   rateMovie: async (
-    _id: string,
+    userId: string,
     id: number,
     rating: number,
     type: string,
     title: string
   ) => {
     const url = "http://localhost:3000/api/movie/rateMovie";
-    const method = "POST";
     const body = {
-      _id,
+      userId,
       id,
       rating,
       type,
       title,
     };
-    return await sendRequest(url, method, body);
+    return await sendRequestPOST(url, body);
   },
 
-  addFavMovie: async (_id: string, movie: object, type: string) => {
+  addFavMovie: async (userId: string, movie: object, type: string) => {
     const url = "http://localhost:3000/api/movie/addFavMovie";
-    const method = "POST";
     const body = {
-      _id,
+      userId,
       movie,
       type,
     };
-    return await sendRequest(url, method, body);
+    return await sendRequestPOST(url, body);
   },
 
-  handleFav: async (_id: string, id: number) => {
-    const url = "http://localhost:3000/api/movie/handleFav";
-    const method = "POST";
-    const body = {
-      _id,
-      id,
-    };
-    return await sendRequest(url, method, body);
+  handleFav: async (userId: string, movieId: number) => {
+    const url = `http://localhost:3000/api/movie/handleFav?userId=${userId}&movieId=${movieId}`;
+
+    return await sendRequestGET(url);
   },
 
-  deleteFavMovie: async (_id: string, id: number) => {
-    const url = "http://localhost:3000/api/movie/deleteFavMovie";
-    const method = "POST";
-    const body = {
-      _id,
-      id,
-    };
-    return await sendRequest(url, method, body);
+  deleteFavMovie: async (userId: string, movieId: number) => {
+    const url = `http://localhost:3000/api/movie/deleteFavMovie?userId=${userId}&movieId=${movieId}`;
+    return await sendRequestDELETE(url);
   },
 
   findAllRated: async (userId: string, type: string) => {
-    const url = "http://localhost:3000/api/movie/findAllRated";
-    const method = "POST";
-    const body = {
-      userId,
-      type,
-    };
-    return await sendRequest(url, method, body);
+    const url = `http://localhost:3000/api/movie/findAllRated/${userId}?type=${type}`;
+
+    return await sendRequestGET(url);
   },
 
-  findFavorites: async (_id: string, type: string, sort: string) => {
-    const url = "http://localhost:3000/api/movie/findFavorites";
-    const method = "POST";
-    const body = {
-      _id,
-      type,
-      sort,
-    };
-    return await sendRequest(url, method, body);
+  findFavorites: async (userId: string, type: string, sort: string) => {
+    const url = `http://localhost:3000/api/movie/findFavorites/${sort}?type=${type}&userId=${userId}`;
+
+    return await sendRequestGET(url);
   },
 };

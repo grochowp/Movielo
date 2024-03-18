@@ -23,7 +23,7 @@ const Container = styled.div`
 const Filler = styled.div<{ completed: string }>`
   height: 100%;
   width: ${(props) => props.completed}%;
-  background-color: green;
+  background-color: orange;
   border-radius: inherit;
   text-align: right;
 `;

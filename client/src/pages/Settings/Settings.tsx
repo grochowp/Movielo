@@ -34,17 +34,12 @@ const Settings: React.FC<ISettings> = ({ theme, setTheme }) => {
 
   const editUserData = async () => {
     const response = await userService.editProfile(name, surname, userId);
+    setUser(response.user);
     setMessage(response.message);
-    resetUserData();
-    response.user && setUser(response.user);
 
-    const intervalId = setInterval(() => {
+    setTimeout(() => {
       setMessage("");
     }, 3500);
-
-    setTimeout(function () {
-      clearInterval(intervalId);
-    }, 1000);
   };
 
   const resetUserData = () => {
@@ -127,7 +122,7 @@ const Settings: React.FC<ISettings> = ({ theme, setTheme }) => {
             <p>Titles</p>
             <ul>
               {user?.titles.map((title: string, i: number) => (
-                <li>
+                <li key={title}>
                   <input type="checkbox" value={i} />
                   <span>{title}</span>
                 </li>

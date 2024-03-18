@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { IoStarOutline } from "react-icons/io5";
 import { CiTrophy } from "react-icons/ci";
 import { PiPopcornThin } from "react-icons/pi";
-import { useUser } from "../../contexts/UserContext";
-import { Movie } from "../../types";
+import { useUser } from "../../../contexts/UserContext";
+import { Movie } from "../../../types";
 
 interface ISingleStats {
   data: Array<Movie>;

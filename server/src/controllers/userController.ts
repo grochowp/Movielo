@@ -67,6 +67,9 @@ module.exports.register = async (
       firstName,
       lastName,
       password: hashedPassword,
+      points: 0,
+      titles: [],
+      achievements: [],
     });
     delete user.password;
     return res.json({ status: true, user });
@@ -81,7 +84,9 @@ module.exports.editProfile = async (
   next: NextFunction
 ) => {
   try {
-    const { firstName, lastName, userId } = req.body;
+    const { firstName, lastName } = req.body;
+    const { userId } = req.params;
+
     const specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~0-9]/;
     if (specialChars.test(firstName) || specialChars.test(lastName)) {
       return res.json({ message: "Letters only" });

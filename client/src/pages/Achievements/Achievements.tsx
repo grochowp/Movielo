@@ -36,7 +36,6 @@ const Achievements: React.FC = () => {
     }
   });
 
-  console.log(counts);
   useEffect(() => {
     const fetchAndSetMovies = async () => {
       try {
