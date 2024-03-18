@@ -1,4 +1,4 @@
-import { sendRequestPOST, sendRequestPUT } from "../utils";
+import { sendRequestPOST, sendRequestPUT } from "./crudService";
 
 export const userService = {
   login: async (email: string, password: string) => {

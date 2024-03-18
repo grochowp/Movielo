@@ -1,4 +1,8 @@
-import { sendRequestPOST, sendRequestDELETE, sendRequestGET } from "../utils";
+import {
+  sendRequestPOST,
+  sendRequestGET,
+  sendRequestDELETE,
+} from "./crudService";
 
 export const MovieService = {
   getMovie: async (apiURL: string) => {

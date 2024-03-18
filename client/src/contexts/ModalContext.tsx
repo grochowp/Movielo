@@ -14,7 +14,7 @@ import { MovieService } from "../services/movieService";
 import { useUser } from "./UserContext";
 import { PiBookmarkSimpleThin, PiBookmarkSimpleFill } from "react-icons/pi";
 import { useKey } from "../hooks/useKey";
-import { AchievementsService } from "../services/AchievementsService";
+import { AchievementsService } from "../services/achievementsService";
 
 interface ModalContextType {
   selectedMovie: Movie | null;

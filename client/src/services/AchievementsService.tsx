@@ -1,4 +1,4 @@
-import { sendRequestPOST, sendRequestGET } from "../utils";
+import { sendRequestPOST, sendRequestGET } from "./crudService";
 
 export const AchievementsService = {
   getAchievements: async (

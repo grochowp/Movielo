@@ -311,6 +311,7 @@ const Content = styled.article`
       font-size: 4rem;
       position: relative;
       bottom: 0.5rem;
+      cursor: pointer;
     }
     .star {
       color: #ffe61b;

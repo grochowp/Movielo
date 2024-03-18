@@ -3,7 +3,7 @@ import ProfileHeader from "../../components/ProfileHeader";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { IoTrophyOutline } from "react-icons/io5";
 import { useEffect, useState } from "react";
-import { AchievementsService } from "../../services/AchievementsService";
+import { AchievementsService } from "../../services/achievementsService";
 import { useUser } from "../../contexts/UserContext";
 import ProgressBar from "./components/ProgressBar";
 
