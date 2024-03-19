@@ -94,6 +94,7 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   };
 
   const rateMovie = async () => {
+    console.log(selectedMovie);
     let response;
     if (user && selectedMovie)
       response = await MovieService.rateMovie(
@@ -101,7 +102,10 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         selectedMovie?.id,
         userRating,
         selectedMovie.media_type,
-        selectedMovie.original_title || selectedMovie.original_name
+        selectedMovie.original_title || selectedMovie.original_name,
+        selectedMovie.poster_path,
+        selectedMovie.vote_average,
+        selectedMovie.release_date || selectedMovie.first_air_date
       );
 
     if (response.user) {

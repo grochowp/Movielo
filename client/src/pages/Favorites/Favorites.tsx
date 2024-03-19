@@ -122,7 +122,7 @@ const Favorites: React.FC = () => {
                       <h2>{fav.type}</h2>
                     </div>
                     <div className="ratings">
-                      <h3>{fav.releaseDate.slice(0, 4)}</h3>
+                      <h3>{fav.release_date.slice(0, 4)}</h3>
                       <h4>{fav.vote_average.toFixed(2)}</h4>
                     </div>
                   </div>

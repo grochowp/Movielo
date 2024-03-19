@@ -27,7 +27,10 @@ export const MovieService = {
     id: number,
     rating: number,
     type: string,
-    title: string
+    title: string,
+    poster_path: string,
+    vote_average: number,
+    release_date: string
   ) => {
     const url = "http://localhost:3000/api/movie/rateMovie";
     const body = {
@@ -36,6 +39,9 @@ export const MovieService = {
       rating,
       type,
       title,
+      poster_path,
+      vote_average,
+      release_date,
     };
     return await sendRequestPOST(url, body);
   },
@@ -69,6 +75,12 @@ export const MovieService = {
 
   findFavorites: async (userId: string, type: string, sort: string) => {
     const url = `http://localhost:3000/api/movie/findFavorites/${sort}?type=${type}&userId=${userId}`;
+
+    return await sendRequestGET(url);
+  },
+
+  getRecent: async (userId: string) => {
+    const url = `http://localhost:3000/api/movie/getRecent/${userId}`;
 
     return await sendRequestGET(url);
   },

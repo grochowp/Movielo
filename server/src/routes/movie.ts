@@ -1,5 +1,9 @@
 const { getMovies } = require("../controllers/movieController");
-const { addRating, findAllRated } = require("../controllers/ratingController");
+const {
+  addRating,
+  findAllRated,
+  getRecent,
+} = require("../controllers/ratingController");
 const {
   addFavMovie,
   handleFav,
@@ -18,7 +22,7 @@ router2.post("/addFavMovie", addFavMovie);
 router2.get("/handleFav", handleFav);
 router2.get("/findFavorites/:sort", findFavorites);
 router2.get("/findAllRated/:userId", findAllRated);
-
+router2.get("/getRecent/:userId", getRecent);
 // PUT
 
 // DELETE

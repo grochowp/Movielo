@@ -100,7 +100,7 @@ export default Graph;
 const GraphComponent = styled.div`
   box-shadow: 0px 0px 10px ${(props) => props.theme.boxShadow};
   background-color: ${(props) => props.theme.componentsBackground};
-  height: clamp(20rem, 39vw, 37rem);
+  height: clamp(26.5rem, 39vw, 37rem);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -134,7 +134,7 @@ const GraphComponent = styled.div`
   }
 
   .graph {
-    height: clamp(15rem, 30vw, 30rem);
+    height: clamp(20rem, 30vw, 30rem);
     padding-right: 2rem;
 
     .recharts-legend-item {

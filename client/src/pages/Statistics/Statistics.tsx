@@ -6,6 +6,7 @@ import { MovieService } from "../../services/movieService";
 import { Movie } from "../../types";
 import SingleStats from "./components/SingleStats";
 import Graph from "./components/Graph";
+import Recent from "./components/Recent";
 
 const Statistics: React.FC = () => {
   const { user } = useUser();
@@ -50,7 +51,7 @@ const Statistics: React.FC = () => {
         </div>
         <div className="right">
           <div className="to-do"></div>
-          <div className="recent"></div>
+          <Recent userId={user?._id} />
         </div>
       </Content>
     </>
@@ -113,14 +114,7 @@ const Content = styled.article`
       box-shadow: 0px 0px 10px ${(props) => props.theme.boxShadow};
       background-color: ${(props) => props.theme.componentsBackground};
       margin-bottom: 2rem;
-      height: clamp(15rem, 30vw, 29rem);
-      border-radius: 10px;
-    }
-
-    .recent {
-      box-shadow: 0px 0px 10px ${(props) => props.theme.boxShadow};
-      background-color: ${(props) => props.theme.componentsBackground};
-      height: clamp(8.5rem, 15vw, 15rem);
+      height: clamp(15rem, 28vw, 29rem);
       border-radius: 10px;
     }
   }

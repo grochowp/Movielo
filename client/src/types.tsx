@@ -28,7 +28,8 @@ export interface Movie {
   media_type: string;
   title: string; // database fetch
   type: string; // movie/series
-  releaseDate: string;
+  release_date: string;
+  first_air_date: string;
 }
 
 export interface fetchMovie {

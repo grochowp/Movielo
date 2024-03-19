@@ -73,7 +73,7 @@ module.exports.addFavMovie = async (
       title: movie.title || movie.name,
       type,
       vote_average: movie.vote_average,
-      releaseDate: movie.release_date || movie.first_air_date,
+      release_date: movie.release_date || movie.first_air_date,
       poster_path: movie.poster_path,
     });
 

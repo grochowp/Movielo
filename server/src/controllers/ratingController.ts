@@ -9,13 +9,16 @@ interface AddRatingRequest extends Request {
     rating: number;
     type: string;
     title: string;
+    poster_path: string;
+    vote_average: number;
+    release_date: string;
   };
 }
 
 interface FindAllRatedRequest extends Request {
   body: {
     userId: string;
-    type: string;
+    type?: string;
   };
 }
 
@@ -25,7 +28,16 @@ module.exports.addRating = async (
   next: NextFunction
 ) => {
   try {
-    const { userId, id, rating, type, title } = req.body;
+    const {
+      userId,
+      id,
+      rating,
+      type,
+      title,
+      poster_path,
+      vote_average,
+      release_date,
+    } = req.body;
 
     const existingRating = await Rating.findOne({ userId, id });
 
@@ -44,6 +56,9 @@ module.exports.addRating = async (
       rating,
       type,
       title,
+      poster_path,
+      vote_average,
+      release_date,
     });
 
     const user = await User.findByIdAndUpdate(
@@ -79,6 +94,20 @@ module.exports.findAllRated = async (
     }
 
     return res.json({ status: true, data });
+  } catch (ex) {
+    next(ex);
+  }
+};
+module.exports.getRecent = async (
+  req: FindAllRatedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { userId } = req.params;
+    const response = await Rating.find({ userId });
+    const recentRating = response[response.length - 1];
+    return res.json({ status: true, recentRating });
   } catch (ex) {
     next(ex);
   }
