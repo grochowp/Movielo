@@ -39,10 +39,10 @@ const Profile: React.FC = () => {
           <Background
             className="background"
             src={`/images/bg-0.jpg`}
-            alt={"a"}
+            alt={"Background photo of profile"}
           />
           <Photo>
-            <img src={`/images/bg-1.jpg`} alt={"a"} />
+            <img src={`${user.profilePicture}`} alt={"Profile picture"}></img>
             <section>
               <div className="name">
                 {user.firstName} {user.lastName}
@@ -79,7 +79,8 @@ const Background = styled.img`
 
   @media (max-width: 900px) {
     width: 100vw;
-    height: 15%;
+    height: 20%;
+    min-height: 13rem;
   }
 `;
 
@@ -147,6 +148,7 @@ const Photo = styled.article`
       height: 20vw;
       min-width: 5rem;
       min-height: 5rem;
+      padding: 1rem;
     }
 
     .name {

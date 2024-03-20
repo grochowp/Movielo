@@ -13,6 +13,7 @@ export interface User {
   achievements: Array<string>;
   ratings: Array<IRating>;
   titles: Array<string>;
+  profilePicture: string;
 }
 
 export interface Movie {

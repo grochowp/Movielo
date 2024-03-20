@@ -2,7 +2,7 @@ import styled from "styled-components";
 import ProfileHeader from "../../components/ProfileHeader";
 import { GoPencil } from "react-icons/go";
 import { useUser } from "../../contexts/UserContext";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { CiDark } from "react-icons/ci";
 import { IoSunnyOutline } from "react-icons/io5";
 import { userService } from "../../services/userService";
@@ -23,6 +23,7 @@ const Settings: React.FC<ISettings> = ({ theme, setTheme }) => {
   const [password, setPassword] = useState<string>("********");
   const [dataChanged, setDataChanged] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
+  const [file, setFile] = useState<File | null>(null);
 
   useEffect(() => {
     if (name !== initialName || surname !== initialSurname) {
@@ -31,6 +32,49 @@ const Settings: React.FC<ISettings> = ({ theme, setTheme }) => {
       setDataChanged(false);
     }
   }, [name, surname, password, initialName, initialSurname]);
+
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      setFile(event.target.files[0]);
+    }
+  };
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    const clientId = "88f1ebac1107996";
+    const auth = "Client-ID " + clientId;
+    if (!file) {
+      return;
+    }
+    // Zakładając, że zmienna file została wcześniej zdefiniowana
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `${auth}`);
+
+    const formData = new FormData();
+    formData.append("image", file, "GHJQTpX.jpeg");
+    formData.append("type", "image");
+    formData.append("title", "Simple upload");
+    formData.append("description", "This is a simple image upload in Imgur");
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: formData,
+    };
+
+    try {
+      const response = await fetch(
+        "https://api.imgur.com/3/image",
+        requestOptions
+      );
+      const data = await response.json();
+      console.log(data);
+      // Obsługa odpowiedzi z serwera
+    } catch (error) {
+      alert("Failed");
+      console.error(error);
+    }
+  };
 
   const editUserData = async () => {
     const response = await userService.editProfile(name, surname, userId);
@@ -50,6 +94,7 @@ const Settings: React.FC<ISettings> = ({ theme, setTheme }) => {
   const changeTheme = (newTheme: string) => {
     setTheme(newTheme);
   };
+
   return (
     <>
       <ProfileHeader>Settings</ProfileHeader>
@@ -112,10 +157,24 @@ const Settings: React.FC<ISettings> = ({ theme, setTheme }) => {
           <div className="prof2">
             <p>Profile Picture</p>
             <div className="changePicture">
-              <img src={`/images/bg-1.jpg`} alt={"a"} />
-              <button className="profPic" onClick={() => resetUserData()}>
-                Change <GoPencil />
-              </button>
+              <img src={`${file ? file : user?.profilePicture}`} alt={"a"} />
+
+              <form onSubmit={handleSubmit}>
+                <div className="file-input-container">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    id="fileInput"
+                    onChange={handleFileChange}
+                  />
+                  <label htmlFor="fileInput" className="custom-file-input">
+                    Choose file
+                  </label>
+                </div>
+                <button className="profPic" type="submit">
+                  Upload <GoPencil />
+                </button>
+              </form>
             </div>
           </div>
           <div className="prof2">
@@ -297,11 +356,44 @@ const Content = styled.article`
       .changePicture {
         display: flex;
         align-items: center;
-        gap: 2rem;
+        justify-content: space-between;
+
         img {
-          width: 8rem;
-          height: 8rem;
+          width: clamp(6rem, 8vw, 8rem);
+          height: clamp(6rem, 8vw, 8rem);
           border-radius: 50%;
+        }
+
+        form {
+          display: flex;
+          // flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap: 1rem;
+        }
+
+        .file-input-container {
+          position: relative;
+          overflow: hidden;
+        }
+
+        .custom-file-input {
+          display: inline-block;
+          padding: 10px 15px;
+          background-color: ${(props) => props.theme.componentsBackground};
+          color: ${(props) => props.theme.color};
+          border-radius: 5px;
+          cursor: pointer;
+        }
+
+        input[type="file"] {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+          cursor: pointer;
         }
       }
 
