@@ -94,7 +94,6 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   };
 
   const rateMovie = async () => {
-    console.log(selectedMovie);
     let response;
     if (user && selectedMovie)
       response = await MovieService.rateMovie(

@@ -1,3 +1,4 @@
+import { URL_HOST } from "../utils";
 import {
   sendRequestPOST,
   sendRequestGET,
@@ -6,7 +7,7 @@ import {
 
 export const MovieService = {
   getMovie: async (apiURL: string) => {
-    const url = "http://localhost:3000/api/movie/getMovie";
+    const url = `${URL_HOST}/api/movie/getMovie`;
     const body = {
       url: apiURL,
       options: {
@@ -32,7 +33,7 @@ export const MovieService = {
     vote_average: number,
     release_date: string
   ) => {
-    const url = "http://localhost:3000/api/movie/rateMovie";
+    const url = `${URL_HOST}/api/movie/rateMovie`;
     const body = {
       userId,
       id,
@@ -47,7 +48,7 @@ export const MovieService = {
   },
 
   addFavMovie: async (userId: string, movie: object, type: string) => {
-    const url = "http://localhost:3000/api/movie/addFavMovie";
+    const url = `${URL_HOST}/api/movie/addFavMovie`;
     const body = {
       userId,
       movie,
@@ -57,30 +58,30 @@ export const MovieService = {
   },
 
   handleFav: async (userId: string, movieId: number) => {
-    const url = `http://localhost:3000/api/movie/handleFav?userId=${userId}&movieId=${movieId}`;
+    const url = `${URL_HOST}/api/movie/handleFav?userId=${userId}&movieId=${movieId}`;
 
     return await sendRequestGET(url);
   },
 
   deleteFavMovie: async (userId: string, movieId: number) => {
-    const url = `http://localhost:3000/api/movie/deleteFavMovie?userId=${userId}&movieId=${movieId}`;
+    const url = `${URL_HOST}/api/movie/deleteFavMovie?userId=${userId}&movieId=${movieId}`;
     return await sendRequestDELETE(url);
   },
 
   findAllRated: async (userId: string, type: string) => {
-    const url = `http://localhost:3000/api/movie/findAllRated/${userId}?type=${type}`;
+    const url = `${URL_HOST}/api/movie/findAllRated/${userId}?type=${type}`;
 
     return await sendRequestGET(url);
   },
 
   findFavorites: async (userId: string, type: string, sort: string) => {
-    const url = `http://localhost:3000/api/movie/findFavorites/${sort}?type=${type}&userId=${userId}`;
+    const url = `${URL_HOST}/api/movie/findFavorites/${sort}?type=${type}&userId=${userId}`;
 
     return await sendRequestGET(url);
   },
 
   getRecent: async (userId: string) => {
-    const url = `http://localhost:3000/api/movie/getRecent/${userId}`;
+    const url = `${URL_HOST}/api/movie/getRecent/${userId}`;
 
     return await sendRequestGET(url);
   },

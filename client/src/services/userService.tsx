@@ -1,8 +1,9 @@
+import { URL_HOST } from "../utils";
 import { sendRequestPOST, sendRequestPUT } from "./crudService";
 
 export const userService = {
   login: async (email: string, password: string) => {
-    const url = "http://localhost:3000/api/profile/login";
+    const url = `${URL_HOST}/api/profile/login`;
     const body = { email, password };
 
     return await sendRequestPOST(url, body);
@@ -17,14 +18,20 @@ export const userService = {
     firstName: string,
     lastName: string
   ) => {
-    const url = "http://localhost:3000/api/profile/register";
+    const url = `${URL_HOST}/api/profile/register`;
     const body = { email, password, firstName, lastName };
     return await sendRequestPOST(url, body);
   },
 
   editProfile: async (firstName: string, lastName: string, userId: string) => {
-    const url = `http://localhost:3000/api/profile/editProfile/${userId}`;
+    const url = `${URL_HOST}/api/profile/editProfile/${userId}`;
     const body = { firstName, lastName };
+    return await sendRequestPUT(url, body);
+  },
+
+  changeProfilePicture: async (file: File, userId?: string) => {
+    const url = `${URL_HOST}/api/profile/changeProfilePicture/${userId}`;
+    const body = { file };
     return await sendRequestPUT(url, body);
   },
 };
