@@ -31,7 +31,7 @@ const Recent: React.FC<IRecent> = ({ userId }) => {
     <Content>
       <h1>Recently rated</h1>
       {recent && (
-        <div className="recent" onClick={() => console.log(recent)}>
+        <div className="recent">
           <img
             src={`https://image.tmdb.org/t/p/w500${recent.poster_path}`}
             alt={recent?.original_title}
