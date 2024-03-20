@@ -332,11 +332,11 @@ const GenreSelection = styled.section`
 
     .prev-next {
       transition: 0.5s;
-      width: 8rem;
+      width: 6rem;
       border-radius: 30px;
 
       @media (max-width: 650px) {
-        width: 5rem;
+        width: 4rem;
       }
     }
 
@@ -351,8 +351,8 @@ const GenreSelection = styled.section`
     button {
       cursor: pointer;
       border-radius: 50%;
-      width: 3rem;
-      height: 3rem;
+      width: clamp(2rem, 3vw, 3rem);
+      height: clamp(2rem, 3vw, 3rem);
       background: none;
       background-color: ${(props) => props.theme.componentsBackground};
       border: 0px solid ${(props) => props.theme.color};
@@ -362,8 +362,6 @@ const GenreSelection = styled.section`
       font-weight: 100;
 
       @media (max-width: 650px) {
-        width: 2rem;
-        height: 2rem;
         font-size: 0.85rem;
       }
       &:hover {

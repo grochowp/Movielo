@@ -95,10 +95,10 @@ const Favorites: React.FC = () => {
               <option key={"nameDown"} value={"title"}>
                 Title Z-A
               </option>
-              <option key={"yearUp"} value={"releaseDate_desc"}>
+              <option key={"yearUp"} value={"release_date_desc"}>
                 Newest
               </option>
-              <option key={"yearDown"} value={"releaseDate"}>
+              <option key={"yearDown"} value={"release_date"}>
                 Oldest
               </option>
             </select>
@@ -208,7 +208,8 @@ const Content = styled.article`
 
     @media (max-width: 900px) {
       gap: 5vw;
-      margin: 2rem 2vw;
+      justify-content: center;
+      margin: 2rem 1rem;
 
       div {
         height: 5vw;
@@ -224,7 +225,7 @@ const Content = styled.article`
 
         select {
           color: ${(props) => props.theme.color};
-          width: clamp(6rem, 25vw, 10rem);
+          width: clamp(3rem, 25vw, 10rem);
           font-family: "Kadwa", sans-serif;
           font-weight: 100;
           font-size: clamp(0.5rem, 3vw, 1.25rem);
@@ -242,8 +243,8 @@ const Content = styled.article`
     height: max-content;
     display: flex;
     flex-wrap: wrap;
-    gap: 2.5rem;
-    margin: 1rem 0.4rem;
+    gap: 2rem;
+    margin: 1rem 1rem;
     justify-content: center;
 
     .loaders {
@@ -263,8 +264,8 @@ const Content = styled.article`
       box-shadow: 0px 0px 10px ${(props) => props.theme.boxShadow};
       border-radius: 0.5rem;
       display: flex;
-      width: 23rem;
-      height: 10rem;
+      width: 20rem;
+      height: 8rem;
       background-color: ${(props) => props.theme.componentsBackground};
       transition: 1s;
       &:hover {
@@ -273,8 +274,8 @@ const Content = styled.article`
 
       .name {
         color: ${(props) => props.theme.color};
-        width: 12rem;
-        height: 7rem;
+        width: 10rem;
+        height: 5rem;
       }
 
       h1 {
@@ -283,7 +284,7 @@ const Content = styled.article`
         margin: 0;
         padding: 0;
         margin-left: 10px;
-        font-size: 1.5rem;
+        font-size: 1.25rem;
         height: 2.5rem;
         white-space: nowrap;
         overflow: hidden;
@@ -302,7 +303,7 @@ const Content = styled.article`
     }
 
     img {
-      height: 10rem;
+      height: 8rem;
       border-radius: 0.5rem 0 0 0.5rem;
     }
 
@@ -316,14 +317,14 @@ const Content = styled.article`
     .star {
       color: #ffe61b;
       position: relative;
-      top: 3.65rem;
-      left: 0.5rem;
-      font-size: 1.75rem;
+      top: 1.75rem;
+      left: 0.25rem;
+      font-size: 1.5rem;
     }
 
     .ratings {
       color: ${(props) => props.theme.color};
-      width: 12rem;
+      width: 10rem;
       height: 4rem;
       display: flex;
       justify-content: space-between;
@@ -334,13 +335,14 @@ const Content = styled.article`
         font-weight: 100;
         display: flex;
         align-items: center;
+        font-size: 1rem;
         color: ${(props) => props.theme.colorSecondary};
       }
 
       h4 {
         font-family: "Kufam", sans-serif;
         font-weight: 100;
-        font-size: 1.5rem;
+        font-size: 1.25rem;
         display: flex;
         align-items: center;
       }

@@ -261,7 +261,7 @@ const Content = styled.article`
   .achievement {
     background-color: ${(props) => props.theme.componentsBackground};
     margin: 2rem 5rem;
-    height: 7rem;
+    height: clamp(5rem, 7vw, 5rem);
     display: flex;
     border-radius: 5px;
     box-shadow: 0px 0px 10px ${(props) => props.theme.boxShadow};
@@ -291,13 +291,13 @@ const Content = styled.article`
     }
 
     .title {
-      width: clamp(20rem, 45vw, 50rem);
+      width: clamp(15rem, 45vw, 50rem);
       margin-left: 1rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
       h1 {
-        font-size: clamp(1.25rem, 2vw, 2rem);
+        font-size: clamp(1rem, 2vw, 2rem);
         margin: 0;
         margin-top: 5px;
         font-family: "Spline Sans", sans-serif;
@@ -305,15 +305,24 @@ const Content = styled.article`
 
         span {
           margin-left: 1rem;
-          font-size: clamp(0.75rem, 1vw, 1rem);
+          font-size: clamp(0.65rem, 1vw, 1rem);
           color: ${(props) => props.theme.colorSecondary};
+        }
+
+        @media (max-width: 500px) {
+          display: flex;
+          flex-direction: column;
+
+          span {
+            margin-left: 0;
+          }
         }
       }
 
       h2 {
         font-family: "Kufam", sans-serif;
         font-weight: 100;
-        font-size: clamp(0.75rem, 1vw, 1rem);
+        font-size: clamp(0.65rem, 1vw, 1rem);
         color: ${(props) => props.theme.colorSecondary};
       }
     }
@@ -323,11 +332,15 @@ const Content = styled.article`
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.25rem;
+      font-size: clamp(1rem, 1.25vw, 1.25rem);
       margin: 0;
       margin-left: 1rem;
       padding: 0;
       color: ${(props) => props.theme.colorSecondary};
+
+      @media (max-width: 450px) {
+        display: none;
+      }
     }
 
     .state {
@@ -337,7 +350,7 @@ const Content = styled.article`
       justify-content: center;
       align-items: center;
       svg {
-        font-size: 3rem;
+        font-size: clamp(1.5rem, 3vw, 3rem);
       }
 
       @media (max-width: 900px) {
@@ -351,7 +364,11 @@ const Content = styled.article`
       color: ${(props) => props.theme.colorSecondary};
       justify-content: center;
       align-items: center;
-      font-size: clamp(1.5rem, 2vw, 1.75rem);
+      font-size: clamp(1.25rem, 2vw, 1.75rem);
+
+      @media (max-width: 400px) {
+        margin-right: 0.5rem;
+      }
     }
   }
 `;

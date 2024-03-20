@@ -37,7 +37,7 @@ interface FindFavoritesRequest extends Request {
 
 function sortByField(field: string, order: string) {
   return function (a: any, b: any) {
-    if (field === "releaseDate" || field === "vote_average") {
+    if (field === "release_date" || field === "vote_average") {
       if (order === "asc") {
         return field === "vote_average"
           ? a[field] - b[field]

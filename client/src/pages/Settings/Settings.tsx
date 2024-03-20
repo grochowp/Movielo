@@ -283,7 +283,7 @@ const Content = styled.article`
 
     .personalInfo-Edit {
       height: 3.5rem;
-      width: clamp(20rem, 35vw, 40rem);
+      width: clamp(18rem, 35vw, 40rem);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -300,7 +300,7 @@ const Content = styled.article`
     }
 
     .userData {
-      width: clamp(20rem, 35vw, 40rem);
+      width: clamp(18rem, 35vw, 40rem);
 
       div {
         display: flex;
@@ -349,7 +349,7 @@ const Content = styled.article`
     }
 
     .prof2 {
-      width: clamp(20rem, 35vw, 30rem);
+      width: clamp(18rem, 35vw, 30rem);
       p {
         padding-bottom: 0.7rem;
         font-size: clamp(1rem, 1.5vw, 1.5rem);
@@ -368,7 +368,6 @@ const Content = styled.article`
 
         form {
           display: flex;
-          // flex-direction: column;
           justify-content: center;
           align-items: center;
           gap: 1rem;
@@ -381,7 +380,7 @@ const Content = styled.article`
 
         .custom-file-input {
           display: inline-block;
-          padding: 10px 15px;
+          padding: 10px clamp(6px, 0.75vw, 16px);
           background-color: ${(props) => props.theme.componentsBackground};
           color: ${(props) => props.theme.color};
           border-radius: 5px;

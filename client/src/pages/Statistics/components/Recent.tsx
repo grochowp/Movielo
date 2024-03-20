@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { MovieService } from "../../../services/movieService";
 import { useEffect, useState } from "react";
 import { Movie } from "../../../types";
+import { IoStarSharp } from "react-icons/io5";
 
 interface IRecent {
   userId?: string;
@@ -48,12 +49,16 @@ const Recent: React.FC<IRecent> = ({ userId }) => {
               <div className="ratings">
                 <div>
                   <p>Avg. Rate</p>
-                  <h5>{recent.vote_average.toFixed(1)}</h5>
+                  <h5>
+                    {recent.vote_average.toFixed(1)} <IoStarSharp />
+                  </h5>
                 </div>
                 <div>
                   {" "}
                   <p>Your Rate</p>
-                  <h5>{recent.rating.toFixed(1)}</h5>
+                  <h5>
+                    {recent.rating.toFixed(1)} <IoStarSharp />
+                  </h5>
                 </div>
               </div>
             </div>
@@ -117,6 +122,7 @@ const Content = styled.div`
       font-size: clamp(1rem, 1.5vw, 1.5rem);
       height: 2.5rem;
       white-space: nowrap;
+      width: clamp(10rem, 15vw, 15rem);
       overflow: hidden;
       text-overflow: ellipsis;
     }
@@ -143,18 +149,29 @@ const Content = styled.div`
 
       .release {
         display: flex;
-        align-items: end;
+        // align-items: end;
       }
 
       .ratings {
         display: flex;
+        justify-content: flex-end;
         gap: 1rem;
+
         div {
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: center;
           gap: 0.3rem;
+
+          svg {
+            margin-bottom: 0.5rem;
+            color: #ffe61b;
+          }
+        }
+
+        @media (max-width: 1050px) {
+          gap: clamp(1rem, 5vw, 3rem);
         }
       }
 

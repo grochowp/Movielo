@@ -72,7 +72,7 @@ const StatsComponents = styled.div`
 
   .stats {
     box-shadow: 0px 0px 10px ${(props) => props.theme.boxShadow};
-    width: clamp(10rem, 13vw, 20rem);
+    width: clamp(9rem, 13vw, 20rem);
     height: clamp(4rem, 6vw, 7rem);
     border-radius: 10px;
 

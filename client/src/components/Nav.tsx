@@ -232,6 +232,7 @@ const Navigation = styled.nav`
     }
 
     @media (max-width: 500px) {
+      width: 8rem;
       // margin: 0 1vw;
     }
   }
@@ -253,7 +254,7 @@ const Navigation = styled.nav`
     }
 
     @media (max-width: 500px) {
-      width: 9rem;
+      width: 7rem;
       min-width: 0;
       height: 2rem;
       top: 30px;
@@ -295,13 +296,12 @@ const Navigation = styled.nav`
 
     @media (max-width: 700px) {
       margin-top: -0.5rem;
-      width: 49vw;
-      max-width: 18rem;
       right: 0.5rem;
     }
 
     @media (max-width: 500px) {
       margin-top: 0rem;
+      width: 10rem;
     }
 
     p {
@@ -340,11 +340,11 @@ const Navigation = styled.nav`
 
         @media (max-width: 500px) {
           h1 {
-            font-size: 0.65rem;
+            font-size: 0.5rem;
           }
 
           h2 {
-            font-size: 0.55rem;
+            font-size: 0.45rem;
           }
         }
       }
@@ -364,8 +364,8 @@ const Navigation = styled.nav`
         border-radius: 50%;
 
         @media (max-width: 500px) {
-          width: 2rem;
-          height: 2rem;
+          width: 1.75rem;
+          height: 1.75rem;
         }
       }
     }

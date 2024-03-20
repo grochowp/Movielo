@@ -100,7 +100,7 @@ const Sect = styled.section`
 
   @media (max-width: 570px) {
     height: max-content;
-    width: clamp(20rem, 60vw, 35rem);
+    width: clamp(18rem, 60vw, 35rem);
   }
 
   h1 {
