@@ -23,8 +23,11 @@ const Settings: React.FC<ISettings> = ({ theme, setTheme }) => {
   const [password, setPassword] = useState<string>("********");
   const [dataChanged, setDataChanged] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
-  const [file, setFile] = useState<File | null>(null);
 
+  const [tempLink, setTempLink] = useState<string>("");
+
+  const clientId = "ca3ea11c49bdc27";
+  const auth = "Client-ID " + clientId;
   useEffect(() => {
     if (name !== initialName || surname !== initialSurname) {
       setDataChanged(true);
@@ -33,47 +36,43 @@ const Settings: React.FC<ISettings> = ({ theme, setTheme }) => {
     }
   }, [name, surname, password, initialName, initialSurname]);
 
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
-      setFile(event.target.files[0]);
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", `${auth}`);
+
+      const formData = new FormData();
+      formData.append("image", event.target.files[0]);
+      formData.append("type", "image");
+      formData.append("title", "PP");
+      formData.append("description", "Profile picture");
+
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: formData,
+      };
+
+      try {
+        const response = await fetch(
+          "https://api.imgur.com/3/image",
+          requestOptions
+        );
+        const data = await response.json();
+        setTempLink(data.data.link);
+      } catch (error) {
+        alert("Failed");
+        console.error(error);
+      }
     }
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const clientId = "88f1ebac1107996";
-    const auth = "Client-ID " + clientId;
-    if (!file) {
-      return;
-    }
-    // Zakładając, że zmienna file została wcześniej zdefiniowana
-    const myHeaders = new Headers();
-    myHeaders.append("Authorization", `${auth}`);
-
-    const formData = new FormData();
-    formData.append("image", file, "GHJQTpX.jpeg");
-    formData.append("type", "image");
-    formData.append("title", "Simple upload");
-    formData.append("description", "This is a simple image upload in Imgur");
-
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: formData,
-    };
-
-    try {
-      const response = await fetch(
-        "https://api.imgur.com/3/image",
-        requestOptions
-      );
-      const data = await response.json();
-      console.log(data);
-      // Obsługa odpowiedzi z serwera
-    } catch (error) {
-      alert("Failed");
-      console.error(error);
-    }
+    if (!tempLink) return;
+    const response = await userService.changeProfilePicture(userId, tempLink);
+    console.log(response);
+    setUser(response.user);
   };
 
   const editUserData = async () => {
@@ -157,7 +156,10 @@ const Settings: React.FC<ISettings> = ({ theme, setTheme }) => {
           <div className="prof2">
             <p>Profile Picture</p>
             <div className="changePicture">
-              <img src={`${file ? file : user?.profilePicture}`} alt={"a"} />
+              <img
+                src={`${tempLink ? tempLink : user?.profilePicture}`}
+                alt={"a"}
+              />
 
               <form onSubmit={handleSubmit}>
                 <div className="file-input-container">

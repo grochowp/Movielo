@@ -29,9 +29,9 @@ export const userService = {
     return await sendRequestPUT(url, body);
   },
 
-  changeProfilePicture: async (file: File, userId?: string) => {
+  changeProfilePicture: async (userId: string, link: string) => {
     const url = `${URL_HOST}/api/profile/changeProfilePicture/${userId}`;
-    const body = { file };
+    const body = { link };
     return await sendRequestPUT(url, body);
   },
 };

@@ -38,6 +38,7 @@ const userSchema = new mongoose.Schema({
   ],
   achievements: [{ type: String, required: true }],
   titles: { type: Array, required: true },
+  profilePicture: { type: String, required: true },
 });
 
 module.exports = mongoose.model("Users", userSchema);

@@ -25,7 +25,7 @@ const Nav: React.FC = () => {
   const { movies } = useMovies(query);
   const modal = useModal();
   const navigate = useNavigate();
-  const user = useUser();
+  const { user, setUser } = useUser();
 
   useEffect(() => {
     if (selectedRef.current) {
@@ -63,7 +63,7 @@ const Nav: React.FC = () => {
   };
 
   const moveTo = (s: string) => {
-    if (s === "login") user.setUser(null);
+    if (s === "login") setUser(null);
     navigate(`/dashboard/${s}`);
   };
 
@@ -105,7 +105,7 @@ const Nav: React.FC = () => {
           <div className="options" onClick={() => setShowUser(false)}>
             <div className="first">
               <div className="img">
-                <img src={`/images/bg-1.jpg`} alt={"a"} />
+                <img src={`${user?.profilePicture}`} alt={"a"} />
               </div>
               <div>
                 <h1>Patryk Grochowski</h1>

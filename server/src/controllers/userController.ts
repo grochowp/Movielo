@@ -1,5 +1,8 @@
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
+const dotenv = require("dotenv");
+const axios = require("axios");
+
 import { Request, Response, NextFunction } from "express";
 
 interface UserRequest extends Request {
@@ -9,6 +12,20 @@ interface UserRequest extends Request {
     firstName: string;
     lastName: string;
     userId: string;
+  };
+}
+
+interface FileRequest extends Request {
+  body: {
+    file: {
+      lastModified: number;
+      lastModifiedData: string;
+      name: string;
+      size: number;
+      type: string;
+      webkitRelativePath: string;
+      buffer: Buffer;
+    };
   };
 }
 
@@ -26,6 +43,7 @@ module.exports.login = async (
         status: false,
       });
     const isPasswordValid = await bcrypt.compare(password, user.password);
+
     if (!isPasswordValid)
       return res.json({
         message: "Incorrect Email or Password",
@@ -70,6 +88,7 @@ module.exports.register = async (
       points: 0,
       titles: [],
       achievements: [],
+      profilePicture: "https://i.imgur.com/u5PAw8H.png",
     });
     delete user.password;
     return res.json({ status: true, user });
@@ -99,5 +118,29 @@ module.exports.editProfile = async (
     return res.json({ status: true, user, message: "Profile updated!" });
   } catch (ex) {
     next(ex);
+  }
+};
+
+module.exports.changeProfilePicture = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { link } = req.body;
+    const { userId } = req.params;
+
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { profilePicture: link },
+      { new: true }
+    );
+    return res.json({
+      status: true,
+      user,
+      message: "Profile picture updated!",
+    });
+  } catch (err) {
+    console.log(err);
   }
 };
