@@ -24,10 +24,10 @@ const Dashb = styled.section`
 `;
 
 const Content = styled.section`
-  width: calc(100vw - 7rem);
+  width: calc(100vw - 5rem);
   height: 100vh;
   min-height: max-content;
-  margin-left: 7rem;
+  margin-left: 5rem;
 
   @media (max-width: 900px) {
     width: 100vw;

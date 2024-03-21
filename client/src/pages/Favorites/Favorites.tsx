@@ -6,12 +6,15 @@ import { MovieService } from "../../services/movieService";
 import { useUser } from "../../contexts/UserContext";
 import { PiBookmarkSimpleFill } from "react-icons/pi";
 import { IoStarSharp } from "react-icons/io5";
+import { useModal } from "../../contexts/ModalContext";
 
 const Favorites: React.FC = () => {
   const { user, setUser } = useUser();
+  const modal = useModal();
+
   const [favorites, setFavorites] = useState<Array<Movie>>([]);
   const [type, setType] = useState<string>("all");
-  const [sort, setSort] = useState<string>("all");
+  const [sort, setSort] = useState<string>("vote_average_desc");
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const deleteFavMovie = async (movie: Movie) => {
@@ -111,15 +114,19 @@ const Favorites: React.FC = () => {
                 <div key={i} className="loaders"></div>
               ))
             : favorites.map((fav) => (
-                <div key={fav.poster_path} className="fav">
+                <div
+                  key={fav.poster_path}
+                  className="fav"
+                  onClick={() => modal.openModal(fav)}
+                >
                   <img
                     src={`https://image.tmdb.org/t/p/w500${fav.poster_path}`}
                     alt={fav.original_title}
                   />
                   <div>
                     <div className="name">
-                      <h1>{fav.title}</h1>
-                      <h2>{fav.type}</h2>
+                      <h1>{fav.original_title}</h1>
+                      <h2>{fav.media_type}</h2>
                     </div>
                     <div className="ratings">
                       <h3>{fav.release_date.slice(0, 4)}</h3>

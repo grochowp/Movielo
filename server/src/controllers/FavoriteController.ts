@@ -4,12 +4,14 @@ const User = require("../models/userModel");
 
 interface Movie {
   id: string;
-  title?: string;
-  name?: string;
+  original_title?: string;
+  original_name?: string;
   vote_average: number;
   release_date?: string;
   first_air_date?: string;
   poster_path: string;
+  backdrop_path: string;
+  overview: string;
 }
 
 interface AddFavoriteRequest extends Request {
@@ -66,15 +68,16 @@ module.exports.addFavMovie = async (
 ) => {
   try {
     const { userId, movie, type } = req.body;
-
     const newFavorite = await Favorite.create({
       userId,
       id: movie.id,
-      title: movie.title || movie.name,
-      type,
+      original_title: movie.original_title || movie.original_name,
+      media_type: type,
       vote_average: movie.vote_average,
       release_date: movie.release_date || movie.first_air_date,
       poster_path: movie.poster_path,
+      backdrop_path: movie.backdrop_path,
+      overview: movie.overview,
     });
 
     await User.findByIdAndUpdate(userId, {

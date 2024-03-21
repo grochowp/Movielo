@@ -66,7 +66,7 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const getAchievement = async (user: User) => {
     if (selectedMovie) {
       const length = user.ratings.filter(
-        (rating) => rating.type === selectedMovie.media_type
+        (rating) => rating.media_type === selectedMovie.media_type
       ).length;
 
       const ratingTitle = getRatingTitle(selectedMovie.media_type, length);
@@ -98,13 +98,8 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     if (user && selectedMovie)
       response = await MovieService.rateMovie(
         user._id,
-        selectedMovie?.id,
         userRating,
-        selectedMovie.media_type,
-        selectedMovie.original_title || selectedMovie.original_name,
-        selectedMovie.poster_path,
-        selectedMovie.vote_average,
-        selectedMovie.release_date || selectedMovie.first_air_date
+        selectedMovie
       );
 
     if (response.user) {

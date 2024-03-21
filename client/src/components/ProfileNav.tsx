@@ -41,7 +41,7 @@ const NavBar = styled.nav`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 7rem;
+  width: 5rem;
   height: 100vh;
   position: fixed;
   justify-content: space-between;
@@ -75,7 +75,7 @@ const NavSection = styled.div`
 
   svg {
     font-size: 2rem;
-    width: 5rem;
+    width: 3rem;
     padding: 1rem;
     transition: 1s;
     cursor: pointer;

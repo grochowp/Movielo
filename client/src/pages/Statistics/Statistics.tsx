@@ -61,12 +61,13 @@ const Statistics: React.FC = () => {
 export default Statistics;
 
 const Content = styled.article`
-  max-width: calc(1920px - 7rem);
-  width: calc(100vw - 7rem);
+  max-width: calc(1920px - 5rem);
+  width: calc(100vw - 5rem);
   min-height: calc(100vh - 6rem);
   padding-top: 6rem;
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
   background-color: ${(props) => props.theme.pageBackground};
 

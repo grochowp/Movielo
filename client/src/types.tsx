@@ -1,6 +1,6 @@
 interface IRating {
   _id: string;
-  type: string;
+  media_type: string;
 }
 
 export interface User {

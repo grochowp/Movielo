@@ -70,12 +70,12 @@ export default Profile;
 
 const Background = styled.img`
   height: 35%;
-  width: calc(100% - 7rem);
+  width: calc(100% - 5rem);
   position: absolute;
   z-index: -1;
   filter: opacity(30%);
   object-fit: cover;
-  max-width: calc(1920px - 7rem);
+  max-width: calc(1920px - 5rem);
 
   @media (max-width: 900px) {
     width: 100vw;
@@ -89,7 +89,7 @@ const Photo = styled.article`
   align-items: center;
   height: 35%;
   gap: 2rem;
-  width: calc(100% - 7rem);
+  width: calc(100% - 5rem);
   background: transparent;
   color: ${(props) => props.theme.color};
 

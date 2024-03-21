@@ -1,3 +1,4 @@
+import { Movie } from "../types";
 import { URL_HOST } from "../utils";
 import {
   sendRequestPOST,
@@ -23,26 +24,12 @@ export const MovieService = {
     return await sendRequestPOST(url, body);
   },
 
-  rateMovie: async (
-    userId: string,
-    id: number,
-    rating: number,
-    type: string,
-    title: string,
-    poster_path: string,
-    vote_average: number,
-    release_date: string
-  ) => {
+  rateMovie: async (userId: string, rating: number, movie: Movie) => {
     const url = `${URL_HOST}/api/movie/rateMovie`;
     const body = {
       userId,
-      id,
       rating,
-      type,
-      title,
-      poster_path,
-      vote_average,
-      release_date,
+      movie,
     };
     return await sendRequestPOST(url, body);
   },

@@ -33,7 +33,7 @@ const StatsComp: React.FC<IProps> = ({ children, data }) => {
               .slice(0, 3)
               .map((movie, index) => (
                 <div key={index + 1}>
-                  <li>{movie.title}</li>
+                  <li>{movie.original_title}</li>
                   <span>{movie.rating}</span>
                 </div>
               ))}

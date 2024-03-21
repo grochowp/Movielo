@@ -29,9 +29,9 @@ const Achievements: React.FC = () => {
   };
 
   user?.ratings.forEach((rating) => {
-    if (rating.type === "movie") {
+    if (rating.media_type === "movie") {
       counts.movie++;
-    } else if (rating.type === "tv") {
+    } else if (rating.media_type === "tv") {
       counts.tv++;
     }
   });
@@ -195,9 +195,8 @@ const SelectSpan = styled.span<SelectSpanProps>`
 
 const Content = styled.article`
   min-height: calc(100vh - 11rem);
-  width: calc(100vw - 7rem);
-
-  max-width: 1920px;
+  width: calc(100vw - 5rem);
+  max-width: calc(1920px - 5rem);
   background-color: ${(props) => props.theme.pageBackground};
   color: ${(props) => props.theme.color};
   padding-top: 10rem;
@@ -261,7 +260,7 @@ const Content = styled.article`
   .achievement {
     background-color: ${(props) => props.theme.componentsBackground};
     margin: 2rem 5rem;
-    height: clamp(5rem, 7vw, 5rem);
+    height: clamp(5rem, 7vw, 7rem);
     display: flex;
     border-radius: 5px;
     box-shadow: 0px 0px 10px ${(props) => props.theme.boxShadow};

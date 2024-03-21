@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema({
         ref: "ratings",
         required: true,
       },
-      type: { type: String, enum: ["movie", "tv"], required: true },
+      media_type: { type: String, enum: ["movie", "tv"], required: true },
     },
   ],
   achievements: [{ type: String, required: true }],

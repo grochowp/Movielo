@@ -2,16 +2,24 @@ import { Request, Response, NextFunction } from "express";
 const Rating = require("../models/ratingModel");
 const User = require("../models/userModel");
 
+interface Movie {
+  id: string;
+  title?: string;
+  name?: string;
+  vote_average: number;
+  release_date?: string;
+  first_air_date?: string;
+  poster_path: string;
+  backdrop_path: string;
+  overview: string;
+  media_type: string;
+}
+
 interface AddRatingRequest extends Request {
   body: {
     userId: string;
-    id: string;
     rating: number;
-    type: string;
-    title: string;
-    poster_path: string;
-    vote_average: number;
-    release_date: string;
+    movie: Movie;
   };
 }
 
@@ -28,21 +36,16 @@ module.exports.addRating = async (
   next: NextFunction
 ) => {
   try {
-    const {
-      userId,
-      id,
-      rating,
-      type,
-      title,
-      poster_path,
-      vote_average,
-      release_date,
-    } = req.body;
+    const { userId, rating, movie } = req.body;
 
-    const existingRating = await Rating.findOne({ userId, id });
+    const existingRating = await Rating.findOne({ userId, id: movie.id });
 
     if (existingRating) {
-      await Rating.findOneAndUpdate({ userId, id }, { rating }, { new: true });
+      await Rating.findOneAndUpdate(
+        { userId, id: movie.id },
+        { rating },
+        { new: true }
+      );
 
       return res.json({
         message: "Rating updated successfully!",
@@ -52,13 +55,13 @@ module.exports.addRating = async (
 
     const newRating = await Rating.create({
       userId,
-      id,
+      id: movie.id,
       rating,
-      type,
-      title,
-      poster_path,
-      vote_average,
-      release_date,
+      media_type: movie.media_type,
+      original_title: movie.title || movie.name,
+      poster_path: movie.poster_path,
+      vote_average: movie.vote_average,
+      release_date: movie.release_date || movie.first_air_date,
     });
 
     const user = await User.findByIdAndUpdate(
@@ -90,7 +93,7 @@ module.exports.findAllRated = async (
     let data;
     if (type === "All") data = await Rating.find({ userId });
     else {
-      data = await Rating.find({ userId, type: type });
+      data = await Rating.find({ userId, media_type: type });
     }
 
     return res.json({ status: true, data });

@@ -40,7 +40,7 @@ const Settings: React.FC<ISettings> = ({ theme, setTheme }) => {
     if (event.target.files && event.target.files.length > 0) {
       const myHeaders = new Headers();
       myHeaders.append("Authorization", `${auth}`);
-
+      console.log(event.target.files[0]);
       const formData = new FormData();
       formData.append("image", event.target.files[0]);
       formData.append("type", "image");
@@ -71,7 +71,6 @@ const Settings: React.FC<ISettings> = ({ theme, setTheme }) => {
     event.preventDefault();
     if (!tempLink) return;
     const response = await userService.changeProfilePicture(userId, tempLink);
-    console.log(response);
     setUser(response.user);
   };
 
@@ -165,7 +164,7 @@ const Settings: React.FC<ISettings> = ({ theme, setTheme }) => {
                 <div className="file-input-container">
                   <input
                     type="file"
-                    accept="image/*"
+                    accept="image/jpeg"
                     id="fileInput"
                     onChange={handleFileChange}
                   />
@@ -220,8 +219,8 @@ export default Settings;
 
 const Content = styled.article`
   display: flex;
-  max-width: calc(1920px - 7rem);
-  width: calc(100vw - 7rem);
+  max-width: calc(1920px - 5rem);
+  width: calc(100vw - 5rem);
   height: calc(100vh - 6rem);
   font-family: "Spline Sans", sans-serif;
   background-color: ${(props) => props.theme.pageBackground};
