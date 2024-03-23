@@ -4,6 +4,8 @@ import { CiTrophy } from "react-icons/ci";
 import { PiPopcornThin } from "react-icons/pi";
 import { useUser } from "../../../contexts/UserContext";
 import { Movie } from "../../../types";
+import { useEffect, useState } from "react";
+import { userService } from "../../../services/userService";
 
 interface ISingleStats {
   data: Array<Movie>;
@@ -11,6 +13,32 @@ interface ISingleStats {
 
 const SingleStats: React.FC<ISingleStats> = ({ data }) => {
   const { user } = useUser();
+  const [ranking, setRanking] = useState<number>(0);
+  const [allUsersRanked, setAllUsersRanked] = useState<number>(0);
+
+  const getSuffix = (number: number) => {
+    const lastDigit = number % 10;
+    if (lastDigit === 1 && number !== 11) {
+      return "st";
+    } else if (lastDigit === 2 && number !== 12) {
+      return "nd";
+    } else if (lastDigit === 3 && number !== 13) {
+      return "rd";
+    } else {
+      return "th";
+    }
+  };
+
+  const findUserRanking = async () => {
+    const response = await userService.findUserRating(user?._id);
+    setRanking(response.ranking);
+    setAllUsersRanked(response.allUsersRanked);
+  };
+
+  useEffect(() => {
+    findUserRanking();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <StatsComponents>
@@ -44,7 +72,11 @@ const SingleStats: React.FC<ISingleStats> = ({ data }) => {
       </div>
       <div className="stats">
         <div>
-          <h1>3rd</h1>
+          <h1>
+            {ranking}
+            {getSuffix(ranking)}
+            {/* {allUsersRanked} */}
+          </h1>
           <CiTrophy />
         </div>
         <h2>Ranking</h2>

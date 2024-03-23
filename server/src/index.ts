@@ -1,6 +1,6 @@
 import express from "express";
 
-const profileRoutes = require("./routes/profile");
+const userRoutes = require("./routes/user");
 const movieRoutes = require("./routes/movie");
 const achievementRoutes = require("./routes/achievement");
 const mongoose = require("mongoose");
@@ -30,6 +30,6 @@ mongoose
     console.log(err.message);
   });
 
-app.use("/api/profile", profileRoutes);
+app.use("/api/user", userRoutes);
 app.use("/api/movie", movieRoutes);
 app.use("/api/achievement", achievementRoutes);

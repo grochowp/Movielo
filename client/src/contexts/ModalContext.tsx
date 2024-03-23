@@ -79,17 +79,19 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         setUser(response.user);
       }
 
-      if (
-        !user.titles.includes("Brutal") &&
-        userRating < 3 &&
-        selectedMovie.vote_average > 8
-      ) {
-        const response = await AchievementsService.assignAchievement(
-          user._id,
-          "Discerning Critic"
-        );
-        setUser(response.user);
-      }
+      // TO-DO: fix user.titles.includes after changing database structure
+
+      // if (
+      //   !user.titles.includes() &&
+      //   userRating < 3 &&
+      //   selectedMovie.vote_average > 8
+      // ) {
+      //   const response = await AchievementsService.assignAchievement(
+      //     user._id,
+      //     "Discerning Critic"
+      //   );
+      //   setUser(response.user);
+      // }
     }
   };
 

@@ -66,7 +66,7 @@ export default StatsComp;
 
 const Sect = styled.section`
   min-height: max-content;
-  border-radius: 1rem;
+  border-radius: 10px;
   width: 35rem;
   display: flex;
   flex-direction: column;

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useUser } from "../../contexts/UserContext";
 import { MovieService } from "../../services/movieService";
 import { useEffect, useState } from "react";
-import { Movie } from "../../types";
+import { ITitle, Movie } from "../../types";
 import StatsComp from "./components/Stats";
 import { Link } from "react-router-dom";
 
@@ -48,9 +48,9 @@ const Profile: React.FC = () => {
                 {user.firstName} {user.lastName}
               </div>
               <div className="titles">
-                {user.titles.map((title: string) => (
-                  <Link to="../achievements" key={title}>
-                    <p>{title}</p>
+                {user.titles.map((title: ITitle) => (
+                  <Link to="../achievements" key={title.name}>
+                    <p>{title.name}</p>
                   </Link>
                 ))}
               </div>

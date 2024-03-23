@@ -17,7 +17,6 @@ module.exports.getAchievements = async (
   try {
     const { type, display, userAchievements } = req.query;
 
-    // Sprawdzenie czy userAchievements istnieje i jest niepuste
     const userAchievementsArray =
       typeof userAchievements === "string" ? userAchievements.split(",") : [];
 
@@ -67,15 +66,31 @@ module.exports.assignAchievement = async (
         .status(404)
         .json({ status: false, message: "Achievement not found" });
     }
-
-    const user = await User.findByIdAndUpdate(
-      userId,
-      {
-        $push: { achievements: name, titles: achievement?.title },
-        $inc: { points: achievement.points },
-      },
-      { new: true }
-    );
+    let user;
+    if (achievement.title) {
+      user = await User.findByIdAndUpdate(
+        userId,
+        {
+          $push: {
+            achievements: name,
+            titles: { name: achievement?.title, display: false },
+          },
+          $inc: { points: achievement.points },
+        },
+        { new: true }
+      );
+    } else {
+      user = await User.findByIdAndUpdate(
+        userId,
+        {
+          $push: {
+            achievements: name,
+          },
+          $inc: { points: achievement.points },
+        },
+        { new: true }
+      );
+    }
 
     return res.json({ status: true, user });
   } catch (ex) {

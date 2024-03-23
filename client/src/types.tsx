@@ -3,6 +3,11 @@ interface IRating {
   media_type: string;
 }
 
+export interface ITitle {
+  name: string;
+  display: boolean;
+}
+
 export interface User {
   _id: string;
   firstName: string;
@@ -12,7 +17,7 @@ export interface User {
   points: number;
   achievements: Array<string>;
   ratings: Array<IRating>;
-  titles: Array<string>;
+  titles: Array<ITitle>;
   profilePicture: string;
 }
 
@@ -27,8 +32,6 @@ export interface Movie {
   overview: string;
   vote_average: number; // other users avg rating
   media_type: string;
-  title: string; // database fetch
-  type: string; // movie/series
   release_date: string;
   first_air_date: string;
 }

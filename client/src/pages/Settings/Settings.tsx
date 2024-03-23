@@ -6,6 +6,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { CiDark } from "react-icons/ci";
 import { IoSunnyOutline } from "react-icons/io5";
 import { userService } from "../../services/userService";
+import { ITitle } from "../../types";
 
 interface ISettings {
   theme: string;
@@ -40,7 +41,7 @@ const Settings: React.FC<ISettings> = ({ theme, setTheme }) => {
     if (event.target.files && event.target.files.length > 0) {
       const myHeaders = new Headers();
       myHeaders.append("Authorization", `${auth}`);
-      console.log(event.target.files[0]);
+
       const formData = new FormData();
       formData.append("image", event.target.files[0]);
       formData.append("type", "image");
@@ -91,6 +92,12 @@ const Settings: React.FC<ISettings> = ({ theme, setTheme }) => {
 
   const changeTheme = (newTheme: string) => {
     setTheme(newTheme);
+  };
+
+  const handleChangeTitles = async (titleName: string) => {
+    const response = await userService.changeTitles(titleName, userId);
+
+    console.log(response);
   };
 
   return (
@@ -181,10 +188,14 @@ const Settings: React.FC<ISettings> = ({ theme, setTheme }) => {
           <div className="prof2">
             <p>Titles</p>
             <ul>
-              {user?.titles.map((title: string, i: number) => (
-                <li key={title}>
-                  <input type="checkbox" value={i} />
-                  <span>{title}</span>
+              {user?.titles.map((title: ITitle, i: number) => (
+                <li key={title.name}>
+                  <input
+                    type="checkbox"
+                    value={i}
+                    onChange={() => handleChangeTitles(title.name)}
+                  />
+                  <span>{title.name}</span>
                 </li>
               ))}
             </ul>

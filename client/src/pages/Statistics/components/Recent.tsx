@@ -39,8 +39,10 @@ const Recent: React.FC<IRecent> = ({ userId }) => {
           />
           <div>
             <div className="name">
-              <h2>{recent.title}</h2>
-              <h3>{recent.type === "tv" ? "series" : recent.type}</h3>
+              <h2>{recent.original_title}</h2>
+              <h3>
+                {recent.media_type === "tv" ? "series" : recent.media_type}
+              </h3>
             </div>
             <div className="info">
               <div className="release">
@@ -63,13 +65,6 @@ const Recent: React.FC<IRecent> = ({ userId }) => {
               </div>
             </div>
           </div>
-          {/* <div>
-          <PiBookmarkSimpleFill
-            className="bookmark"
-            onClick={() => deleteFavMovie(fav)}
-          />
-          <IoStarSharp className="star" />
-        </div> */}
         </div>
       )}
     </Content>

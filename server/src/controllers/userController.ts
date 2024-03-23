@@ -15,20 +15,6 @@ interface UserRequest extends Request {
   };
 }
 
-interface FileRequest extends Request {
-  body: {
-    file: {
-      lastModified: number;
-      lastModifiedData: string;
-      name: string;
-      size: number;
-      type: string;
-      webkitRelativePath: string;
-      buffer: Buffer;
-    };
-  };
-}
-
 module.exports.login = async (
   req: UserRequest,
   res: Response,
@@ -140,7 +126,48 @@ module.exports.changeProfilePicture = async (
       user,
       message: "Profile picture updated!",
     });
-  } catch (err) {
-    console.log(err);
+  } catch (ex) {
+    next(ex);
+  }
+};
+
+module.exports.findUserRating = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { userId } = req.params;
+
+    const users = await User.find().sort({ points: -1 });
+    const userIndex = users.findIndex((user: any) => user.id === userId);
+    const ranking = userIndex !== -1 ? userIndex + 1 : null;
+
+    return res.json({
+      status: true,
+      ranking,
+      allUsersRanked: users.length,
+    });
+  } catch (ex) {
+    next(ex);
+  }
+};
+
+module.exports.changeTitles = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { userId } = req.params;
+    const { name } = req.body;
+
+    const user = User.find(userId);
+
+    return res.json({
+      status: true,
+    });
+  } catch (ex) {
+    next(ex);
   }
 };
