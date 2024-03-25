@@ -94,10 +94,16 @@ const Settings: React.FC<ISettings> = ({ theme, setTheme }) => {
     setTheme(newTheme);
   };
 
-  const handleChangeTitles = async (titleName: string) => {
-    const response = await userService.changeTitles(titleName, userId);
-
-    console.log(response);
+  const handleChangeTitles = async (
+    titleName: string,
+    titleDisplay: boolean
+  ) => {
+    const response = await userService.changeTitles(
+      titleName,
+      !titleDisplay,
+      userId
+    );
+    setUser(response.user);
   };
 
   return (
@@ -188,12 +194,14 @@ const Settings: React.FC<ISettings> = ({ theme, setTheme }) => {
           <div className="prof2">
             <p>Titles</p>
             <ul>
-              {user?.titles.map((title: ITitle, i: number) => (
+              {user?.titles.map((title: ITitle) => (
                 <li key={title.name}>
                   <input
                     type="checkbox"
-                    value={i}
-                    onChange={() => handleChangeTitles(title.name)}
+                    checked={title.display}
+                    onChange={() =>
+                      handleChangeTitles(title.name, title.display)
+                    }
                   />
                   <span>{title.name}</span>
                 </li>

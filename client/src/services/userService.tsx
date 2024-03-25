@@ -40,9 +40,9 @@ export const userService = {
     return await sendRequestGET(url);
   },
 
-  changeTitles: async (userId: string, name: string) => {
+  changeTitles: async (name: string, display: boolean, userId: string) => {
     const url = `${URL_HOST}/api/user/changeTitles/${userId}`;
-    const body = { name };
+    const body = { name, display };
     return await sendRequestPUT(url, body);
   },
 };

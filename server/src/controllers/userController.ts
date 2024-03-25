@@ -160,12 +160,17 @@ module.exports.changeTitles = async (
 ) => {
   try {
     const { userId } = req.params;
-    const { name } = req.body;
+    const { name, display } = req.body; // display is the opposite of the current title "display" status
 
-    const user = User.find(userId);
-
+    const user = await User.findOneAndUpdate(
+      { _id: userId, "titles.name": name },
+      { $set: { "titles.$.display": display } }, // set selected title display status to it`s opposite
+      { new: true }
+    );
+    console.log(user);
     return res.json({
       status: true,
+      user,
     });
   } catch (ex) {
     next(ex);

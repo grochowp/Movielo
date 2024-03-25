@@ -50,7 +50,7 @@ const Profile: React.FC = () => {
               <div className="titles">
                 {user.titles.map((title: ITitle) => (
                   <Link to="../achievements" key={title.name}>
-                    <p>{title.name}</p>
+                    {title.display && <p>{title.name}</p>}
                   </Link>
                 ))}
               </div>
@@ -132,7 +132,7 @@ const Photo = styled.article`
 
   @media (max-width: 1300px) {
     height: clamp(10rem, 25vw, 35%);
-    gap: 1rem;
+    gap: 0rem;
     width: 100%;
 
     section {
@@ -158,12 +158,14 @@ const Photo = styled.article`
     .titles {
       display: flex;
       gap: 0.5rem;
-      font-size: clamp(0.5rem, 1.5vw, 2rem);
+      font-size: clamp(0.5rem, 1vw, 1rem);
+      flex-wrap: wrap;
 
       p {
         font-family: "Inter", sans-serif;
         font-weight: 400;
-        padding: 0.25rem 0.75rem;
+        padding: 0.5vw 1vw;
+        margin: 0;
       }
     }
   }

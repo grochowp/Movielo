@@ -39,7 +39,7 @@ const userSchema = new mongoose.Schema({
   achievements: [{ type: String, required: true }],
   titles: [
     {
-      name: { type: Array, required: true },
+      name: { type: String, required: true },
       display: { type: Boolean, required: true },
     },
   ],
