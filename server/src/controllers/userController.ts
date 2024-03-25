@@ -167,7 +167,7 @@ module.exports.changeTitles = async (
       { $set: { "titles.$.display": display } }, // set selected title display status to it`s opposite
       { new: true }
     );
-    console.log(user);
+
     return res.json({
       status: true,
       user,

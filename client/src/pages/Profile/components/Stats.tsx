@@ -8,18 +8,23 @@ interface IProps {
 }
 
 const StatsComp: React.FC<IProps> = ({ children, data }) => {
+  const randomIndex = Math.floor(Math.random() * data.length);
+
   return (
     <Sect>
       <h1>{children}</h1>
 
       <article>
         <div>
-          <h2>Favorite</h2>
+          <h2>Recently rated</h2>
           <div className="favMovie">
-            <img src={`/images/bg-2.jpg`} alt={"a"} />
+            <img
+              src={`https://image.tmdb.org/t/p/w500${data[randomIndex].poster_path}`}
+              alt={"a"}
+            />
             <div className="titleYear">
-              <h3>Dune</h3>
-              <h4>Year</h4>
+              <h3>{data[randomIndex].original_title}</h3>
+              <h4>{data[randomIndex].release_date}</h4>
             </div>
           </div>
         </div>

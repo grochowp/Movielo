@@ -6,6 +6,7 @@ import { useUser } from "../../../contexts/UserContext";
 import { Movie } from "../../../types";
 import { useEffect, useState } from "react";
 import { userService } from "../../../services/userService";
+import { Link } from "react-router-dom";
 
 interface ISingleStats {
   data: Array<Movie>;
@@ -14,7 +15,7 @@ interface ISingleStats {
 const SingleStats: React.FC<ISingleStats> = ({ data }) => {
   const { user } = useUser();
   const [ranking, setRanking] = useState<number>(0);
-  const [allUsersRanked, setAllUsersRanked] = useState<number>(0);
+  const [, setAllUsersRanked] = useState<number>(0);
 
   const getSuffix = (number: number) => {
     const lastDigit = number % 10;
@@ -64,11 +65,13 @@ const SingleStats: React.FC<ISingleStats> = ({ data }) => {
         <h2>Average rating</h2>
       </div>
       <div className="stats">
-        <div>
-          <h1>{user?.points}p</h1>
-          <CiTrophy />
-        </div>
-        <h2>Points</h2>
+        <Link to="../achievements">
+          <div>
+            <h1>{user?.points}p</h1>
+            <CiTrophy />
+          </div>
+          <h2>Points</h2>
+        </Link>
       </div>
       <div className="stats">
         <div>
@@ -107,6 +110,12 @@ const StatsComponents = styled.div`
     width: clamp(9rem, 13vw, 20rem);
     height: clamp(4rem, 6vw, 7rem);
     border-radius: 10px;
+
+    a {
+      text-decoration: none;
+      color: #d9d9d9;
+      cursor: pointer;
+    }
 
     &:nth-child(1) {
       background: rgb(30, 27, 158);

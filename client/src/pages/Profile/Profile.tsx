@@ -10,9 +10,10 @@ const Profile: React.FC = () => {
   const { user } = useUser();
   const [movies, setMovies] = useState<Array<Movie>>([]);
   const [series, setSeries] = useState<Array<Movie>>([]);
-
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const fetchAndSetMovies = async () => {
     try {
+      setIsLoading(true);
       if (user) {
         const movieResponse = await MovieService.findAllRated(
           user._id,
@@ -21,6 +22,7 @@ const Profile: React.FC = () => {
         const seriesResponse = await MovieService.findAllRated(user._id, "tv");
         setMovies(movieResponse.data);
         setSeries(seriesResponse.data);
+        setIsLoading(false);
       }
     } catch (error) {
       console.error("Error while fetching movie data", error);
@@ -57,8 +59,13 @@ const Profile: React.FC = () => {
             </section>
           </Photo>
           <Stats>
-            <StatsComp data={movies}>Movies</StatsComp>
-            <StatsComp data={series}>Series</StatsComp>
+            {!isLoading && (
+              <>
+                {" "}
+                <StatsComp data={movies}>Movies</StatsComp>
+                <StatsComp data={series}>Series</StatsComp>
+              </>
+            )}
           </Stats>
         </>
       )}
