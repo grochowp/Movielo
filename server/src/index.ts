@@ -9,7 +9,14 @@ dotenv.config();
 const cors = require("cors");
 const app = express();
 
-app.use(cors());
+app.use(
+  cors()
+  // {
+  // origin: [],
+  // methods: ["POST", "GET"],
+  // credentials: true,
+  // }
+);
 app.use(express.json());
 
 const port = process.env.PORT;
@@ -20,8 +27,8 @@ app.listen(port, () => {
 
 mongoose
   .connect(process.env.MONGODB_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+    // useNewUrlParser: true,
+    // useUnifiedTopology: true,
   })
   .then(() => {
     console.log("DB Connetion Successfull");

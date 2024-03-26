@@ -9,7 +9,7 @@ const {
   handleFav,
   deleteFavMovie,
   findFavorites,
-} = require("../controllers/favoriteController");
+} = require("../controllers/FavoriteController");
 
 const router2 = require("express").Router();
 
