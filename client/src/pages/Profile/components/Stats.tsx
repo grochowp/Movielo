@@ -18,14 +18,18 @@ const StatsComp: React.FC<IProps> = ({ children, data }) => {
         <div>
           <h2>Recently rated</h2>
           <div className="favMovie">
-            <img
-              src={`https://image.tmdb.org/t/p/w500${data[randomIndex].poster_path}`}
-              alt={"a"}
-            />
-            <div className="titleYear">
-              <h3>{data[randomIndex].original_title}</h3>
-              <h4>{data[randomIndex].release_date}</h4>
-            </div>
+            {data[randomIndex] && (
+              <>
+                <img
+                  src={`https://image.tmdb.org/t/p/w500${data[randomIndex].poster_path}`}
+                  alt={"a"}
+                />
+                <div className="titleYear">
+                  <h3>{data[randomIndex].original_title}</h3>
+                  <h4>{data[randomIndex].release_date}</h4>
+                </div>
+              </>
+            )}
           </div>
         </div>
 

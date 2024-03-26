@@ -124,7 +124,7 @@ module.exports.changeProfilePicture = async (
     return res.json({
       status: true,
       user,
-      message: "Profile picture updated!",
+      message: "Profile Picture updated!",
     });
   } catch (ex) {
     next(ex);

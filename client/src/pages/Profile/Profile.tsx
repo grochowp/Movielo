@@ -20,6 +20,7 @@ const Profile: React.FC = () => {
           "movie"
         );
         const seriesResponse = await MovieService.findAllRated(user._id, "tv");
+
         setMovies(movieResponse.data);
         setSeries(seriesResponse.data);
         setIsLoading(false);
@@ -61,7 +62,6 @@ const Profile: React.FC = () => {
           <Stats>
             {!isLoading && (
               <>
-                {" "}
                 <StatsComp data={movies}>Movies</StatsComp>
                 <StatsComp data={series}>Series</StatsComp>
               </>

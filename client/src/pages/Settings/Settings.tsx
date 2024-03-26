@@ -7,6 +7,7 @@ import { CiDark } from "react-icons/ci";
 import { IoSunnyOutline } from "react-icons/io5";
 import { userService } from "../../services/userService";
 import { ITitle } from "../../types";
+import { IMGUR_CLIENT_ID } from "../../utils";
 
 interface ISettings {
   theme: string;
@@ -24,11 +25,12 @@ const Settings: React.FC<ISettings> = ({ theme, setTheme }) => {
   const [password, setPassword] = useState<string>("********");
   const [dataChanged, setDataChanged] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
+  const [profilePictureMessage, setProfilePictureMessage] =
+    useState<string>("Profile Picture");
 
   const [tempLink, setTempLink] = useState<string>("");
 
-  const clientId = "ca3ea11c49bdc27";
-  const auth = "Client-ID " + clientId;
+  const auth = "Client-ID " + IMGUR_CLIENT_ID;
   useEffect(() => {
     if (name !== initialName || surname !== initialSurname) {
       setDataChanged(true);
@@ -73,6 +75,12 @@ const Settings: React.FC<ISettings> = ({ theme, setTheme }) => {
     if (!tempLink) return;
     const response = await userService.changeProfilePicture(userId, tempLink);
     setUser(response.user);
+
+    setProfilePictureMessage(response.message);
+
+    setTimeout(() => {
+      setProfilePictureMessage("Profile Picture");
+    }, 3500);
   };
 
   const editUserData = async () => {
@@ -166,7 +174,7 @@ const Settings: React.FC<ISettings> = ({ theme, setTheme }) => {
         </div>
         <div className="pfp-Titles">
           <div className="prof2">
-            <p>Profile Picture</p>
+            <p>{profilePictureMessage}</p>
             <div className="changePicture">
               <img
                 src={`${tempLink ? tempLink : user?.profilePicture}`}
