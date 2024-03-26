@@ -27,7 +27,7 @@ export const AchievementsGraph = () => {
 
   return (
     <Graph>
-      <h3>Achievements completed</h3>
+      <h3>Achievements progress</h3>
 
       <ResponsiveContainer width="100%" height="80%">
         <PieChart width={400} height={400}>

@@ -68,8 +68,10 @@ module.exports.register = async (
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({
       email,
-      firstName,
-      lastName,
+      firstName:
+        firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase(),
+      lastName:
+        lastName.charAt(0).toUpperCase() + lastName.slice(1).toLowerCase(),
       password: hashedPassword,
       points: 0,
       titles: [],
@@ -98,7 +100,12 @@ module.exports.editProfile = async (
     }
     const user = await User.findByIdAndUpdate(
       userId,
-      { firstName, lastName },
+      {
+        firstName:
+          firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase(),
+        lastName:
+          lastName.charAt(0).toUpperCase() + lastName.slice(1).toLowerCase(),
+      },
       { new: true }
     );
     return res.json({ status: true, user, message: "Profile updated!" });

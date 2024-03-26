@@ -108,8 +108,10 @@ const Nav: React.FC = () => {
                 <img src={`${user?.profilePicture}`} alt={"a"} />
               </div>
               <div>
-                <h1>Patryk Grochowski</h1>
-                <h2>grochowp@gmail.com</h2>
+                <h1>
+                  {user?.firstName} {user?.lastName}
+                </h1>
+                <h2>{user?.email}</h2>
               </div>
               <div className="x">
                 <IoCloseOutline onClick={() => setShowUser(true)} />
