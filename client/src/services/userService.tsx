@@ -1,4 +1,4 @@
-import { URL_HOST } from "../utils";
+import { URL_HOST } from "../../public/utils";
 import { sendRequestGET, sendRequestPOST, sendRequestPUT } from "./crudService";
 
 export const userService = {

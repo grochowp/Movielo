@@ -7,7 +7,7 @@ import { CiDark } from "react-icons/ci";
 import { IoSunnyOutline } from "react-icons/io5";
 import { userService } from "../../services/userService";
 import { ITitle } from "../../types";
-import { IMGUR_CLIENT_ID } from "../../utils";
+import { IMGUR_CLIENT_ID } from "../../../public/utils";
 
 interface ISettings {
   theme: string;

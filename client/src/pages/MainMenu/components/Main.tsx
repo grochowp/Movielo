@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Movie } from "../../../types";
-import { API_KEY, MOVIE_ID } from "../../../utils";
+import { API_KEY, MOVIE_ID } from "../../../../public/utils";
 import styled from "styled-components";
 import "swiper/css";
 import "swiper/css/navigation";

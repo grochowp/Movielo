@@ -1,5 +1,5 @@
 import { Movie } from "../types";
-import { URL_HOST } from "../utils";
+import { URL_HOST } from "../../public/utils";
 import {
   sendRequestPOST,
   sendRequestGET,

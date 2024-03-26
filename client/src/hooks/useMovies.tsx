@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { API_KEY } from "../utils";
+import { API_KEY } from "../../public/utils";
 import { MovieService } from "../services/movieService";
 import { Movie } from "../types";
 

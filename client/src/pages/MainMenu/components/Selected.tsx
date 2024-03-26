@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { API_KEY, MOVIE_GENRES, SERIES_GENRES } from "../../../utils";
+import { API_KEY, MOVIE_GENRES, SERIES_GENRES } from "../../../../public/utils";
 import { MovieService } from "../../../services/movieService";
 import styled, { keyframes } from "styled-components";
 import {
