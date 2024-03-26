@@ -7,6 +7,7 @@ import { Movie } from "../../types";
 import SingleStats from "./components/SingleStats";
 import Graph from "./components/Graph";
 import Recent from "./components/Recent";
+import { AchievementsGraph } from "./components/AchievementsGraph";
 
 const Statistics: React.FC = () => {
   const { user } = useUser();
@@ -50,7 +51,7 @@ const Statistics: React.FC = () => {
           <Graph ratings={ratingsCounted} type={type} onChangeType={setType} />
         </div>
         <div className="right">
-          <div className="to-do"></div>
+          <AchievementsGraph />
           <Recent userId={user?._id} />
         </div>
       </Content>
@@ -109,14 +110,6 @@ const Content = styled.article`
 
     @media (max-width: 500px) {
       margin: 0 1rem 1rem 1rem;
-    }
-
-    .to-do {
-      box-shadow: 0px 0px 10px ${(props) => props.theme.boxShadow};
-      background-color: ${(props) => props.theme.componentsBackground};
-      margin-bottom: 2rem;
-      height: clamp(15rem, 28vw, 29rem);
-      border-radius: 10px;
     }
   }
 `;

@@ -144,7 +144,6 @@ const Content = styled.div`
 
       .release {
         display: flex;
-        // align-items: end;
       }
 
       .ratings {

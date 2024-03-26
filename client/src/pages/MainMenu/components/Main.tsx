@@ -146,7 +146,6 @@ const MainPage = styled.section`
     left: 50%;
     font-size: 1.05rem;
     transform: translate(-50%, -50%);
-    // color: ${(props) => props.theme.color};
     font-family: "Inika", serif;
     font-weight: 100;
 

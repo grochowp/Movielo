@@ -233,7 +233,6 @@ const Navigation = styled.nav`
 
     @media (max-width: 500px) {
       width: 8rem;
-      // margin: 0 1vw;
     }
   }
   input {

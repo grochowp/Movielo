@@ -168,10 +168,6 @@ const Content = styled.article`
   display: flex;
   flex-direction: column;
 
-  @media (max-width: 900px) {
-    // padding-top: 10rem;
-  }
-
   .selectBars {
     display: flex;
     width: calc(100% - 2rem);

@@ -367,6 +367,12 @@ const Content = styled.article`
     }
 
     .prof2 {
+      input[type="checkbox"] {
+        width: 1.15rem;
+        height: 1.15rem;
+        accent-color: ${(props) => props.theme.color};
+      }
+
       width: clamp(18rem, 35vw, 30rem);
       p {
         padding-bottom: 0.7rem;
@@ -437,7 +443,6 @@ const Content = styled.article`
       }
       .active {
         background-color: ${(props) => props.theme.componentsBackground};
-        // color: ${(props) => props.theme.componentsBackground};
       }
     }
   }

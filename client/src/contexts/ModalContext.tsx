@@ -436,7 +436,6 @@ const Description = styled.div`
 
       h1 {
         line-height: 1.25;
-        // margin: 0;
         width: 75%;
         font-size: 2.5vw;
       }
