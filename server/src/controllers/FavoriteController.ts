@@ -68,6 +68,7 @@ module.exports.addFavMovie = async (
 ) => {
   try {
     const { userId, movie, type } = req.body;
+
     const newFavorite = await Favorite.create({
       userId,
       id: movie.id,
@@ -77,7 +78,7 @@ module.exports.addFavMovie = async (
       release_date: movie.release_date || movie.first_air_date,
       poster_path: movie.poster_path,
       backdrop_path: movie.backdrop_path,
-      overview: movie.overview,
+      overview: movie.overview || "",
     });
 
     await User.findByIdAndUpdate(userId, {
@@ -138,7 +139,7 @@ module.exports.findFavorites = async (
 
     let favorites;
     if (type !== "all") {
-      favorites = await Favorite.find({ userId, type });
+      favorites = await Favorite.find({ userId, media_type: type });
     } else {
       favorites = await Favorite.find({ userId });
     }

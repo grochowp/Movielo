@@ -28,6 +28,7 @@ const Favorites: React.FC = () => {
   const fetchAndSetMovies = async () => {
     try {
       if (user) {
+        console.log(type);
         const response = await MovieService.findFavorites(user._id, type, sort);
 
         setFavorites(response.favorites);
@@ -92,10 +93,10 @@ const Favorites: React.FC = () => {
               <option key={"ratingDown"} value={"vote_average"}>
                 Low rated
               </option>
-              <option key={"nameUp"} value={"title_desc"}>
+              <option key={"nameUp"} value={"original_title_desc"}>
                 Title A-Z
               </option>
-              <option key={"nameDown"} value={"title"}>
+              <option key={"nameDown"} value={"original_title"}>
                 Title Z-A
               </option>
               <option key={"yearUp"} value={"release_date_desc"}>

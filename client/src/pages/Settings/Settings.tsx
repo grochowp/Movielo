@@ -72,12 +72,11 @@ const Settings: React.FC<ISettings> = ({ theme, setTheme }) => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (!tempLink) return;
     const response = await userService.changeProfilePicture(userId, tempLink);
     setUser(response.user);
 
     setProfilePictureMessage(response.message);
-
+    setTempLink("");
     setTimeout(() => {
       setProfilePictureMessage("Profile Picture");
     }, 3500);
@@ -178,7 +177,7 @@ const Settings: React.FC<ISettings> = ({ theme, setTheme }) => {
             <div className="changePicture">
               <img
                 src={`${tempLink ? tempLink : user?.profilePicture}`}
-                alt={"a"}
+                alt={"user profile picture"}
               />
 
               <form onSubmit={handleSubmit}>
@@ -193,7 +192,10 @@ const Settings: React.FC<ISettings> = ({ theme, setTheme }) => {
                     Choose file
                   </label>
                 </div>
-                <button className="profPic" type="submit">
+                <button
+                  className={!tempLink ? "disabled" : "profPic"}
+                  type="submit"
+                >
                   Upload <GoPencil />
                 </button>
               </form>
@@ -372,6 +374,13 @@ const Content = styled.article`
     }
     .profPic {
       width: clamp(5rem, 10vw, 8rem);
+    }
+
+    .disabled {
+      width: clamp(5rem, 10vw, 8rem);
+      pointer-events: none;
+      cursor: not-allowed;
+      color: ${(props) => props.theme.colorSecondary};
     }
 
     .prof2 {

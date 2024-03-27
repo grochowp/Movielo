@@ -271,7 +271,7 @@ const Modal = styled.section`
     }
 
     @media (max-width: 650px) {
-      width: 70vw;
+      width: clamp(18rem, 70vw, 40rem);
       height: max-content;
     }
   }
@@ -295,7 +295,8 @@ const Modal = styled.section`
       }
 
       @media (max-width: 650px) {
-        margin-top: 7.2vw;
+        font-size: 10.5vw;
+        margin-top: 6.3vw;
       }
     }
 
@@ -320,6 +321,7 @@ const ImageWrapper = styled.div`
 
   .backdrop {
     width: 63vw;
+    min-width: 16.75rem;
     display: none;
   }
 
@@ -343,7 +345,7 @@ const ImageWrapper = styled.div`
       display: flex;
       margin-top: 5vw;
       img {
-        width: 20vw;
+        // width: 30vw;
       }
     }
   }
@@ -369,7 +371,8 @@ const Description = styled.div`
     }
 
     @media (max-width: 850px) {
-      font-size: 1.25vw;
+      margin-top: 1rem;
+      font-size: clamp(0.55rem, 1.25vw, 1.25rem);
       width: 100%;
     }
   }
@@ -437,7 +440,7 @@ const Description = styled.div`
       h1 {
         line-height: 1.25;
         width: 75%;
-        font-size: 2.5vw;
+        font-size: clamp(0.85rem, 1.75vw, 2.5rem);
       }
     }
   }
@@ -471,7 +474,7 @@ const Rating = styled.div`
     justify-content: center;
     height: 35%;
     margin-bottom: 1rem;
-
+    margin-left: 1rem;
     p {
       font-family: "Kadwa", sans-serif;
       font-weight: 100;
@@ -515,15 +518,20 @@ const Rating = styled.div`
     }
 
     @media (max-width: 650px) {
+      margin-left: 0rem;
+
       p {
         font-size: 4vw;
 
         margin: 0 0 1.5vw 0;
       }
-
+      div {
+        gap: 0.25rem;
+      }
       span {
-        width: 4vw !important;
-        height: 4vw !important;
+        width: 5vw !important;
+        height: 5vw !important;
+        margin-bottom: 1rem;
       }
       svg {
         width: 4vw;

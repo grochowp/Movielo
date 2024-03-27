@@ -13,7 +13,7 @@ const favoriteSchema = new mongoose3.Schema({
   release_date: { type: String, required: true },
   poster_path: { type: String, required: true },
   backdrop_path: { type: String, required: true },
-  overview: { type: String, required: true },
+  overview: { type: String, required: false },
 });
 
 module.exports = mongoose3.model("Favorite", favoriteSchema);
