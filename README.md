@@ -5,6 +5,13 @@ variables, built with libraries such as React Router or
 Styled Components. Movie database is provided through
 the TMDb API.
 
+## Test info
+
+You can test website on [Movielo](https://movielo.netlify.app), I`m using free hosting so first login might take around 1-2 minutes.
+
+Email: test@test.com
+
+Password: Test1234
 
 ## Requirements
 
