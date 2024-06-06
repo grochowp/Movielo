@@ -49,10 +49,10 @@ function sortByField(field: string, order: string) {
           ? b[field] - a[field]
           : b[field].localeCompare(a[field]);
       }
-    } else if (field === "title") {
-      return order === "desc"
-        ? a[field].localeCompare(b[field])
-        : b[field].localeCompare(a[field]);
+    } else if (field === "original_title") {
+      return order === "asc"
+        ? b[field].localeCompare(a[field])
+        : a[field].localeCompare(b[field]);
     } else {
       if (a[field] < b[field]) return -1;
       if (a[field] > b[field]) return 1;

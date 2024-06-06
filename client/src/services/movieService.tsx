@@ -1,10 +1,6 @@
 import { Movie } from "../types";
 import { URL_HOST } from "../../public/utils";
-import {
-  sendRequestPOST,
-  sendRequestGET,
-  sendRequestDELETE,
-} from "./crudService";
+import { sendRequest } from "./crudService";
 
 export const MovieService = {
   getMovie: async (apiURL: string) => {
@@ -21,7 +17,7 @@ export const MovieService = {
       },
     };
 
-    return await sendRequestPOST(url, body);
+    return await sendRequest(url, "POST", body);
   },
 
   rateMovie: async (userId: string, rating: number, movie: Movie) => {
@@ -31,7 +27,7 @@ export const MovieService = {
       rating,
       movie,
     };
-    return await sendRequestPOST(url, body);
+    return await sendRequest(url, "POST", body);
   },
 
   addFavMovie: async (userId: string, movie: object, type: string) => {
@@ -41,35 +37,35 @@ export const MovieService = {
       movie,
       type,
     };
-    return await sendRequestPOST(url, body);
+    return await sendRequest(url, "POST", body);
   },
 
   handleFav: async (userId: string, movieId: number) => {
     const url = `${URL_HOST}/api/movie/handleFav?userId=${userId}&movieId=${movieId}`;
 
-    return await sendRequestGET(url);
+    return await sendRequest(url, "GET");
   },
 
   deleteFavMovie: async (userId: string, movieId: number) => {
     const url = `${URL_HOST}/api/movie/deleteFavMovie?userId=${userId}&movieId=${movieId}`;
-    return await sendRequestDELETE(url);
+    return await sendRequest(url, "DELETE");
   },
 
   findAllRated: async (userId: string, type: string) => {
     const url = `${URL_HOST}/api/movie/findAllRated/${userId}?type=${type}`;
 
-    return await sendRequestGET(url);
+    return await sendRequest(url, "GET");
   },
 
   findFavorites: async (userId: string, type: string, sort: string) => {
     const url = `${URL_HOST}/api/movie/findFavorites/${sort}?type=${type}&userId=${userId}`;
 
-    return await sendRequestGET(url);
+    return await sendRequest(url, "GET");
   },
 
   getRecent: async (userId: string) => {
     const url = `${URL_HOST}/api/movie/getRecent/${userId}`;
 
-    return await sendRequestGET(url);
+    return await sendRequest(url, "GET");
   },
 };

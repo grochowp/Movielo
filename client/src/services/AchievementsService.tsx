@@ -1,5 +1,5 @@
 import { URL_HOST } from "../../public/utils";
-import { sendRequestPOST, sendRequestGET } from "./crudService";
+import { sendRequest } from "./crudService";
 
 export const AchievementsService = {
   getAchievements: async (
@@ -13,11 +13,11 @@ export const AchievementsService = {
       url += `&userAchievements=${userAchievementsString}`;
     }
 
-    return await sendRequestGET(url);
+    return await sendRequest(url, "GET");
   },
   assignAchievement: async (userId: string, name: string) => {
     const url = `${URL_HOST}/api/achievement/assignAchievement`;
     const body = { userId, name };
-    return await sendRequestPOST(url, body);
+    return await sendRequest(url, "POST", body);
   },
 };

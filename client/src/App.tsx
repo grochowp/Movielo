@@ -63,21 +63,13 @@ const App: React.FC = () => {
       <ModalProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="*" element={<Error />} />
-            <Route
-              path="/login"
-              element={user ? <Navigate to="/main" /> : <LoginPage />}
-            />
-            <Route
-              path="/main"
-              element={user ? <MainMenu /> : <Navigate to="/login" />}
-            />
+            <Route index element={<LoginPage />} />
+            <Route path="/main" element={<MainMenu />} />
             <Route
               path="/dashboard/*"
-              element={user ? <Dashboard /> : <Navigate to="/login" />}
+              element={user ? <Dashboard /> : <Navigate to="/" />}
             >
-              {" "}
-              <Route path="*" element={<Error />} />
+              <Route index element={<Navigate replace to="profile" />} />
               <Route path="profile" element={<Profile />} />
               <Route path="statistics" element={<Statistics />} />
               <Route path="favorites" element={<Favorites />} />
@@ -86,7 +78,9 @@ const App: React.FC = () => {
                 path="settings"
                 element={<Settings theme={theme} setTheme={setTheme} />}
               />
+              <Route path="*" element={<Error />} />
             </Route>
+            <Route path="*" element={user ? <Error /> : <Navigate to="/" />} />
           </Routes>
         </BrowserRouter>
       </ModalProvider>

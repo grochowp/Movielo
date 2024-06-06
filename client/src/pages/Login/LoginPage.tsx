@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { userService } from "../../services/userService";
 import { useUser } from "../../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
 
 interface UseFormInputs {
   firstName: string;
@@ -24,6 +25,8 @@ export const LoginPage: React.FC = () => {
       password: "",
     },
   });
+
+  const navigate = useNavigate();
 
   const handleChangeAction = () => {
     setAction(action === "Login" ? "Register" : "Login");
@@ -50,6 +53,7 @@ export const LoginPage: React.FC = () => {
 
       if (response.user) {
         user.setUser(response.user);
+        navigate("/main");
         setError("");
       } else {
         setError(response.message);

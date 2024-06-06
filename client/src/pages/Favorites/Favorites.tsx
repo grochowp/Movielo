@@ -28,9 +28,7 @@ const Favorites: React.FC = () => {
   const fetchAndSetMovies = useCallback(async () => {
     try {
       if (user) {
-        console.log(type);
         const response = await MovieService.findFavorites(user._id, type, sort);
-
         setFavorites(response.favorites);
         setIsLoading(false);
       }
