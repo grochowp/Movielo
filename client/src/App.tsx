@@ -14,6 +14,7 @@ import Statistics from "./pages/Statistics/Statistics";
 import Favorites from "./pages/Favorites/Favorites";
 import Achievements from "./pages/Achievements/Achievements";
 import Settings from "./pages/Settings/Settings";
+import { Error } from "./components/Error";
 
 interface Theme {
   bodyColor: string;
@@ -53,7 +54,7 @@ const themes: Record<string, Theme> = {
 const App: React.FC = () => {
   const [theme, setTheme] = useState("dark");
 
-  const user = useUser();
+  const { user } = useUser();
 
   return (
     <ThemeProvider theme={themes[theme]}>
@@ -62,19 +63,21 @@ const App: React.FC = () => {
       <ModalProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="*" element={<Navigate to="login" />} />
+            <Route path="*" element={<Error />} />
             <Route
               path="/login"
-              element={user.user ? <Navigate to="/main" /> : <LoginPage />}
+              element={user ? <Navigate to="/main" /> : <LoginPage />}
             />
             <Route
               path="/main"
-              element={user.user ? <MainMenu /> : <Navigate to="/login" />}
+              element={user ? <MainMenu /> : <Navigate to="/login" />}
             />
             <Route
               path="/dashboard/*"
-              element={user.user ? <Dashboard /> : <Navigate to="/login" />}
+              element={user ? <Dashboard /> : <Navigate to="/login" />}
             >
+              {" "}
+              <Route path="*" element={<Error />} />
               <Route path="profile" element={<Profile />} />
               <Route path="statistics" element={<Statistics />} />
               <Route path="favorites" element={<Favorites />} />
