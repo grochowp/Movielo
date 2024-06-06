@@ -13,7 +13,7 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
-      {children}
+      {user !== null && children}
     </UserContext.Provider>
   );
 };
@@ -26,5 +26,6 @@ const useUser = (): UserContextType => {
   return context;
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
 export { UserProvider, useUser };
+
+//export const useUser = () => useContext(UserContext);

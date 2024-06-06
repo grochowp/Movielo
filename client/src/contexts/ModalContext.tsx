@@ -4,6 +4,7 @@ import React, {
   useContext,
   ReactNode,
   useEffect,
+  useCallback,
 } from "react";
 import { Movie, User } from "../types";
 import styled from "styled-components";
@@ -32,12 +33,20 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const { user, setUser } = useUser();
 
+  const seeFav = useCallback(async () => {
+    if (user && selectedMovie) {
+      const response = await MovieService.handleFav(
+        user._id,
+        selectedMovie?.id
+      );
+
+      setIsFavorite(response.favorite);
+    }
+  }, [selectedMovie, user]);
+
   useEffect(() => {
     seeFav();
-    // Dependency Array - Adding "seeFav" will cause infinite loop, user and selectedMovie are needed to make sure that it will display correct bookmark after changing movie or changing users but trying to see modal of the same movie on both accounts
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, selectedMovie]);
+  }, [user, selectedMovie, seeFav]);
 
   const closeModal = () => {
     setSelectedMovie(null);
@@ -70,7 +79,6 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       ).length;
 
       const ratingTitle = getRatingTitle(selectedMovie.media_type, length);
-
       if (ratingTitle) {
         const response = await AchievementsService.assignAchievement(
           user._id,
@@ -108,17 +116,6 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     }
 
     setMessage(response.message);
-  };
-
-  const seeFav = async () => {
-    if (user && selectedMovie) {
-      const response = await MovieService.handleFav(
-        user._id,
-        selectedMovie?.id
-      );
-
-      setIsFavorite(response.favorite);
-    }
   };
 
   const addFavMovie = async () => {

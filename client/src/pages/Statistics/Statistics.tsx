@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import ProfileHeader from "../../components/ProfileHeader";
 import { useUser } from "../../contexts/UserContext";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { MovieService } from "../../services/movieService";
 import { Movie } from "../../types";
 import SingleStats from "./components/SingleStats";
@@ -27,7 +27,7 @@ const Statistics: React.FC = () => {
     ratingsCounted[rate - 1].ratings++;
   });
 
-  const fetchAndSetMovies = async () => {
+  const fetchAndSetMovies = useCallback(async () => {
     try {
       if (user) {
         const response = await MovieService.findAllRated(user._id, type);
@@ -36,12 +36,11 @@ const Statistics: React.FC = () => {
     } catch (error) {
       console.error("Error while fetching movie data", error);
     }
-  };
+  }, [user, type]);
 
   useEffect(() => {
     fetchAndSetMovies();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [type]);
+  }, [fetchAndSetMovies]);
   return (
     <>
       <ProfileHeader>Statistics</ProfileHeader>

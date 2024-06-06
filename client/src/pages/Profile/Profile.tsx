@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useUser } from "../../contexts/UserContext";
 import { MovieService } from "../../services/movieService";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ITitle, Movie } from "../../types";
 import StatsComp from "./components/Stats";
 import { Link } from "react-router-dom";
@@ -11,7 +11,7 @@ const Profile: React.FC = () => {
   const [movies, setMovies] = useState<Array<Movie>>([]);
   const [series, setSeries] = useState<Array<Movie>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const fetchAndSetMovies = async () => {
+  const fetchAndSetMovies = useCallback(async () => {
     try {
       setIsLoading(true);
       if (user) {
@@ -28,12 +28,11 @@ const Profile: React.FC = () => {
     } catch (error) {
       console.error("Error while fetching movie data", error);
     }
-  };
+  }, [user]);
 
   useEffect(() => {
     fetchAndSetMovies();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fetchAndSetMovies]);
 
   return (
     <>

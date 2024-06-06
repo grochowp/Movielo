@@ -4,7 +4,7 @@ import { CiTrophy } from "react-icons/ci";
 import { PiPopcornThin } from "react-icons/pi";
 import { useUser } from "../../../contexts/UserContext";
 import { Movie } from "../../../types";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { userService } from "../../../services/userService";
 import { Link } from "react-router-dom";
 
@@ -30,16 +30,15 @@ const SingleStats: React.FC<ISingleStats> = ({ data }) => {
     }
   };
 
-  const findUserRanking = async () => {
+  const findUserRanking = useCallback(async () => {
     const response = await userService.findUserRating(user?._id);
     setRanking(response.ranking);
     setAllUsersRanked(response.allUsersRanked);
-  };
+  }, [user?._id]);
 
   useEffect(() => {
     findUserRanking();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [findUserRanking]);
 
   return (
     <StatsComponents>

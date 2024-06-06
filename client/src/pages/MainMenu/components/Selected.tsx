@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { API_KEY, MOVIE_GENRES, SERIES_GENRES } from "../../../../public/utils";
 import { MovieService } from "../../../services/movieService";
 import styled, { keyframes } from "styled-components";
@@ -18,25 +18,26 @@ const Selected: React.FC = () => {
 
   const modal = useModal();
 
+  const fetchAndSetMovies = useCallback(
+    async (apiURL: string) => {
+      setIsLoading(true);
+      try {
+        const response = await MovieService.getMovie(apiURL);
+        const data = await response.movies.slice(0, 15);
+        setMovies(data.map((item: Movie) => ({ ...item, media_type: type })));
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error while fetching movie data", error);
+      }
+    },
+    [type]
+  );
+
   useEffect(() => {
     fetchAndSetMovies(
       `https://api.themoviedb.org/3/discover/${type}?api_key=${API_KEY}&with_genres=${genre}&page=${page}`
     );
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, type, genre]);
-
-  const fetchAndSetMovies = async (apiURL: string) => {
-    setIsLoading(true);
-    try {
-      const response = await MovieService.getMovie(apiURL);
-      const data = response.movies.slice(0, 15);
-      setMovies(data.map((item: Movie) => ({ ...item, media_type: type })));
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Error while fetching movie data", error);
-    }
-  };
+  }, [page, type, genre, fetchAndSetMovies]);
 
   const handleGenreChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setGenre(parseInt(event.target.value));

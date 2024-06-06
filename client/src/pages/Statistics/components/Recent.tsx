@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { MovieService } from "../../../services/movieService";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Movie } from "../../../types";
 import { IoStarSharp } from "react-icons/io5";
 
@@ -11,7 +11,7 @@ interface IRecent {
 const Recent: React.FC<IRecent> = ({ userId }) => {
   const [recent, setRecent] = useState<Movie>();
 
-  const fetchAndSetMovies = async () => {
+  const fetchAndSetMovies = useCallback(async () => {
     try {
       if (userId) {
         const response = await MovieService.getRecent(userId);
@@ -21,12 +21,11 @@ const Recent: React.FC<IRecent> = ({ userId }) => {
     } catch (error) {
       console.error("Error while fetching movie data", error);
     }
-  };
+  }, [userId]);
 
   useEffect(() => {
     fetchAndSetMovies();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fetchAndSetMovies]);
 
   return (
     <Content>

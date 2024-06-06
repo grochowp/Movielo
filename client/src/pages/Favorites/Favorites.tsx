@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components";
 import ProfileHeader from "../../components/ProfileHeader";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { Movie } from "../../types";
 import { MovieService } from "../../services/movieService";
 import { useUser } from "../../contexts/UserContext";
@@ -25,7 +25,7 @@ const Favorites: React.FC = () => {
     }
   };
 
-  const fetchAndSetMovies = async () => {
+  const fetchAndSetMovies = useCallback(async () => {
     try {
       if (user) {
         console.log(type);
@@ -37,13 +37,12 @@ const Favorites: React.FC = () => {
     } catch (error) {
       console.error("Error while fetching movie data", error);
     }
-  };
+  }, [type, sort, user]);
 
   useEffect(() => {
     setIsLoading(true);
     fetchAndSetMovies();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [type, sort]);
+  }, [type, sort, fetchAndSetMovies]);
 
   const handleChangeType = (event: ChangeEvent<HTMLSelectElement>) => {
     setType(event.target.value);

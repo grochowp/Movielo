@@ -12,7 +12,7 @@ const MovieSlider: React.FC<fetchMovie> = ({ url, genre }) => {
   const fetchAndSetMovies = async (apiURL: string) => {
     try {
       const response = await MovieService.getMovie(apiURL);
-      const data = response.movies;
+      const data = await response.movies;
       setMovies(data);
       setIsLoading(false);
     } catch (error) {
