@@ -13,3 +13,5 @@ const AuthRoute: React.FC<AuthRouteProps> = ({ element }) => {
 };
 
 export default AuthRoute;
+
+// Currently not using

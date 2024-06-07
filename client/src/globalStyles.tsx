@@ -2,6 +2,10 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
 
+html {
+    width: 100vw;
+}
+    
 body {
     display: flex;
     justify-content: center;

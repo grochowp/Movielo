@@ -68,7 +68,6 @@ const Graph = styled.div`
   border-radius: 10px;
 
   h3 {
-    width: 100%;
     height: 3rem;
     font-size: clamp(1.25rem, 1.5vw, 1.5rem);
     display: flex;

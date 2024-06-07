@@ -195,8 +195,7 @@ const SelectSpan = styled.span<SelectSpanProps>`
 
 const Content = styled.article`
   min-height: calc(100vh - 11rem);
-  width: calc(100vw - 5rem);
-  max-width: calc(1920px - 5rem);
+
   background-color: ${(props) => props.theme.pageBackground};
   color: ${(props) => props.theme.color};
   padding-top: 10rem;

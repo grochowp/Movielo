@@ -5,16 +5,7 @@ import { ThemeProvider } from "styled-components";
 import { ModalProvider } from "./contexts/ModalContext";
 import { useUser } from "./contexts/UserContext";
 import GlobalStyle from "./globalStyles";
-// import { LoginPage } from "./pages/Login/LoginPage";
-// import MainMenu from "./pages/MainMenu/MainMenu";
-// import Dashboard from "./pages/Dashboard/Dashboard";
-
-// import Profile from "./pages/Profile/Profile";
-// import Statistics from "./pages/Statistics/Statistics";
-// import Favorites from "./pages/Favorites/Favorites";
-// import Achievements from "./pages/Achievements/Achievements";
-// import Settings from "./pages/Settings/Settings";
-// import { Error } from "./components/Error";
+import { Spinner } from "./components/Spinner";
 
 const LoginPage = lazy(() => import("./pages/Login/LoginPage"));
 const MainMenu = lazy(() => import("./pages/MainMenu/MainMenu"));
@@ -72,7 +63,7 @@ const App: React.FC = () => {
 
       <ModalProvider>
         <BrowserRouter>
-          <Suspense fallback={<Error />}>
+          <Suspense fallback={<Spinner />}>
             <Routes>
               <Route index element={<LoginPage />} />
               <Route path="/main" element={<MainMenu />} />
