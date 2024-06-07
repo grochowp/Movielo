@@ -12,9 +12,9 @@ interface UseFormInputs {
   password: string;
 }
 
-export const LoginPage: React.FC = () => {
+const LoginPage: React.FC = () => {
   const user = useUser();
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string>("");
   const [action, setAction] = useState<"Login" | "Register">("Login");
 
   const { register, reset, handleSubmit } = useForm<UseFormInputs>({
@@ -117,6 +117,8 @@ export const LoginPage: React.FC = () => {
     </PageBackground>
   );
 };
+
+export default LoginPage;
 
 const PageBackground = styled.section`
   display: flex;

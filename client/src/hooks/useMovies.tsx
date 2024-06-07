@@ -3,14 +3,12 @@ import { API_KEY } from "../../public/utils";
 import { MovieService } from "../services/movieService";
 import { Movie } from "../types";
 
-export const KEY = "ad0a8221";
-
 type CallbackFunction = () => void;
 
 export function useMovies(query: string, callback?: CallbackFunction) {
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
 
   useEffect(() => {
     callback?.();

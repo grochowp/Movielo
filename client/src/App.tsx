@@ -1,20 +1,30 @@
-import React, { useState } from "react";
+import React, { Suspense, lazy, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { LoginPage } from "./pages/Login/LoginPage";
 import { Navigate } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
-import GlobalStyle from "./globalStyles";
 import { ModalProvider } from "./contexts/ModalContext";
 import { useUser } from "./contexts/UserContext";
-import MainMenu from "./pages/MainMenu/MainMenu";
-import Dashboard from "./pages/Dashboard/Dashboard";
+import GlobalStyle from "./globalStyles";
+// import { LoginPage } from "./pages/Login/LoginPage";
+// import MainMenu from "./pages/MainMenu/MainMenu";
+// import Dashboard from "./pages/Dashboard/Dashboard";
 
-import Profile from "./pages/Profile/Profile";
-import Statistics from "./pages/Statistics/Statistics";
-import Favorites from "./pages/Favorites/Favorites";
-import Achievements from "./pages/Achievements/Achievements";
-import Settings from "./pages/Settings/Settings";
-import { Error } from "./components/Error";
+// import Profile from "./pages/Profile/Profile";
+// import Statistics from "./pages/Statistics/Statistics";
+// import Favorites from "./pages/Favorites/Favorites";
+// import Achievements from "./pages/Achievements/Achievements";
+// import Settings from "./pages/Settings/Settings";
+// import { Error } from "./components/Error";
+
+const LoginPage = lazy(() => import("./pages/Login/LoginPage"));
+const MainMenu = lazy(() => import("./pages/MainMenu/MainMenu"));
+const Dashboard = lazy(() => import("./pages/Dashboard/Dashboard"));
+const Error = lazy(() => import("./components/Error"));
+const Profile = lazy(() => import("./pages/Profile/Profile"));
+const Statistics = lazy(() => import("./pages/Statistics/Statistics"));
+const Favorites = lazy(() => import("./pages/Favorites/Favorites"));
+const Achievements = lazy(() => import("./pages/Achievements/Achievements"));
+const Settings = lazy(() => import("./pages/Settings/Settings"));
 
 interface Theme {
   bodyColor: string;
@@ -52,7 +62,7 @@ const themes: Record<string, Theme> = {
 };
 
 const App: React.FC = () => {
-  const [theme, setTheme] = useState("dark");
+  const [theme, setTheme] = useState<string>("dark");
 
   const { user } = useUser();
 
@@ -62,26 +72,31 @@ const App: React.FC = () => {
 
       <ModalProvider>
         <BrowserRouter>
-          <Routes>
-            <Route index element={<LoginPage />} />
-            <Route path="/main" element={<MainMenu />} />
-            <Route
-              path="/dashboard/*"
-              element={user ? <Dashboard /> : <Navigate to="/" />}
-            >
-              <Route index element={<Navigate replace to="profile" />} />
-              <Route path="profile" element={<Profile />} />
-              <Route path="statistics" element={<Statistics />} />
-              <Route path="favorites" element={<Favorites />} />
-              <Route path="achievements" element={<Achievements />} />
+          <Suspense fallback={<Error />}>
+            <Routes>
+              <Route index element={<LoginPage />} />
+              <Route path="/main" element={<MainMenu />} />
               <Route
-                path="settings"
-                element={<Settings theme={theme} setTheme={setTheme} />}
+                path="/dashboard/*"
+                element={user ? <Dashboard /> : <Navigate to="/" />}
+              >
+                <Route index element={<Navigate replace to="profile" />} />
+                <Route path="profile" element={<Profile />} />
+                <Route path="statistics" element={<Statistics />} />
+                <Route path="favorites" element={<Favorites />} />
+                <Route path="achievements" element={<Achievements />} />
+                <Route
+                  path="settings"
+                  element={<Settings theme={theme} setTheme={setTheme} />}
+                />
+                <Route path="*" element={<Error />} />
+              </Route>
+              <Route
+                path="*"
+                element={user ? <Error /> : <Navigate to="/" />}
               />
-              <Route path="*" element={<Error />} />
-            </Route>
-            <Route path="*" element={user ? <Error /> : <Navigate to="/" />} />
-          </Routes>
+            </Routes>
+          </Suspense>
         </BrowserRouter>
       </ModalProvider>
     </ThemeProvider>

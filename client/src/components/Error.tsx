@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-export const Error = () => {
+const Error = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -17,6 +17,8 @@ export const Error = () => {
     </>
   );
 };
+
+export default Error;
 
 const ErrorMessage = styled.div`
   width: 100vw;

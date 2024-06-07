@@ -28,8 +28,8 @@ const StarRating: React.FC<StarRatingProps> = ({
   defaultRating = 5,
   onSetRating,
 }) => {
-  const [rating, setRating] = useState(defaultRating);
-  const [tempRating, setTempRating] = useState(0);
+  const [rating, setRating] = useState<number>(defaultRating);
+  const [tempRating, setTempRating] = useState<number>(0);
 
   function handleRating(rating: number) {
     setRating(rating);
