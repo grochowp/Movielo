@@ -65,8 +65,8 @@ const App: React.FC = () => {
         <BrowserRouter>
           <Suspense fallback={<Spinner />}>
             <Routes>
-              <Route index element={<LoginPage />} />
-              <Route path="/main" element={<MainMenu />} />
+              <Route index element={<MainMenu />} />
+              <Route path="/login" element={<LoginPage />} />
               <Route
                 path="/dashboard/*"
                 element={user ? <Dashboard /> : <Navigate to="/" />}

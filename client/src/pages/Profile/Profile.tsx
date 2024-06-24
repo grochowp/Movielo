@@ -85,8 +85,7 @@ const Background = styled.img`
 
   @media (max-width: 900px) {
     width: 100vw;
-    height: 20%;
-    min-height: 13rem;
+    height: 17.5rem;
   }
 `;
 
@@ -137,7 +136,7 @@ const Photo = styled.article`
   }
 
   @media (max-width: 1300px) {
-    height: clamp(10rem, 25vw, 35%);
+    height: 17.5rem;
     gap: 0rem;
     width: 100%;
 
@@ -188,11 +187,11 @@ const Stats = styled.article`
 
   @media (max-width: 1300px) {
     padding: 2rem;
-    min-height: 75%;
+    min-height: calc(100vh - 21.5rem);
   }
 
   @media (max-width: 900px) {
     flex-direction: column;
-    min-height: calc(77vh);
+    min-height: calc(100vh - 25rem);
   }
 `;

@@ -67,6 +67,11 @@ const Nav: React.FC = () => {
     navigate(`/dashboard/${s}`);
   };
 
+  const handleUserIcon = () => {
+    if (!user) navigate("/login");
+    setShowUser(true);
+  };
+
   return (
     <Navigation>
       {/* <span className="home">
@@ -152,7 +157,7 @@ const Nav: React.FC = () => {
           </div>
         ) : (
           <span>
-            <CiUser className="userIcon" onClick={() => setShowUser(true)} />
+            <CiUser className="userIcon" onClick={handleUserIcon} />
           </span>
         )}
       </div>
@@ -237,6 +242,7 @@ const Navigation = styled.nav`
       width: 8rem;
     }
   }
+
   input {
     height: 3rem;
     width: 20rem;
@@ -282,7 +288,6 @@ const Navigation = styled.nav`
   }
 
   .options {
-    font-family: "Inika", sans-serif;
     font-weight: 100;
     z-index: 5;
     position: relative;
@@ -313,6 +318,7 @@ const Navigation = styled.nav`
       display: flex;
       align-items: center;
       transition: 1s;
+
       &:hover {
         background-color: ${(props) => props.theme.color};
         color: ${(props) => props.theme.componentsBackground};
@@ -338,6 +344,10 @@ const Navigation = styled.nav`
 
       div {
         width: 60%;
+
+        h2 {
+          opacity: 0.75;
+        }
 
         @media (max-width: 500px) {
           h1 {

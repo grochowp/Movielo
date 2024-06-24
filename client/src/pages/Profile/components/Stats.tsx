@@ -180,7 +180,7 @@ const Sect = styled.section`
     ul {
       list-style: none;
       width: 70%;
-      height: 5rem;
+      height: 8rem;
       div {
         display: flex;
         width: 100%;

@@ -16,7 +16,7 @@ const ProfileNav: React.FC = () => {
   return (
     <NavBar>
       <NavSection>
-        <IoHomeOutline onClick={() => navigate("/main")} />
+        <IoHomeOutline onClick={() => navigate("/")} />
       </NavSection>
       <NavSection>
         <CgProfile onClick={() => navigate("profile")} />

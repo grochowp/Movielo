@@ -5,7 +5,7 @@ const Error = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/main");
+    navigate(-1);
   };
 
   return (

@@ -159,11 +159,13 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
                   className="fav"
                   onClick={() => deleteFavMovie()}
                 />
-              ) : (
+              ) : user ? (
                 <PiBookmarkSimpleThin
                   className="fav"
                   onClick={() => addFavMovie()}
                 />
+              ) : (
+                ""
               )}
 
               <ImageWrapper className="image">
@@ -192,18 +194,22 @@ const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
                   </div>
                   <h2>{selectedMovie.overview}</h2>
                 </Description>
-                <Rating>
-                  <div className="rating">
-                    <p>{message || "Rating"}</p>
-                    <StarRating
-                      maxRating={10}
-                      size={24}
-                      key={selectedMovie.id}
-                      onSetRating={setUserRating}
-                    />
-                    <button onClick={() => rateMovie()}>Rate</button>
-                  </div>
-                </Rating>
+                {user ? (
+                  <Rating>
+                    <div className="rating">
+                      <p>{message || "Rating"}</p>
+                      <StarRating
+                        maxRating={10}
+                        size={24}
+                        key={selectedMovie.id}
+                        onSetRating={setUserRating}
+                      />
+                      <button onClick={() => rateMovie()}>Rate</button>
+                    </div>
+                  </Rating>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           </article>

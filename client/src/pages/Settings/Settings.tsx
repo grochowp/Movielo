@@ -259,6 +259,7 @@ const Content = styled.article`
   @media (max-width: 900px) {
     padding-top: 8rem;
   }
+
   button {
     box-shadow: 0px 0px 10px ${(props) => props.theme.boxShadow};
     font-family: "Spline Sans", sans-serif;
@@ -289,7 +290,7 @@ const Content = styled.article`
     justify-content: center;
     align-items: center;
     gap: 5rem;
-    height: max-content;
+    // height: max-content;
 
     article {
       padding-bottom: 5rem;

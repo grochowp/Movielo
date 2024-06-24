@@ -53,7 +53,7 @@ const LoginPage: React.FC = () => {
 
       if (response.user) {
         user.setUser(response.user);
-        navigate("/main");
+        navigate("/");
         setError("");
       } else {
         setError(response.message);
