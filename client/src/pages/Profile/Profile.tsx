@@ -87,6 +87,11 @@ const Background = styled.img`
     width: 100vw;
     height: 17.5rem;
   }
+
+  @media (max-width: 700px) {
+    width: 100vw;
+    height: 10rem;
+  }
 `;
 
 const Photo = styled.article`
@@ -173,6 +178,12 @@ const Photo = styled.article`
         margin: 0;
       }
     }
+
+    @media (max-width: 700px) {
+      height: 10rem;
+      gap: 0rem;
+      width: 100%;
+    }
   }
 `;
 
@@ -193,5 +204,10 @@ const Stats = styled.article`
   @media (max-width: 900px) {
     flex-direction: column;
     min-height: calc(100vh - 25rem);
+  }
+
+  @media (max-width: 700px) {
+    flex-direction: column;
+    min-height: calc(100vh - 17.5rem);
   }
 `;

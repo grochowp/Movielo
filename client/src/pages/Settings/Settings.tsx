@@ -250,7 +250,7 @@ const Content = styled.article`
   display: flex;
   max-width: calc(1920px - 5rem);
   width: calc(100vw - 5rem);
-  height: calc(100vh - 6rem);
+  min-height: calc(100vh - 6rem);
   font-family: "Spline Sans", sans-serif;
   background-color: ${(props) => props.theme.pageBackground};
   padding-top: 6rem;
@@ -456,6 +456,7 @@ const Content = styled.article`
         }
       }
       .themes {
+        padding-bottom: 1rem;
         display: flex;
         justify-content: space-around;
       }
